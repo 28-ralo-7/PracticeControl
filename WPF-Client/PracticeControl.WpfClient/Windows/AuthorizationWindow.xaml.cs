@@ -21,7 +21,7 @@ namespace PracticeControl.WpfClient.Windows
             }
             var userAuth = new AuthUser(login_TextBox.Text, passwordBox.Password);
 
-            var user = Requests.Authorization(userAuth);
+            var user = GetRequests.Authorization(userAuth);
 
             if (user.Result is null)
             {

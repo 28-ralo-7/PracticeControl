@@ -59,6 +59,8 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 MessageBox.Show("Такой сотрудник уже существует");
                 return;
             }
+
+
             if (string.IsNullOrWhiteSpace(lastname_TextBox.Text) ||
                 string.IsNullOrWhiteSpace(firstname_TextBox.Text) ||
                 string.IsNullOrWhiteSpace(login_TextBox.Text) ||
@@ -68,6 +70,8 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 MessageBox.Show("Заполните все поля");
                 return;
             }
+
+
             CreateEmployeeView employeeView = new CreateEmployeeView 
             {
                 LastName = lastname_TextBox.Text,
@@ -77,10 +81,12 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 Password = password_TextBox.Text,
                 IsAdmin = (bool)isAdmin_CheckBox.IsChecked
             };
+
+
             try
             {
-                
-                var response = await Requests.CreateEmoloyeesAsync(employeeView);
+                var response = await PostRequests.CreateEmoloyeesAsync(employeeView);
+
                 if (response is not null)
                 {
                     MessageBox.Show("Пользователь сохранен");
@@ -91,17 +97,18 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                     MessageBox.Show("Не удалось сохранить пользователя");
                     return;
                 }
-            } catch
+
+            }
+            catch
             {
                 MessageBox.Show("Ошибка сохранения");
             }
-
 
         }
 
         private void cancel_Button_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            this.Close();
         }
 
         private async void edit_Button_Click(object sender, RoutedEventArgs e)
@@ -111,6 +118,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 MessageBox.Show("Этот логин занят");
                 return;
             }
+
             if (string.IsNullOrWhiteSpace(lastname_TextBox.Text) ||
                 string.IsNullOrWhiteSpace(firstname_TextBox.Text) ||
                 string.IsNullOrWhiteSpace(login_TextBox.Text) ||
@@ -120,6 +128,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 MessageBox.Show("Заполните все поля");
                 return;
             }
+
             CreateEmployeeView employeeView = new CreateEmployeeView
             {
                 LastName = lastname_TextBox.Text,
@@ -129,9 +138,11 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 Password = password_TextBox.Text,
                 IsAdmin = (bool)isAdmin_CheckBox.IsChecked
             };
+
             try
             {
-                var response = await Requests.UpdateEmployeeAsync(employeeView);
+                var response = await PostRequests.UpdateEmployeeAsync(employeeView);
+
                 if (response is not null)
                 {
                     MessageBox.Show("Пользователь сохранен");

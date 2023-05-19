@@ -27,14 +27,16 @@ namespace PracticeControl.WpfClient.Windows.Pages
             if (User.IsAdmin)
             {
                 columnPracticeLead.Visibility = Visibility.Visible;
+                stPanFuncAdminPractices.Visibility = Visibility.Visible;
 
-                var Practices = await Requests.GetAllPracticesAsync();
+                var Practices = await GetRequests.GetAllPracticesAsync();
 
                 dataGridPractices.ItemsSource = Practices;
             }
             else
             {
                 columnPracticeLead.Visibility = Visibility.Hidden;
+                stPanFuncAdminPractices.Visibility = Visibility.Hidden;
 
                 var Practices = User.PracticeSchedules;
 

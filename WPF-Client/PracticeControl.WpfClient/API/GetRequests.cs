@@ -6,14 +6,12 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using PracticeControl.WpfClient.Model;
 using PracticeControl.WpfClient.Model.View;
-using System.Data.SqlTypes;
-using PracticeControl.WpfClient.Model.ViewCreate;
+using PracticeControl.WpfClient.Model;
 
 namespace PracticeControl.WpfClient.API
 {
-    public class Requests
+    public class GetRequests
     {
         public static async Task<User?> Authorization(AuthUser systemUserAuth)
         {
@@ -107,7 +105,6 @@ namespace PracticeControl.WpfClient.API
             return allPractices;
         }//Готово
 
-
         public static async Task<List<PracticeScheduleView>> GetPracticesLeadAsync(int PracticeLeadId)
         {
             HttpClient client = new HttpClient();
@@ -122,67 +119,5 @@ namespace PracticeControl.WpfClient.API
 
             return PracticesLead;
         }
-
-        public static async Task<CreateEmployeeView> CreateEmoloyeesAsync(CreateEmployeeView newEmployee)
-        {
-            HttpClient client = new HttpClient();
-
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
-
-            var json = JsonConvert.SerializeObject(newEmployee);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var response = await client.PostAsync("https://localhost:7063/api/post/createEmployee/", data).ConfigureAwait(false);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                return null;
-            }
-
-            var responseData = await response.Content.ReadAsStringAsync();
-            var createdEmployee = JsonConvert.DeserializeObject<CreateEmployeeView>(responseData);
-
-            return createdEmployee;
-        } //Готово
-
-        public static async Task<EmployeeView> DeleteEmployeeAsync(string login)
-        {
-            HttpClient client = new HttpClient();
-
-            var response = await client.DeleteAsync($"https://localhost:7063/api/delete/deleteEmployee/{login}").ConfigureAwait(false);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                return null;
-            }
-
-            var responseData = await response.Content.ReadAsStringAsync();
-            var employeeView = JsonConvert.DeserializeObject<EmployeeView>(responseData);
-
-            return employeeView;
-
-        }
-        public static async Task<EmployeeView> UpdateEmployeeAsync(CreateEmployeeView updateEmployee)
-        {
-            HttpClient client = new HttpClient();
-
-            var json = JsonConvert.SerializeObject(updateEmployee);
-
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var response = await client.PutAsync($"https://localhost:7063/api/put/updateEmployee/", data).ConfigureAwait(false);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                return null;
-            }
-
-            var responseData = await response.Content.ReadAsStringAsync();
-            var employeeView = JsonConvert.DeserializeObject<EmployeeView>(responseData);
-
-            return employeeView;
-        }
-    
-    
     }
 }

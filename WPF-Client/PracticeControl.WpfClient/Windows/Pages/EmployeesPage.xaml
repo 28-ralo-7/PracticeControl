@@ -5,35 +5,35 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="563" d:DesignWidth="970"
+      d:DesignHeight="800" d:DesignWidth="1227"
       Title="EmployeesPage">
 
-    <Grid Background="White" >
+    <Grid Background="White" Height="800" Width="1227">
 
-        <StackPanel Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Center" Margin="5">
-            
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,5,0,5" Width="1207">
+
             <StackPanel x:Name="adminPanel_Stackpanel" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="addPracticeLead_Button"
                         Click="addPracticeLead_Button_Click"
                         Background="White" Content="Добавить преподавателя"
-                        Margin="0,0,15,0" FontSize="15"
-                        Width="190" Height="45"></Button>
+                        Margin="0,20,15,0" FontSize="18"
+                        Width="232" Height="45"></Button>
             </StackPanel>
-            
+
             <DataGrid x:Name="dataGridEmployees" ScrollViewer.VerticalScrollBarVisibility="Visible"
                       IsReadOnly="True" HorizontalAlignment="Center" CanUserResizeColumns="False"
-                      Margin="10,5,15,10"
-                      AutoGenerateColumns="False" Width="940" MaxHeight="500">
-                
+                      Margin="10,20,15,10"
+                      AutoGenerateColumns="False" Width="1068" MaxHeight="620" Height="620">
+
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem x:Name="edit_Button" Click="edit_Button_Click" Header="Изменить"/>
                         <MenuItem x:Name="delete_Button" Click="delete_Button_Click" Header="Удалить"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
-                
+
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" MinWidth="100" MaxWidth="500" Header="Преподаватели" Binding="{Binding EmployeeName}">
+                    <DataGridTextColumn Width="500" MinWidth="100" MaxWidth="500" Header="Преподаватели" Binding="{Binding EmployeeName}">
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="TextBlock.Margin" Value="2"></Setter>
@@ -56,7 +56,7 @@
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
 
-                    <DataGridTextColumn Width="*" MaxWidth="250" Header="Логин" Binding="{Binding Login}">
+                    <DataGridTextColumn Width="300" Header="Логин" Binding="{Binding Login}">
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="TextBlock.Margin" Value="2"></Setter>
@@ -78,8 +78,8 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
-                    
-                    <DataGridTextColumn Width="*" MinWidth="100" MaxWidth="200" Header="Роль" Binding="{Binding IsAdmin}">
+
+                    <DataGridTextColumn Width="*" Header="Роль" Binding="{Binding IsAdmin}">
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="TextBlock.Margin" Value="2"></Setter>
@@ -101,7 +101,7 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
-                    
+
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

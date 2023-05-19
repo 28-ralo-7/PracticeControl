@@ -1,6 +1,7 @@
 ﻿using PracticeControl.WpfClient.API;
 using PracticeControl.WpfClient.Model;
 using PracticeControl.WpfClient.Model.View;
+using PracticeControl.WpfClient.Windows.DialogWindows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,9 +32,18 @@ namespace PracticeControl.WpfClient.Windows.Pages
         }
 
         private async void GroupsData()
-        {//вилка на админа
+        {
 
-            var allGroups = await Requests.GetGroupsAsync();
+            if (User.IsAdmin)
+            { 
+                stackPanelFuncAdminGroup.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                stackPanelFuncAdminGroup.Visibility = Visibility.Hidden;
+            }
+
+            var allGroups = await GetRequests.GetGroupsAsync();
 
             if (allGroups is null)
             {
@@ -41,14 +51,39 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 return;
             }
 
+
+            var Groups = new List<Group>();
+
+            foreach (var item in allGroups)
+            {
+                var group = new Group
+                {
+                    GroupView = item,
+                    CountStudents = item.StudentsView.Count,
+                };
+
+                Groups.Add(group);
+            }
+
+
             dataGridGroups.ItemsSource = null;
-            dataGridGroups.ItemsSource = allGroups;
+            dataGridGroups.ItemsSource = Groups;
         }
 
         private void StudentsData(GroupView group)
-        {//вилка на админа
+        {
 
-            tbGroupName.Text = group.GroupName;
+            if (User.IsAdmin)
+            {
+                columnStudentLogin.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                columnStudentLogin.Visibility = Visibility.Collapsed;
+                columnStudentName.Width = new DataGridLength(1040);
+            }
+
+            textBoxGroupName.Text = group.GroupName;
 
             var Students = new List<Student>();
 
@@ -56,7 +91,8 @@ namespace PracticeControl.WpfClient.Windows.Pages
             {
                 var student = new Student
                 {
-                    StudentName = $"{item.LastName} {item.FirstName} {item.MiddleName}"
+                    StudentName = $"{item.LastName} {item.FirstName} {item.MiddleName}",
+                    Login = item.Login
                 };
 
                 Students.Add(student);
@@ -71,9 +107,9 @@ namespace PracticeControl.WpfClient.Windows.Pages
             gridGroup.Visibility = Visibility.Hidden;
             gridStudents.Visibility = Visibility.Visible;
 
-            var selectedGroup = (GroupView)dataGridGroups.SelectedItem;
+            var selectedGroup = (Group)dataGridGroups.SelectedItem;
 
-            StudentsData(selectedGroup);
+            StudentsData(selectedGroup.GroupView);
         }
 
         private void bttnBackGroup_Click(object sender, RoutedEventArgs e)
@@ -83,11 +119,27 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             GroupsData();
         }
+
+        private void buttonCreateNewGroup_Click(object sender, RoutedEventArgs e)
+        {
+            GroupModalWindow createGroup = new GroupModalWindow();
+            createGroup.ShowDialog();
+
+            GroupsData();
+        }
+    }
+
+
+    class Group
+    {
+        public GroupView GroupView { get; set; }
+        public int CountStudents { get; set; }
     }
 
     class Student
     {
         public string StudentName { get; set; }
+        public string Login { get; set; }
     }
     
 }

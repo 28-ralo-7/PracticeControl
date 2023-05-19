@@ -20,7 +20,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
         private async void EmployeesData()
         {
-            employees = await Requests.GetAllEmployeesAsync();
+            employees = await GetRequests.GetAllEmployeesAsync();
 
             if (employees is null)
             {
@@ -73,7 +73,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             if (result == MessageBoxResult.Yes)
             {
-                var response = await Requests.DeleteEmployeeAsync(employee.Login); 
+                var response = await PostRequests.DeleteEmployeeAsync(employee.Login); 
 
                 if (response is not null)
                 {
