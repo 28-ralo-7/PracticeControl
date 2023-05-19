@@ -52,11 +52,11 @@ namespace PracticeControl.WpfClient.Windows.Pages
             }
 
 
-            var Groups = new List<Group>();
+            var Groups = new List<GroupOut>();
 
             foreach (var item in allGroups)
             {
-                var group = new Group
+                var group = new GroupOut
                 {
                     GroupView = item,
                     CountStudents = item.StudentsView.Count,
@@ -85,11 +85,11 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             textBoxGroupName.Text = group.GroupName;
 
-            var Students = new List<Student>();
+            var Students = new List<StudentOut>();
 
             foreach (var item in group.StudentsView)
             {
-                var student = new Student
+                var student = new StudentOut
                 {
                     StudentName = $"{item.LastName} {item.FirstName} {item.MiddleName}",
                     Login = item.Login
@@ -107,7 +107,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             gridGroup.Visibility = Visibility.Hidden;
             gridStudents.Visibility = Visibility.Visible;
 
-            var selectedGroup = (Group)dataGridGroups.SelectedItem;
+            var selectedGroup = (GroupOut)dataGridGroups.SelectedItem;
 
             StudentsData(selectedGroup.GroupView);
         }
@@ -122,7 +122,9 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
         private void buttonCreateNewGroup_Click(object sender, RoutedEventArgs e)
         {
-            GroupModalWindow createGroup = new GroupModalWindow();
+            var groups = (List<GroupOut>)dataGridGroups.ItemsSource;
+
+            GroupModalWindow createGroup = new GroupModalWindow(groups);
             createGroup.ShowDialog();
 
             GroupsData();
@@ -130,13 +132,13 @@ namespace PracticeControl.WpfClient.Windows.Pages
     }
 
 
-    class Group
+    public class GroupOut
     {
         public GroupView GroupView { get; set; }
         public int CountStudents { get; set; }
     }
 
-    class Student
+    public class StudentOut
     {
         public string StudentName { get; set; }
         public string Login { get; set; }

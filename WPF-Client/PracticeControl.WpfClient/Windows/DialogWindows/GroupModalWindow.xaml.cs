@@ -2,7 +2,9 @@
 using Microsoft.Win32;
 using PracticeControl.WpfClient.API;
 using PracticeControl.WpfClient.Helpers;
+using PracticeControl.WpfClient.Model.View;
 using PracticeControl.WpfClient.Model.ViewCreate;
+using PracticeControl.WpfClient.Windows.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +23,13 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 {
     public partial class GroupModalWindow : Window
     {
-        public GroupModalWindow()
+
+        private List<GroupOut> Groups { get; set; }
+        private List<CreateStudentView> Students { get; set; }
+        public GroupModalWindow(List<GroupOut> Groups)
         {
+            this.Groups = Groups;
+
             InitializeComponent();
         }
 
@@ -30,27 +37,31 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
         {
             var newGroup = new CreateGroupView();
 
-            var students = (List<CreateStudentView>)dataGridStudents.ItemsSource;
-
             if (string.IsNullOrWhiteSpace(textBoxGroupName.Text))
             {
                 MessageBox.Show("Введите название группы");
                 return;
             }
 
-            if (students.Count == 0)
+            if (Groups.Any(x => x.GroupView.GroupName == textBoxGroupName.Text.Trim()))
+            {
+                MessageBox.Show("Группа с таким названием уже существует");
+                return;
+            }
+
+            if (Students.Count == 0)
             {
                 MessageBox.Show("Заполните студентов");
                 return;
             }
 
-            foreach (var item in students)
+            foreach (var item in Students)
             {
                 item.Group = newGroup;
             }
 
             newGroup.GroupName = textBoxGroupName.Text;
-            newGroup.Students = students;
+            newGroup.Students = Students;
 
             try
             {
@@ -82,22 +93,22 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             {
                 var filePath = dialog.FileName;
 
-                var students = ExcelParser.LoadFile(filePath);
+                Students = ExcelParser.LoadFile(filePath);
 
-                if (students != null)
+                if (Students.Count != 0)
                 {
-                    DataGridStudentsData(students);
+                    DataGridStudentsData();
                 }
             }
         }
 
-        private void DataGridStudentsData(List<CreateStudentView> students)
+        private void DataGridStudentsData()
         {
-            var Students = new List<StudentOut>();
+            var StudentsOut = new List<StudentOut>();
 
-            foreach (var item in students)
+            foreach (var item in Students)
             {
-                Students.Add(new StudentOut
+                StudentsOut.Add(new StudentOut
                 {
                     StudentName = item.LastName + " " + item.FirstName + " " + item.LastName,
                     Login = item.Login,
@@ -105,7 +116,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             }
 
             dataGridStudents.ItemsSource = null;
-            dataGridStudents.ItemsSource = Students;
+            dataGridStudents.ItemsSource = StudentsOut;
         }
     }
 
