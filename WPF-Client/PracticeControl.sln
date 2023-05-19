@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeControl.WpfClient", "PracticeControl.WpfClient\PracticeControl.WpfClient.csproj", "{BD0F22F7-8F07-4399-9150-2F7590D12DEF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeControl.WebAPI", "..\Server\PracticeControl.WebAPI\PracticeControl.WebAPI.csproj", "{DE97125D-AB50-4B5F-A6FA-F87043570BE5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD0F22F7-8F07-4399-9150-2F7590D12DEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD0F22F7-8F07-4399-9150-2F7590D12DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD0F22F7-8F07-4399-9150-2F7590D12DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD0F22F7-8F07-4399-9150-2F7590D12DEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE97125D-AB50-4B5F-A6FA-F87043570BE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE97125D-AB50-4B5F-A6FA-F87043570BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE97125D-AB50-4B5F-A6FA-F87043570BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE97125D-AB50-4B5F-A6FA-F87043570BE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E79C9176-6C0E-46BC-A657-77B8BEEACCF3}
+	EndGlobalSection
+EndGlobal

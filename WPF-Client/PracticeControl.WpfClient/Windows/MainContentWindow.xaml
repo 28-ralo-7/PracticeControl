@@ -1,0 +1,24 @@
+﻿<Window x:Class="PracticeControl.WpfClient.Windows.MainContentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows"
+        mc:Ignorable="d"
+        Title="ПрактикКонтроль" Height="800" Width="1400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+    <Grid>
+        <TabControl TabStripPlacement="Left">
+            <TabItem x:Name="tbItemPractices" Header="Практики" Width="150" Padding="10" FontSize="16">
+                <Frame x:Name="framePractices" Width="970" Height="563"/>
+            </TabItem>
+
+            <TabItem x:Name="tbItemGroups" Header="Группы" Width="150" Padding="10" FontSize="16">
+                <Frame x:Name="frameGroups" Width="970" Height="563"/>
+            </TabItem>
+
+            <TabItem x:Name="tbItemEmployees" Header="Преподаватели" Width="150" Padding="10" FontSize="16">
+                <Frame x:Name="frameEmployees" Width="970" Height="563"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
