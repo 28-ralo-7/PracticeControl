@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PracticeControl.WebAPI.Interfaces.IServices;
 using PracticeControl.WebAPI.Views.blanksCreate;
+using PracticeControl.WebAPI.Views.blanksUpdate;
 
 namespace PracticeControl.WebAPI.Controllers
 {
@@ -14,11 +15,11 @@ namespace PracticeControl.WebAPI.Controllers
             _putService = putService;
         }
         [HttpPut("updateEmployee")]
-        public async Task<IActionResult> UpdateEmployee([FromBody] CreateEmployeeView employee)
+        public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployeeView employee)
         {
             var response = _putService.UpdateEmployee(employee);
 
-            return Ok(response);
+            return Ok(response.Result);
         }
     }
 }

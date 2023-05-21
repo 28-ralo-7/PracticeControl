@@ -37,43 +37,8 @@ namespace PracticeControl.WpfClient.API
 
             return createdEmployee;
         } //Готово
-        public static async Task<EmployeeView> DeleteEmployeeAsync(string login)
-        {
-            HttpClient client = new HttpClient();
 
-            var response = await client.DeleteAsync($"https://localhost:7063/api/delete/deleteEmployee/{login}").ConfigureAwait(false);
 
-            if (!response.IsSuccessStatusCode)
-            {
-                return null;
-            }
-
-            var responseData = await response.Content.ReadAsStringAsync();
-            var employeeView = JsonConvert.DeserializeObject<EmployeeView>(responseData);
-
-            return employeeView;
-
-        }
-        public static async Task<EmployeeView> UpdateEmployeeAsync(CreateEmployeeView updateEmployee)
-        {
-            HttpClient client = new HttpClient();
-
-            var json = JsonConvert.SerializeObject(updateEmployee);
-
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var response = await client.PutAsync($"https://localhost:7063/api/put/updateEmployee/", data).ConfigureAwait(false);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                return null;
-            }
-
-            var responseData = await response.Content.ReadAsStringAsync();
-            var employeeView = JsonConvert.DeserializeObject<EmployeeView>(responseData);
-
-            return employeeView;
-        }
         #endregion
 
         public static async Task<CreateGroupView?> CreateGroupAsync(CreateGroupView newGroup)

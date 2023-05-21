@@ -43,6 +43,9 @@ namespace PracticeControl.WebAPI
             builder.Services.AddTransient<IDeleteService, DeleteService>();
             builder.Services.AddTransient<IDeleteRepository, DeleteRepository>();
 
+            builder.Services.AddTransient<IPutService, PutService>();
+            builder.Services.AddTransient<IPutRepository, PutRepository>();
+
             builder.Services.AddTransient<ProductionPracticeControlContext>();
 
            builder.Services.AddAuthentication().AddJwtBearer(options =>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows.DialogWindows"
         mc:Ignorable="d"
-        Title="Добавление группы" Height="600" Width="565">
+        Title="Добавление группы" Height="600" Width="565" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" >
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="30,20,30,0" Width="444">

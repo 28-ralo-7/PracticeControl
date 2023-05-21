@@ -1,6 +1,7 @@
 ﻿using PracticeControl.WpfClient.API;
 using PracticeControl.WpfClient.Model.View;
 using PracticeControl.WpfClient.Model.ViewCreate;
+using PracticeControl.WpfClient.Model.ViewUpdate;
 using PracticeControl.WpfClient.Windows.Pages;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
     public partial class EmployeeModalWindow : Window
     {
         private readonly List<EmployeeView>? employeeViews;
+        private readonly EmployeeView? employee;
         public EmployeeModalWindow(List<EmployeeView>? employeeViews)
         {
             InitializeComponent();
@@ -39,7 +41,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             title_Label.Content = "Изменение пользователя";
             this.employeeViews = employeeViews;
 
-            EmployeeView? employee = employeeViews.FirstOrDefault(employee => employee.Login == employeeForm.Login);
+            employee = employeeViews.FirstOrDefault(employee => employee.Login == employeeForm.Login);
 
             if (employee != null)
             {
@@ -113,7 +115,13 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
         private async void edit_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (employeeViews.Count(employee => employee.Login == login_TextBox.Text)>1)
+            var count = employeeViews
+                .Where(employeeView => 
+                employeeView.Login.ToLower() == login_TextBox.Text.ToLower() && 
+                employeeView.Login.ToLower() != employee.Login.ToLower())
+                .Count();
+
+            if (count > 0)
             {
                 MessageBox.Show("Этот логин занят");
                 return;
@@ -121,27 +129,27 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
             if (string.IsNullOrWhiteSpace(lastname_TextBox.Text) ||
                 string.IsNullOrWhiteSpace(firstname_TextBox.Text) ||
-                string.IsNullOrWhiteSpace(login_TextBox.Text) ||
-                string.IsNullOrWhiteSpace(password_TextBox.Text)
+                string.IsNullOrWhiteSpace(login_TextBox.Text) 
                 )
             {
                 MessageBox.Show("Заполните все поля");
                 return;
             }
 
-            CreateEmployeeView employeeView = new CreateEmployeeView
+            UpdateEmployeeView employeeView = new UpdateEmployeeView
             {
                 LastName = lastname_TextBox.Text,
                 FirstName = firstname_TextBox.Text,
                 MiddleName = middlename_TextBox.Text,
                 Login = login_TextBox.Text,
                 Password = password_TextBox.Text,
-                IsAdmin = (bool)isAdmin_CheckBox.IsChecked
+                IsAdmin = (bool)isAdmin_CheckBox.IsChecked,
+                LoginForSearch = employee.Login
             };
 
             try
             {
-                var response = await PostRequests.UpdateEmployeeAsync(employeeView);
+                var response = await UpdateRequests.UpdateEmployeeAsync(employeeView);
 
                 if (response is not null)
                 {

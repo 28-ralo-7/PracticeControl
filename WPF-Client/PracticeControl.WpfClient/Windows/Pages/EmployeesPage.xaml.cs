@@ -73,7 +73,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             if (result == MessageBoxResult.Yes)
             {
-                var response = await PostRequests.DeleteEmployeeAsync(employee.Login); 
+                var response = await DeleteRequests.DeleteEmployeeAsync(employee.Login); 
 
                 if (response is not null)
                 {

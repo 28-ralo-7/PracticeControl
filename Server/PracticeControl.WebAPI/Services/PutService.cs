@@ -3,7 +3,8 @@ using PracticeControl.WebAPI.Helpers;
 using PracticeControl.WebAPI.Interfaces.IRepositories;
 using PracticeControl.WebAPI.Interfaces.IServices;
 using PracticeControl.WebAPI.Repositories;
-using PracticeControl.WebAPI.Views.blanksCreate;
+using PracticeControl.WebAPI.Views.blanks;
+using PracticeControl.WebAPI.Views.blanksUpdate;
 using static PracticeControl.WebAPI.Converters.EmployeeConverter;
 
 namespace PracticeControl.WebAPI.Services
@@ -16,7 +17,7 @@ namespace PracticeControl.WebAPI.Services
             _putRepository = putRepository;
         }
         //Обновление сотрудника
-        public async Task<CreateEmployeeView> UpdateEmployee(CreateEmployeeView updateEmployee)
+        public async Task<EmployeeView> UpdateEmployee(UpdateEmployeeView updateEmployee)
         {
             if (updateEmployee is not null)
             {
@@ -31,8 +32,8 @@ namespace PracticeControl.WebAPI.Services
                     employee.Passwordsalt = salt;
                 }
 
-                CreateEmployeeView response = ConvertToCreateEmployeeView(
-                    await _putRepository.UpdateEmployee(employee));
+                EmployeeView response = ConvertToEmployeeView(
+                    await _putRepository.UpdateEmployee(employee, updateEmployee.LoginForSearch));
 
                 return response;
             }

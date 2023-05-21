@@ -2,6 +2,7 @@
 using PracticeControl.WebAPI.Views;
 using PracticeControl.WebAPI.Views.blanks;
 using PracticeControl.WebAPI.Views.blanksCreate;
+using PracticeControl.WebAPI.Views.blanksUpdate;
 
 namespace PracticeControl.WebAPI.Converters
 {
@@ -204,6 +205,20 @@ namespace PracticeControl.WebAPI.Converters
             }
 
             return employeeViews;
+        }
+        //Из представления для обновления в бд модель
+        public static Employee ConvertToEmployee(UpdateEmployeeView updateEmployee)
+        {
+            var employee = new Employee
+            {
+                Lastname = updateEmployee.LastName,
+                Firstname = updateEmployee.FirstName,
+                Middlename = updateEmployee.MiddleName,
+                Login = updateEmployee.Login,
+                IsAdmin = updateEmployee.IsAdmin
+            };
+
+            return employee;
         }
     }
 }

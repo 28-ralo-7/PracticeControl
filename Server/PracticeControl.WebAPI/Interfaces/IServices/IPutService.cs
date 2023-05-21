@@ -1,9 +1,10 @@
-﻿using PracticeControl.WebAPI.Views.blanksCreate;
+﻿using PracticeControl.WebAPI.Views.blanks;
+using PracticeControl.WebAPI.Views.blanksUpdate;
 
 namespace PracticeControl.WebAPI.Interfaces.IServices
 {
     public interface IPutService
     {
-        Task<CreateEmployeeView> UpdateEmployee(CreateEmployeeView employee);
+        Task<EmployeeView> UpdateEmployee(UpdateEmployeeView employee);
     }
 }
