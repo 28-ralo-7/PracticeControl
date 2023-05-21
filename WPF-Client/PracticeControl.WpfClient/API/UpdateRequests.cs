@@ -33,5 +33,28 @@ namespace PracticeControl.WpfClient.API
 
             return employeeView;
         }
+
+
+        public static async Task<StudentView> UpdateStudentAsync(UpdateStudentView updateEmployee)
+        {
+            HttpClient client = new HttpClient();
+
+            var json = JsonConvert.SerializeObject(updateEmployee);
+
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"https://localhost:7063/api/put/updateStudent/", data).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var responseData = await response.Content.ReadAsStringAsync();
+            var studentView = JsonConvert.DeserializeObject<StudentView>(responseData);
+
+            return studentView;
+        }
+
     }
 }

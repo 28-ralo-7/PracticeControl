@@ -1,6 +1,8 @@
 ﻿using PracticeControl.WpfClient.API;
+using PracticeControl.WpfClient.Helpers;
 using PracticeControl.WpfClient.Model;
 using PracticeControl.WpfClient.Model.View;
+using PracticeControl.WpfClient.Model.ViewUpdate;
 using PracticeControl.WpfClient.Windows.DialogWindows;
 using System;
 using System.Collections.Generic;
@@ -22,6 +24,9 @@ namespace PracticeControl.WpfClient.Windows.Pages
     public partial class GroupsPage : Page
     {
         private EmployeeView User { get; set; }
+
+        private GroupOut SelectedGroup { get; set; }
+ 
         public GroupsPage(EmployeeView User)
         {
             this.User = User;
@@ -70,9 +75,8 @@ namespace PracticeControl.WpfClient.Windows.Pages
             dataGridGroups.ItemsSource = Groups;
         }
 
-        private void StudentsData(GroupView group)
+        private async void StudentsData(GroupView group)
         {
-
             if (User.IsAdmin)
             {
                 columnStudentLogin.Visibility = Visibility.Visible;
@@ -84,6 +88,13 @@ namespace PracticeControl.WpfClient.Windows.Pages
             }
 
             textBoxGroupName.Text = group.GroupName;
+
+            //var studentsGroup = await GetRequests.GetStudentsGroupAsync(group.GroupName);
+
+            //if (studentsGroup == null)
+            //{
+            //    return;
+            //}
 
             var Students = new List<StudentOut>();
 
@@ -107,9 +118,9 @@ namespace PracticeControl.WpfClient.Windows.Pages
             gridGroup.Visibility = Visibility.Hidden;
             gridStudents.Visibility = Visibility.Visible;
 
-            var selectedGroup = (GroupOut)dataGridGroups.SelectedItem;
+            SelectedGroup = (GroupOut)dataGridGroups.SelectedItem;
 
-            StudentsData(selectedGroup.GroupView);
+            StudentsData(SelectedGroup.GroupView);
         }
 
         private void bttnBackGroup_Click(object sender, RoutedEventArgs e)
@@ -129,19 +140,52 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             GroupsData();
         }
+
+        private async void editStudent_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var studentOut = (StudentOut)dataGridStudents.SelectedItem;
+
+            string lastName = studentOut.StudentName.Split(' ')[0];
+            string firstName = studentOut.StudentName.Split(' ')[1];
+            string middleName = studentOut.StudentName.Split(' ')[2];
+
+            var studentEdit = SelectedGroup.GroupView.StudentsView.First(x => x.LastName == lastName
+            && x.FirstName == firstName
+            && x.MiddleName == middleName
+            && x.Login == studentOut.Login);
+
+            var updateStudent = new UpdateStudentView();
+
+            StudentEditModalWindow studentEditWindow = new StudentEditModalWindow(studentOut);
+            studentEditWindow.ShowDialog();
+
+            if (studentEditWindow.DialogResult.HasValue && studentEditWindow.DialogResult.Value)
+            {
+                updateStudent.LoginForSearch = studentEdit.Login;
+                updateStudent.LastName = studentEditWindow.textBoxLastName.Text;
+                updateStudent.FirstName = studentEditWindow.textBoxFirstName.Text;
+                updateStudent.MiddleName = studentEditWindow.textBoxMiddleName.Text;
+                updateStudent.Login = studentEditWindow.textBoxLogin.Text;
+                updateStudent.GroupName = SelectedGroup.GroupView.GroupName;
+
+                //var response = await UpdateRequests.UpdateStudentAsync(updateStudent);
+
+                //if (response == null)
+                //{
+                //    MessageBox.Show("Изменение не удалось");
+                //    return;
+                //}
+
+                MessageBox.Show("Изменение прошло успешно");
+            }
+
+            StudentsData(SelectedGroup.GroupView);
+        }
+
+        private void deleteStudent_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
-
-    public class GroupOut
-    {
-        public GroupView GroupView { get; set; }
-        public int CountStudents { get; set; }
-    }
-
-    public class StudentOut
-    {
-        public string StudentName { get; set; }
-        public string Login { get; set; }
-    }
-    
 }

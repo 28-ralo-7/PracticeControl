@@ -65,6 +65,30 @@ namespace PracticeControl.WpfClient.API
             return allGroups;
         }//Готово
 
+        public static async Task<List<StudentView>?> GetStudentsGroupAsync(string groupName)
+        {
+            HttpClient client = new HttpClient();
+
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
+
+            string json = JsonConvert.SerializeObject(groupName);
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+
+            var response = await client.PostAsync("https://localhost:7063/api/get/getStudentsGroup/", content).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var studentGroup = JsonConvert.DeserializeObject<List<StudentView>>(data);
+
+            return studentGroup;
+        }//ДОБАВИТЬ
+
         public static async Task<List<EmployeeView>?> GetAllEmployeesAsync()
         {
             HttpClient client = new HttpClient();
@@ -84,6 +108,24 @@ namespace PracticeControl.WpfClient.API
             return allEmployees;
         }//Готово
 
+        public static async Task<List<StudentView>?> GetAllStudentsAsync()
+        {
+            HttpClient client = new HttpClient();
+
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
+
+            var response = await client.GetAsync("https://localhost:7063/api/get/getAllStudents/").ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var allStudents = JsonConvert.DeserializeObject<List<StudentView>>(data);
+
+            return allStudents;
+        }//ДОБАВИТЬ
 
         public static async Task<List<PracticeScheduleView>?> GetAllPracticesAsync()
         {

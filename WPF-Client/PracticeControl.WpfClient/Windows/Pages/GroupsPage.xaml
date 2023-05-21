@@ -27,6 +27,14 @@
                           IsReadOnly="True" HorizontalAlignment="Center" CanUserResizeColumns="False"
                           Margin="10,5,15,10"  MaxHeight="405" ItemsSource="{Binding Students}"
                           AutoGenerateColumns="False" Width="1072" Height="405">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="editStudent_Button" Click="editStudent_Button_Click" Header="Изменить"/>
+                            <MenuItem x:Name="deleteStudent_Button" Click="deleteStudent_Button_Click" Header="Удалить"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+
+
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="650" x:Name="columnStudentName" Header="Студенты" Binding="{Binding StudentName}">
                             <DataGridTextColumn.HeaderStyle>

@@ -1,0 +1,36 @@
+﻿<Window x:Class="PracticeControl.WpfClient.Windows.DialogWindows.StudentEditModalWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows.DialogWindows"
+        mc:Ignorable="d"
+        Title="StudentEditModalWindow" Height="465" Width="405" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="38*"></ColumnDefinition>
+            <ColumnDefinition Width="43*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Фамилия" Margin="56,30,56,30" FontSize="18" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Имя" Margin="75,30,76,30" FontSize="18" />
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Отчество" Margin="56,30,56,30" FontSize="18" />
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Логин" Margin="66,30,66,30" FontSize="18" />
+
+
+        <TextBox x:Name="textBoxLastName" Grid.Row="0" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
+        <TextBox x:Name="textBoxFirstName" Grid.Row="1" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
+        <TextBox x:Name="textBoxMiddleName" Grid.Row="2" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
+        <TextBox x:Name="textBoxLogin" Grid.Row="3" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
+
+        <Button x:Name="buttonEditStudent" Click="buttonEditStudent_Click" Content="Изменить студента" FontSize="17"  Grid.ColumnSpan="2" Grid.Row="3" Height="45" Width="220" Margin="92,90,93,45" Grid.RowSpan="2"/>
+    </Grid>
+</Window>

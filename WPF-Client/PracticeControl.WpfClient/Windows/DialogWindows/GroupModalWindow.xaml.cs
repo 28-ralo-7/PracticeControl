@@ -110,7 +110,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             {
                 StudentsOut.Add(new StudentOut
                 {
-                    StudentName = item.LastName + " " + item.FirstName + " " + item.LastName,
+                    StudentName = item.LastName + " " + item.FirstName + " " + item.MiddleName,
                     Login = item.Login,
                 });
             }
@@ -118,11 +118,40 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             dataGridStudents.ItemsSource = null;
             dataGridStudents.ItemsSource = StudentsOut;
         }
-    }
 
-    class StudentOut
-    {
-        public string StudentName { get; set; }
-        public string Login { get; set; }
+        private void editStudent_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var studentOut = (StudentOut)dataGridStudents.SelectedItem;
+
+            string lastName = studentOut.StudentName.Split(' ')[0];
+            string firstName = studentOut.StudentName.Split(' ')[1];
+            string middleName = studentOut.StudentName.Split(' ')[2];
+
+            var studentEdit = Students.First(x => x.LastName == lastName
+            && x.FirstName == firstName
+            && x.MiddleName == middleName
+            && x.Login == studentOut.Login);
+
+
+            StudentEditModalWindow studentEditWindow = new StudentEditModalWindow(studentOut);
+            studentEditWindow.ShowDialog();
+
+            if (studentEditWindow.DialogResult.HasValue && studentEditWindow.DialogResult.Value)
+            {
+                studentEdit.LastName = studentEditWindow.textBoxLastName.Text;
+                studentEdit.FirstName = studentEditWindow.textBoxFirstName.Text;
+                studentEdit.MiddleName = studentEditWindow.textBoxMiddleName.Text;
+                studentEdit.Login = studentEditWindow.textBoxLogin.Text;
+
+                MessageBox.Show("Изменения прошли успешно");
+            }
+
+            DataGridStudentsData();
+        }
+
+        private void deleteStudent_Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
