@@ -20,9 +20,9 @@ namespace PracticeControl.WebAPI.Controllers
 
         [HttpPost]
         [Route("authorization")]
-        public IActionResult Login([FromBody] AuthRequest parameters)
+        public async Task<IActionResult> Login([FromBody] AuthRequest parameters)
         {
-            AuthResponse response = _authService.Authenticate(parameters.Login, parameters.PasswordString);
+            AuthResponse response = await _authService.Authenticate(parameters.Login, parameters.PasswordString);
 
             if (response is not null)
             {

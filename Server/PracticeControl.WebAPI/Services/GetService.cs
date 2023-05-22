@@ -6,6 +6,7 @@ using PracticeControl.WebAPI.Views.blanks;
 using static PracticeControl.WebAPI.Converters.AttendanceConverter;
 using static PracticeControl.WebAPI.Converters.PracticeScheduleConverter;
 using static PracticeControl.WebAPI.Converters.EmployeeConverter;
+using static PracticeControl.WebAPI.Converters.StudentConverter;
 using static PracticeControl.WebAPI.Converters.GroupConverter;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -24,9 +25,9 @@ namespace PracticeControl.WebAPI.Services
         }
 
         //Возврат списка групп
-        public List<GroupView> GetGroupViews()
+        public async Task<List<GroupView>> GetGroupViews()
         {
-            List<Database.Group>? groups = _getRepository.GetGroups();
+            List<Database.Group>? groups = await _getRepository.GetGroups();
 
             List<GroupView>? groupViews = ConvertToListGroupView(groups);
 
@@ -34,30 +35,58 @@ namespace PracticeControl.WebAPI.Services
         }
 
         //Возврат сотрудника при авторизации
-        public EmployeeView? GetEmployee(int id)
+        public async Task<EmployeeView> GetEmployee(int id)
         {
-            var employee = _getRepository.GetEmployee(id);
+            var employee = await _getRepository.GetEmployee(id);
             var employeeView = ConvertToEmployeeView(employee);
             return employeeView;
         }
 
         //Возврат списка сотрудников для админа
-        public List<EmployeeView> GetEmployeeViewList()
+        public async Task<List<EmployeeView>> GetEmployeeViewList()
         {
-            List<Employee> employees = _getRepository.GetEmployeeList();
+            List<Employee> employees = await _getRepository.GetEmployeeList();
             List<EmployeeView> employeeViews = ConvertToListEmployeeView(employees);
 
             return employeeViews;
         }
 
         //Возврат списка практик для админа
-        public List<PracticeScheduleView> GetPracticeScheduleViewList()
+        public async Task<List<PracticeScheduleView>> GetPracticeScheduleViewList()
         {
-            List<Practiceschedule> practiceSchedules = _getRepository.GetPracticeScheduleList();
+            List<Practiceschedule> practiceSchedules = await _getRepository.GetPracticeScheduleList();
 
-            List<PracticeScheduleView> practiceScheduleViews = ConvertToPracticeScheduleView(practiceSchedules, _getRepository);
+            List<PracticeScheduleView> practiceScheduleViews = await ConvertToPracticeScheduleView(practiceSchedules, _getRepository);
 
             return practiceScheduleViews;
+        }
+
+        public async Task<List<StudentView>> GetStudentGroup(string groupName)
+        {
+
+            List<Student> studentsGroup = await _getRepository.GetStudentsGroup(groupName);
+            List<StudentView> studentsGroupViews = new List<StudentView>();
+
+            foreach (var student in studentsGroup)
+            {
+                studentsGroupViews.Add(ConvertToView(student));
+            }
+
+            return studentsGroupViews;
+
+        }
+
+        public async Task<List<StudentView>> GetStudents()
+        {
+            List<Student> students = await _getRepository.GetStudents();
+            List<StudentView> studentsGroupViews = new List<StudentView>();
+
+            foreach (var student in students)
+            {
+                studentsGroupViews.Add(ConvertToView(student));
+            }
+
+            return studentsGroupViews;
         }
     }
 }

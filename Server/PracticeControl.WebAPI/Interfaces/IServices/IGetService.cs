@@ -7,9 +7,11 @@ namespace PracticeControl.WebAPI.Interfaces.IServices
 
     public interface IGetService
     {
-        List<GroupView> GetGroupViews();
-        EmployeeView? GetEmployee(int id);
-        List<EmployeeView> GetEmployeeViewList();
-        List<PracticeScheduleView> GetPracticeScheduleViewList();
+        Task<List<GroupView>> GetGroupViews();
+        Task<EmployeeView> GetEmployee(int id);
+        Task<List<EmployeeView>> GetEmployeeViewList();
+        Task<List<PracticeScheduleView>> GetPracticeScheduleViewList();
+        Task<List<StudentView>> GetStudentGroup(string groupName);
+        Task<List<StudentView>> GetStudents();
     }
 }

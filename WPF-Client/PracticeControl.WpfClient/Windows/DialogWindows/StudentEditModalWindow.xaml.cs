@@ -1,5 +1,8 @@
-﻿using PracticeControl.WpfClient.API;
+﻿using DocumentFormat.OpenXml.Office2010.ExcelAc;
+using PracticeControl.WpfClient.API;
 using PracticeControl.WpfClient.Model.View;
+using PracticeControl.WpfClient.Model.ViewUpdate;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
@@ -12,9 +15,17 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
     {
         private StudentOut Student { get; set; }
 
-        public StudentEditModalWindow(StudentOut? student)
+        private List<StudentView> AllStudents { get; set; }
+
+        private bool IsExcelStudent { get; set; } = false;
+
+        public StudentEditModalWindow(StudentOut? student, bool isExcelStudent)
         {
             Student = student;
+
+            IsExcelStudent = isExcelStudent;
+
+            
 
             InitializeComponent();
 
@@ -23,37 +34,72 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
         private void StudentEditData()
         {
-            textBoxLastName.Text = Student.StudentName.Split(' ')[0];
-            textBoxFirstName.Text = Student.StudentName.Split(' ')[1];
-            textBoxMiddleName.Text = Student.StudentName.Split(' ')[2];
-            textBoxLogin.Text = Student.Login;
+            lastName_TextBox.Text = Student.StudentName.Split(' ')[0];
+            firstName_TextBox.Text = Student.StudentName.Split(' ')[1];
+            middleName_TextBox.Text = Student.StudentName.Split(' ')[2];
+            login_TextBox.Text = Student.Login;
         }
 
-        private async void buttonEditStudent_Click(object sender, RoutedEventArgs e)
+        private async void EditStudent_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBoxLastName.Text) ||
-                   string.IsNullOrWhiteSpace(textBoxFirstName.Text) ||
-                   string.IsNullOrWhiteSpace(textBoxMiddleName.Text) ||
-                   string.IsNullOrWhiteSpace(textBoxLogin.Text))
+            if (string.IsNullOrWhiteSpace(lastName_TextBox.Text) ||
+                   string.IsNullOrWhiteSpace(firstName_TextBox.Text) ||
+                   string.IsNullOrWhiteSpace(middleName_TextBox.Text) ||
+                   string.IsNullOrWhiteSpace(login_TextBox.Text))
             {
                 MessageBox.Show("Заполните все поля");
                 return;
             }
 
-            //var allStudents = await GetRequests.GetAllStudentsAsync();
+            AllStudents = await GetRequests.GetAllStudentsAsync();
 
-            //var count = allStudents
-            //  .Where(x => x.Login.ToLower() == textBoxLogin.Text.ToLower())
-            //  .Count();
+            int loginVerification = AllStudents
+                    .Where(employeeView =>
+                    employeeView.Login.ToLower() == login_TextBox.Text.ToLower() &&
+                    employeeView.Login.ToLower() != Student.Login.ToLower())
+                    .Count();
 
-            //if (count > 0)
-            //{
-            //    MessageBox.Show("Данный логин занят");
-            //    return;
-            //}
+            if (loginVerification > 0)
+            {
+                MessageBox.Show("Этот логин занят");
+                return;
+            }
 
-            DialogResult = true;
-            this.Close();
+            if (IsExcelStudent) 
+            {
+                DialogResult = true;
+                this.Close();
+                return;
+            }
+
+            UpdateStudentView studentView = new UpdateStudentView
+            {
+                LastName = lastName_TextBox.Text,
+                FirstName = firstName_TextBox.Text,
+                MiddleName = middleName_TextBox.Text,
+                Login = login_TextBox.Text,
+                Password = password_TextBox.Text,
+                GroupName = Student.Group.GroupName,
+                LoginForSearch = Student.Login
+            };
+            try
+            {
+                var response = await UpdateRequests.UpdateStudentAsync(studentView);
+                if (response is not null)
+                {
+                    MessageBox.Show("Студент сохранен");
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("Не удалось сохранить студента");
+                    return;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка сохранения");
+            }
         }
     }
 }

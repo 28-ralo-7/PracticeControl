@@ -7,7 +7,7 @@ namespace PracticeControl.WebAPI.Converters
     public static class PracticeScheduleConverter
     {
 
-        public static List<PracticeScheduleView> ConvertToPracticeScheduleView(List<Practiceschedule> practiceSchedules, IGetRepository getRepository)
+        public static async Task<List<PracticeScheduleView>> ConvertToPracticeScheduleView(List<Practiceschedule> practiceSchedules, IGetRepository _getRepository)
         {
 
             List<PracticeScheduleView> practiceScheduleViews = new List<PracticeScheduleView>();
@@ -23,7 +23,7 @@ namespace PracticeControl.WebAPI.Converters
                 practiceScheduleView.StartDate = practiceSchedule.Startdate.ToString();
                 practiceScheduleView.EndDate = practiceSchedule.Enddate.ToString();
 
-                Employee? employee = getRepository.GetEmployee((int)practiceSchedule.IdEmployee);
+                Employee? employee = await _getRepository.GetEmployee((int)practiceSchedule.IdEmployee);
 
                 if (employee is not null)
                 {

@@ -21,5 +21,12 @@ namespace PracticeControl.WebAPI.Controllers
 
             return Ok(response.Result);
         }
+        [HttpPut("updateStudent")]
+        public async Task<IActionResult> UpdateStudent([FromBody] UpdateStudentView student)
+        {
+            var response = _putService.UpdateStudent(student);
+
+            return Ok(response.Result);
+        }
     }
 }

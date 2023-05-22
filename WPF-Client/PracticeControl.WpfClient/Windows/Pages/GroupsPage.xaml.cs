@@ -26,16 +26,16 @@ namespace PracticeControl.WpfClient.Windows.Pages
         private EmployeeView User { get; set; }
 
         private GroupOut SelectedGroup { get; set; }
+        private List<GroupView> GroupView { get; set; }
  
         public GroupsPage(EmployeeView User)
         {
             this.User = User;
-
             InitializeComponent();
-
             GroupsData();
         }
 
+        //Вывод групп
         private async void GroupsData()
         {
 
@@ -48,9 +48,9 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 stackPanelFuncAdminGroup.Visibility = Visibility.Hidden;
             }
 
-            var allGroups = await GetRequests.GetGroupsAsync();
+            GroupView = await GetRequests.GetGroupsAsync();
 
-            if (allGroups is null)
+            if (GroupView is null)
             {
                 MessageBox.Show("Групп нет");
                 return;
@@ -59,7 +59,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             var Groups = new List<GroupOut>();
 
-            foreach (var item in allGroups)
+            foreach (var item in GroupView)
             {
                 var group = new GroupOut
                 {
@@ -74,7 +74,27 @@ namespace PracticeControl.WpfClient.Windows.Pages
             dataGridGroups.ItemsSource = null;
             dataGridGroups.ItemsSource = Groups;
         }
+        //Открытие студентов группы
+        private void dataGridGroups_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            gridGroup.Visibility = Visibility.Hidden;
+            gridStudents.Visibility = Visibility.Visible;
 
+            SelectedGroup = (GroupOut)dataGridGroups.SelectedItem;
+
+            StudentsData(SelectedGroup.GroupView);
+        }
+        //Добавление группы
+        private void buttonCreateNewGroup_Click(object sender, RoutedEventArgs e)
+        {
+            var groups = (List<GroupOut>)dataGridGroups.ItemsSource;
+
+            GroupModalWindow createGroup = new GroupModalWindow(groups);
+            createGroup.ShowDialog();
+
+            GroupsData();
+        }
+        //Вывод студентов
         private async void StudentsData(GroupView group)
         {
             if (User.IsAdmin)
@@ -87,42 +107,33 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 columnStudentName.Width = new DataGridLength(1040);
             }
 
+            var studentsGroup = await GetRequests.GetStudentsGroupAsync(group.GroupName);
+
+            if (studentsGroup == null)
+            {
+                return;
+            }
+
             textBoxGroupName.Text = group.GroupName;
 
-            //var studentsGroup = await GetRequests.GetStudentsGroupAsync(group.GroupName);
+            List<StudentOut> studentsList = new List<StudentOut>();
 
-            //if (studentsGroup == null)
-            //{
-            //    return;
-            //}
-
-            var Students = new List<StudentOut>();
-
-            foreach (var item in group.StudentsView)
+            foreach (var item in studentsGroup)
             {
                 var student = new StudentOut
                 {
                     StudentName = $"{item.LastName} {item.FirstName} {item.MiddleName}",
-                    Login = item.Login
+                    Login = item.Login,
+
                 };
 
-                Students.Add(student);
+                studentsList.Add(student);
             }
 
             dataGridStudents.ItemsSource = null;
-            dataGridStudents.ItemsSource = Students.OrderBy(b=>b.StudentName);
+            dataGridStudents.ItemsSource = studentsList.OrderBy(b => b.StudentName);
         }
-
-        private void dataGridGroups_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            gridGroup.Visibility = Visibility.Hidden;
-            gridStudents.Visibility = Visibility.Visible;
-
-            SelectedGroup = (GroupOut)dataGridGroups.SelectedItem;
-
-            StudentsData(SelectedGroup.GroupView);
-        }
-
+        //Возврат к списку групп
         private void bttnBackGroup_Click(object sender, RoutedEventArgs e)
         {
             gridGroup.Visibility = Visibility.Visible;
@@ -130,58 +141,28 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             GroupsData();
         }
-
-        private void buttonCreateNewGroup_Click(object sender, RoutedEventArgs e)
-        {
-            var groups = (List<GroupOut>)dataGridGroups.ItemsSource;
-
-            GroupModalWindow createGroup = new GroupModalWindow(groups);
-            createGroup.ShowDialog();
-
-            GroupsData();
-        }
-
+        //Изменение студента
         private async void editStudent_Button_Click(object sender, RoutedEventArgs e)
         {
             var studentOut = (StudentOut)dataGridStudents.SelectedItem;
 
-            string lastName = studentOut.StudentName.Split(' ')[0];
-            string firstName = studentOut.StudentName.Split(' ')[1];
-            string middleName = studentOut.StudentName.Split(' ')[2];
-
-            var studentEdit = SelectedGroup.GroupView.StudentsView.First(x => x.LastName == lastName
-            && x.FirstName == firstName
-            && x.MiddleName == middleName
-            && x.Login == studentOut.Login);
+            studentOut.Group = GroupView.FirstOrDefault(group => group.GroupName == SelectedGroup.GroupView.GroupName);
 
             var updateStudent = new UpdateStudentView();
 
-            StudentEditModalWindow studentEditWindow = new StudentEditModalWindow(studentOut);
+            StudentEditModalWindow studentEditWindow = new StudentEditModalWindow(studentOut, false);
             studentEditWindow.ShowDialog();
 
             if (studentEditWindow.DialogResult.HasValue && studentEditWindow.DialogResult.Value)
             {
-                updateStudent.LoginForSearch = studentEdit.Login;
-                updateStudent.LastName = studentEditWindow.textBoxLastName.Text;
-                updateStudent.FirstName = studentEditWindow.textBoxFirstName.Text;
-                updateStudent.MiddleName = studentEditWindow.textBoxMiddleName.Text;
-                updateStudent.Login = studentEditWindow.textBoxLogin.Text;
-                updateStudent.GroupName = SelectedGroup.GroupView.GroupName;
 
-                //var response = await UpdateRequests.UpdateStudentAsync(updateStudent);
-
-                //if (response == null)
-                //{
-                //    MessageBox.Show("Изменение не удалось");
-                //    return;
-                //}
 
                 MessageBox.Show("Изменение прошло успешно");
             }
 
             StudentsData(SelectedGroup.GroupView);
         }
-
+        //Удаление студента
         private void deleteStudent_Button_Click(object sender, RoutedEventArgs e)
         {
 

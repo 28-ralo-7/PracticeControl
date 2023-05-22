@@ -16,24 +16,24 @@ namespace PracticeControl.WebAPI.Repositories
         {
             _context = context;
         }
-
-        public List<Group>? GetGroups()
+        //Список групп
+        public async Task<List<Group>> GetGroups()
         {
-            var groups = _context.Groups
+            var groups = await _context.Groups
                 .Where(group => group.Isdeleted == false)
 
                 .Include(g => g.Students
                 .Where(student => student.Isdeleted == false))
 
-                .ToList();
+                .ToListAsync();
 
             return groups;
            
         }
-
-        public Employee? GetEmployee(int id)
+        //Работние по ID лоя авторизации
+        public async Task<Employee> GetEmployee(int id)
         {
-            var practicesEmployee = _context.Employees
+            var practicesEmployee = await _context.Employees
                 .Where(employee => employee.Isdeleted == false)
 
                 .Include(b=>b.Practiceschedules)
@@ -47,15 +47,15 @@ namespace PracticeControl.WebAPI.Repositories
                 .ThenInclude(b => b.Attendances)
                 .ThenInclude(b=>b.IdStudentNavigation)
 
-                .FirstOrDefault(b=>b.Id == id);
+                .FirstOrDefaultAsync(b=>b.Id == id);
 
             return practicesEmployee;
 
         }
-
-        public List<Employee> GetEmployeeList()
+        //Список сотрудников для админа
+        public async Task<List<Employee>> GetEmployeeList()
         {
-            var employees = _context.Employees
+            var employees = await _context.Employees
                 .Where(employee => employee.Isdeleted == false)
 
                 .Include(b => b.Practiceschedules
@@ -76,14 +76,14 @@ namespace PracticeControl.WebAPI.Repositories
                 .Where(attendance => attendance.Isdeleted == false))
                 .ThenInclude(b => b.IdStudentNavigation)
 
-                .ToList();
+                .ToListAsync();
 
             return employees;
         }
-
-        public List<Practiceschedule> GetPracticeScheduleList()
+        //Список практик
+        public async Task<List<Practiceschedule>> GetPracticeScheduleList()
         {
-            var practiceSchedule = _context.Practiceschedules
+            var practiceSchedule = await _context.Practiceschedules
                 .Where(schedule => schedule.Isdeleted == false)
 
                 .Include(ps => ps.IdPracticeNavigation)
@@ -92,9 +92,32 @@ namespace PracticeControl.WebAPI.Repositories
                 .Include(ps => ps.Attendances)
                 .ThenInclude(a => a.IdStudentNavigation)
 
-                .ToList();
+                .ToListAsync();
 
             return practiceSchedule;
+        }
+        //Группа по названию
+        public async Task<Group> GetGroup(string name)
+        {
+            var group = await _context.Groups.FirstOrDefaultAsync(group => group.Name == name);
+
+            return group;
+        }
+        //Список студентов группы
+        public async Task<List<Student>> GetStudentsGroup(string groupName)
+        {
+            var studentsGroup = await _context.Students
+                .Where(student => student.IdGroupNavigation.Name == groupName)
+                .ToListAsync();
+
+            return studentsGroup;
+        }
+
+        public async Task<List<Student>> GetStudents()
+        {
+            var students = await _context.Students.Where(student => student.Isdeleted != true).ToListAsync();
+
+            return students;
         }
     }
 }

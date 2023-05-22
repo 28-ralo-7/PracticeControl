@@ -25,7 +25,7 @@ namespace PracticeControl.WebAPI.Services
             _authRepository = authRepository;
             _getService = getService;
         }
-        public AuthResponse Authenticate(string login, string password)
+        public async Task<AuthResponse> Authenticate(string login, string password)
         {
 
             Employee? employee = _authRepository.GetEmployee(login); 
@@ -37,7 +37,7 @@ namespace PracticeControl.WebAPI.Services
                 if (passwordHash == employee?.Passwordhash)
                 {
                     string token = CreateToken(employee);
-                    EmployeeView? userView = _getService.GetEmployee(Convert.ToInt32(employee.Id));
+                    EmployeeView? userView = await _getService.GetEmployee(Convert.ToInt32(employee.Id));
                     return new AuthResponse(token, userView);
                 }
             }

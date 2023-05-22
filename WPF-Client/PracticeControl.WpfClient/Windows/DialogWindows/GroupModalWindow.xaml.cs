@@ -1,23 +1,11 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using PracticeControl.WpfClient.API;
 using PracticeControl.WpfClient.Helpers;
 using PracticeControl.WpfClient.Model.View;
 using PracticeControl.WpfClient.Model.ViewCreate;
-using PracticeControl.WpfClient.Windows.Pages;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PracticeControl.WpfClient.Windows.DialogWindows
 {
@@ -25,7 +13,10 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
     {
 
         private List<GroupOut> Groups { get; set; }
+        private List<StudentView> studentViews { get; set; }
         private List<CreateStudentView> Students { get; set; }
+
+        private List<StudentView> AllStudents { get; set; }
         public GroupModalWindow(List<GroupOut> Groups)
         {
             this.Groups = Groups;
@@ -33,7 +24,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             InitializeComponent();
         }
 
-        private void buttonCreateNewGroup_Click(object sender, RoutedEventArgs e)
+        private async void buttonCreateNewGroup_Click(object sender, RoutedEventArgs e)
         {
             var newGroup = new CreateGroupView();
 
@@ -54,6 +45,24 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 MessageBox.Show("Заполните студентов");
                 return;
             }
+
+            AllStudents = await GetRequests.GetAllStudentsAsync();
+
+            int loginVerification = AllStudents
+                .Where(employeeView => Students
+                    .Select(x => x.Login.ToLower())
+                    .Contains(employeeView.Login.ToLower()))
+                .Count();
+
+            if (loginVerification > 0)
+            {
+                MessageBox.Show("Этот логин занят");
+                return;
+            }
+
+
+
+
 
             foreach (var item in Students)
             {
@@ -82,7 +91,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             {
                 MessageBox.Show("Ошибка сохранения");
             }
-           
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -102,9 +111,10 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             }
         }
 
-        private void DataGridStudentsData()
+        private async void DataGridStudentsData()
         {
             var StudentsOut = new List<StudentOut>();
+
 
             foreach (var item in Students)
             {
@@ -133,15 +143,15 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             && x.Login == studentOut.Login);
 
 
-            StudentEditModalWindow studentEditWindow = new StudentEditModalWindow(studentOut);
+            StudentEditModalWindow studentEditWindow = new StudentEditModalWindow(studentOut, true);
             studentEditWindow.ShowDialog();
 
             if (studentEditWindow.DialogResult.HasValue && studentEditWindow.DialogResult.Value)
             {
-                studentEdit.LastName = studentEditWindow.textBoxLastName.Text;
-                studentEdit.FirstName = studentEditWindow.textBoxFirstName.Text;
-                studentEdit.MiddleName = studentEditWindow.textBoxMiddleName.Text;
-                studentEdit.Login = studentEditWindow.textBoxLogin.Text;
+                studentEdit.LastName = studentEditWindow.lastName_TextBox.Text;
+                studentEdit.FirstName = studentEditWindow.firstName_TextBox.Text;
+                studentEdit.MiddleName = studentEditWindow.middleName_TextBox.Text;
+                studentEdit.Login = studentEditWindow.login_TextBox.Text;
 
                 MessageBox.Show("Изменения прошли успешно");
             }
@@ -151,7 +161,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
         private void deleteStudent_Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
     }
 }

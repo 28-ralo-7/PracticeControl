@@ -13,6 +13,7 @@ namespace PracticeControl.WpfClient.API
 {
     public class GetRequests
     {
+        //Авторизация
         public static async Task<User?> Authorization(AuthUser systemUserAuth)
         {
             HttpClient client = new HttpClient();
@@ -45,7 +46,7 @@ namespace PracticeControl.WpfClient.API
 
             return user;
         }
-
+        //Список групп
         public static async Task<List<GroupView>?> GetGroupsAsync()
         {
             HttpClient client = new HttpClient();
@@ -64,19 +65,15 @@ namespace PracticeControl.WpfClient.API
 
             return allGroups;
         }//Готово
-
+        //Список студентов группы
         public static async Task<List<StudentView>?> GetStudentsGroupAsync(string groupName)
         {
             HttpClient client = new HttpClient();
 
             //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
 
-            string json = JsonConvert.SerializeObject(groupName);
 
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-
-            var response = await client.PostAsync("https://localhost:7063/api/get/getStudentsGroup/", content).ConfigureAwait(false);
+            var response = await client.GetAsync($"https://localhost:7063/api/get/getStudentGroup/{groupName}").ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -88,7 +85,7 @@ namespace PracticeControl.WpfClient.API
 
             return studentGroup;
         }//ДОБАВИТЬ
-
+        //Все сотрудники
         public static async Task<List<EmployeeView>?> GetAllEmployeesAsync()
         {
             HttpClient client = new HttpClient();
@@ -107,7 +104,7 @@ namespace PracticeControl.WpfClient.API
 
             return allEmployees;
         }//Готово
-
+        //Все студенты
         public static async Task<List<StudentView>?> GetAllStudentsAsync()
         {
             HttpClient client = new HttpClient();
@@ -126,7 +123,7 @@ namespace PracticeControl.WpfClient.API
 
             return allStudents;
         }//ДОБАВИТЬ
-
+        //Все практики
         public static async Task<List<PracticeScheduleView>?> GetAllPracticesAsync()
         {
             HttpClient client = new HttpClient();
@@ -146,7 +143,7 @@ namespace PracticeControl.WpfClient.API
 
             return allPractices;
         }//Готово
-
+        //Все руководители
         public static async Task<List<PracticeScheduleView>> GetPracticesLeadAsync(int PracticeLeadId)
         {
             HttpClient client = new HttpClient();

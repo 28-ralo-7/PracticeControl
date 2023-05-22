@@ -9,7 +9,7 @@ namespace PracticeControl.WpfClient.Model.View
 {
     public class StudentOut
     {
-        public GroupOut Group { get; set; }
+        public GroupView Group { get; set; }
         public string StudentName { get; set; }
         public string Login { get; set; }
     }

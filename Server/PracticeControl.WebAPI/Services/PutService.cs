@@ -6,15 +6,18 @@ using PracticeControl.WebAPI.Repositories;
 using PracticeControl.WebAPI.Views.blanks;
 using PracticeControl.WebAPI.Views.blanksUpdate;
 using static PracticeControl.WebAPI.Converters.EmployeeConverter;
+using static PracticeControl.WebAPI.Converters.StudentConverter;
 
 namespace PracticeControl.WebAPI.Services
 {
     public class PutService : IPutService
     {
         private readonly IPutRepository _putRepository;
-        public PutService(IPutRepository putRepository)
+        private readonly IGetRepository _getRepository;
+        public PutService(IPutRepository putRepository, IGetRepository getRepository)
         {
             _putRepository = putRepository;
+            _getRepository = getRepository;
         }
         //Обновление сотрудника
         public async Task<EmployeeView> UpdateEmployee(UpdateEmployeeView updateEmployee)
@@ -34,6 +37,34 @@ namespace PracticeControl.WebAPI.Services
 
                 EmployeeView response = ConvertToEmployeeView(
                     await _putRepository.UpdateEmployee(employee, updateEmployee.LoginForSearch));
+
+                return response;
+            }
+
+            return null;
+        }
+
+        public async Task<StudentView> UpdateStudent(UpdateStudentView updateStudent)
+        {
+            if(updateStudent is not null)
+            {
+                Student student = ConvertToStudent(updateStudent);
+
+                var group = _getRepository.GetGroup(updateStudent.GroupName).Result as Group;
+
+                student.IdGroup = Convert.ToInt32(group.Id);
+
+                if (!string.IsNullOrWhiteSpace(updateStudent.Password))
+                {
+                    var salt = PasswordHelper.GetSalt();
+                    var passwordHash = PasswordHelper.GetHash(salt, updateStudent.Password);
+
+                    student.Passwordhash = passwordHash;
+                    student.Passwordsalt = salt;
+                }
+
+                StudentView response = ConvertToView(
+                    await _putRepository.UpdateStudent(student, updateStudent.LoginForSearch));
 
                 return response;
             }

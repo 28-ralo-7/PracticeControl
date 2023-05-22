@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows.DialogWindows"
         mc:Ignorable="d"
-        Title="StudentEditModalWindow" Height="465" Width="405" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="StudentEditModalWindow" Height="600" Width="405" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="38*"></ColumnDefinition>
@@ -18,19 +18,24 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Фамилия" Margin="56,30,56,30" FontSize="18" />
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Имя" Margin="75,30,76,30" FontSize="18" />
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Отчество" Margin="56,30,56,30" FontSize="18" />
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Логин" Margin="66,30,66,30" FontSize="18" />
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Фамилия" Width="100" Height="35" FontSize="18" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Имя" Width="100" Height="35" FontSize="18" />
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Отчество" Width="100" Height="35" FontSize="18" />
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Логин" Width="100" Height="35" FontSize="18" />
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Пароль" Width="100" Height="35" FontSize="18" />
 
 
-        <TextBox x:Name="textBoxLastName" Grid.Row="0" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
-        <TextBox x:Name="textBoxFirstName" Grid.Row="1" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
-        <TextBox x:Name="textBoxMiddleName" Grid.Row="2" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
-        <TextBox x:Name="textBoxLogin" Grid.Row="3" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
+        <TextBox x:Name="lastName_TextBox" Grid.Row="0" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
+        <TextBox x:Name="firstName_TextBox" Grid.Row="1" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
+        <TextBox x:Name="middleName_TextBox" Grid.Row="2" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
+        <TextBox x:Name="login_TextBox" Grid.Row="3" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
+        <TextBox x:Name="password_TextBox" Grid.Row="4" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
 
-        <Button x:Name="buttonEditStudent" Click="buttonEditStudent_Click" Content="Изменить студента" FontSize="17"  Grid.ColumnSpan="2" Grid.Row="3" Height="45" Width="220" Margin="92,90,93,45" Grid.RowSpan="2"/>
+        <Button x:Name="editStudent_Button" Click="EditStudent_Button_Click" 
+                Content="Изменить студента" FontSize="17"  Grid.ColumnSpan="2"
+                Grid.Row="5" Height="45" Width="220"/>
     </Grid>
 </Window>
