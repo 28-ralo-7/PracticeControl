@@ -41,7 +41,7 @@ namespace PracticeControl.WpfClient.API
 
         #endregion
 
-        public static async Task<CreateGroupView?> CreateGroupAsync(CreateGroupView newGroup)
+        public static async Task<bool?> CreateGroupAsync(CreateGroupView newGroup)
         {
             HttpClient client = new HttpClient();
 
@@ -50,7 +50,7 @@ namespace PracticeControl.WpfClient.API
             var json = JsonConvert.SerializeObject(newGroup);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("https://localhost:7063/api/post/createGroup/", data).ConfigureAwait(false);
+            var response = await client.PostAsync("https://localhost:7063/api/post/createGroup", data).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -58,7 +58,7 @@ namespace PracticeControl.WpfClient.API
             }
 
             var responseData = await response.Content.ReadAsStringAsync();
-            var createdGroup = JsonConvert.DeserializeObject<CreateGroupView>(responseData);
+            var createdGroup = JsonConvert.DeserializeObject<bool>(responseData);
 
             return createdGroup;
         }

@@ -61,22 +61,14 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             }
 
 
-
-
-
-            foreach (var item in Students)
-            {
-                item.Group = newGroup;
-            }
-
             newGroup.GroupName = textBoxGroupName.Text;
             newGroup.Students = Students;
 
             try
             {
-                var createdGroup = PostRequests.CreateGroupAsync(newGroup);
+                var createdGroup = await PostRequests.CreateGroupAsync(newGroup);
 
-                if (createdGroup is not null)
+                if ((bool)createdGroup)
                 {
                     MessageBox.Show("Группа успешно сохранена");
                     this.Close();
@@ -96,11 +88,13 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+       
             OpenFileDialog dialog = new OpenFileDialog();
 
             if (dialog.ShowDialog() == true)
             {
                 var filePath = dialog.FileName;
+
 
                 Students = ExcelParser.LoadFile(filePath);
 

@@ -6,6 +6,6 @@ namespace PracticeControl.WebAPI.Interfaces.IServices
     public interface IPostService
     {
         CreateEmployeeView CreateEmployee(CreateEmployeeView employeeView);
-        CreateGroupView CreateGroup(CreateGroupView employeeView);
+        bool CreateGroup(CreateGroupView employeeView);
     }
 }

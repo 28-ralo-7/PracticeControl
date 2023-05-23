@@ -5,6 +5,7 @@ using PracticeControl.WebAPI.Interfaces.IServices;
 using PracticeControl.WebAPI.Views.blanks;
 using PracticeControl.WebAPI.Views.blanksCreate;
 using static PracticeControl.WebAPI.Converters.EmployeeConverter;
+using static PracticeControl.WebAPI.Converters.GroupConverter;
 
 
 namespace PracticeControl.WebAPI.Services
@@ -35,24 +36,25 @@ namespace PracticeControl.WebAPI.Services
 
             return null;
         }
+
         //Добавление группы
-        public CreateGroupView CreateGroup(CreateGroupView groupView)
+        public bool CreateGroup(CreateGroupView createGroupView)
         {
-            if (groupView is not null)
+            if (createGroupView is not null)
             {
-                //Group group = ConvertToEmployee(groupView);
+                Group group = ConvertToGroup(createGroupView);
 
-                //var salt = PasswordHelper.GetSalt();
-                //var passwordHash = PasswordHelper.GetHash(salt, employeeView.Password);
+                var groupCreated = _postRepository.CreateGroup(group);
 
-                //employee.Passwordhash = passwordHash;
-                //employee.Passwordsalt = salt;
-                //CreateEmployeeView response = ConvertToCreateEmployeeView(_postRepository.CreateEmployee(employee));
+                if (groupCreated is not null)
+                {
+                    return true;
+                }
 
-                //return response;
+                return false;
             }
 
-            return null;
+            return false;
         }
     }
 }

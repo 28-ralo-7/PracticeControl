@@ -100,9 +100,12 @@ namespace PracticeControl.WpfClient.Windows.Pages
             if (User.IsAdmin)
             {
                 columnStudentLogin.Visibility = Visibility.Visible;
+                contextMenuStudents.Visibility = Visibility.Visible;
+
             }
             else
             {
+                contextMenuStudents.Visibility = Visibility.Collapsed;
                 columnStudentLogin.Visibility = Visibility.Collapsed;
                 columnStudentName.Width = new DataGridLength(1040);
             }
@@ -144,23 +147,30 @@ namespace PracticeControl.WpfClient.Windows.Pages
         //Изменение студента
         private async void editStudent_Button_Click(object sender, RoutedEventArgs e)
         {
-            var studentOut = (StudentOut)dataGridStudents.SelectedItem;
-
-            studentOut.Group = GroupView.FirstOrDefault(group => group.GroupName == SelectedGroup.GroupView.GroupName);
-
-            var updateStudent = new UpdateStudentView();
-
-            StudentEditModalWindow studentEditWindow = new StudentEditModalWindow(studentOut, false);
-            studentEditWindow.ShowDialog();
-
-            if (studentEditWindow.DialogResult.HasValue && studentEditWindow.DialogResult.Value)
+            try
             {
+                var studentOut = (StudentOut)dataGridStudents.SelectedItem;
+
+                studentOut.Group = GroupView.FirstOrDefault(group => group.GroupName == SelectedGroup.GroupView.GroupName);
+
+                var updateStudent = new UpdateStudentView();
+
+                StudentEditModalWindow studentEditWindow = new StudentEditModalWindow(studentOut, false);
+                studentEditWindow.ShowDialog();
+
+                if (studentEditWindow.DialogResult.HasValue && studentEditWindow.DialogResult.Value)
+                {
 
 
-                MessageBox.Show("Изменение прошло успешно");
+                    MessageBox.Show("Изменение прошло успешно");
+                }
+
+                StudentsData(SelectedGroup.GroupView);
             }
-
-            StudentsData(SelectedGroup.GroupView);
+            catch (Exception)
+            {
+                return;
+            }
         }
         //Удаление студента
         private void deleteStudent_Button_Click(object sender, RoutedEventArgs e)
