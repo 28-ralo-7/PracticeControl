@@ -7,6 +7,10 @@ using PracticeControl.WebAPI.Views.blanks;
 using PracticeControl.WebAPI.Views.blanksUpdate;
 using static PracticeControl.WebAPI.Converters.EmployeeConverter;
 using static PracticeControl.WebAPI.Converters.StudentConverter;
+using static PracticeControl.WebAPI.Converters.GroupConverter;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update.Internal;
+using Microsoft.IdentityModel.Tokens;
 
 namespace PracticeControl.WebAPI.Services
 {
@@ -14,6 +18,8 @@ namespace PracticeControl.WebAPI.Services
     {
         private readonly IPutRepository _putRepository;
         private readonly IGetRepository _getRepository;
+
+        private byte[] PasswordSalt { get; set; }
         public PutService(IPutRepository putRepository, IGetRepository getRepository)
         {
             _putRepository = putRepository;
@@ -44,7 +50,8 @@ namespace PracticeControl.WebAPI.Services
             return null;
         }
 
-        public async Task<StudentView> UpdateStudent(UpdateStudentView updateStudent)
+        //Обновление студента
+        public async Task<bool> UpdateStudent(UpdateStudentView updateStudent)
         {
             if(updateStudent is not null)
             {
@@ -63,13 +70,27 @@ namespace PracticeControl.WebAPI.Services
                     student.Passwordsalt = salt;
                 }
 
-                StudentView response = ConvertToView(
-                    await _putRepository.UpdateStudent(student, updateStudent.LoginForSearch));
+                var response = await _putRepository.UpdateStudent(student, updateStudent.LoginForSearch);
 
-                return response;
+                if (response != null)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public async Task<GroupView> UpdateGroup(string oldName, string groupName)
+        {
+            if (groupName is not null && oldName is not null)
+            {
+                var response = await _putRepository.UpdateGroup(oldName, groupName);
+
+                if(response is not null)
+                    return ConvertToGroupView(response);
             }
 
             return null;
         }
+
     }
 }

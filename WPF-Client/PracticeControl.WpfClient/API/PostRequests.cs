@@ -41,7 +41,8 @@ namespace PracticeControl.WpfClient.API
 
         #endregion
 
-        public static async Task<bool?> CreateGroupAsync(CreateGroupView newGroup)
+        #region Group
+        public static async Task<bool?> CreateGroupAsync(CreateGroupView? newGroup)
         {
             HttpClient client = new HttpClient();
 
@@ -54,7 +55,7 @@ namespace PracticeControl.WpfClient.API
 
             if (!response.IsSuccessStatusCode)
             {
-                return null;
+                return false;
             }
 
             var responseData = await response.Content.ReadAsStringAsync();
@@ -62,5 +63,30 @@ namespace PracticeControl.WpfClient.API
 
             return createdGroup;
         }
+        #endregion
+
+        public static async Task<bool?> CreateStudentAsync(CreateStudentView? newStudent)
+        {
+            HttpClient client = new HttpClient();
+
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
+
+            var json = JsonConvert.SerializeObject(newStudent);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("https://localhost:7063/api/post/createStudent", data).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            var responseData = await response.Content.ReadAsStringAsync();
+            var createdGroup = JsonConvert.DeserializeObject<bool>(responseData);
+
+            return createdGroup;
+        }
+
+
     }
 }

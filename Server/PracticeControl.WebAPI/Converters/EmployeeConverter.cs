@@ -3,6 +3,7 @@ using PracticeControl.WebAPI.Views;
 using PracticeControl.WebAPI.Views.blanks;
 using PracticeControl.WebAPI.Views.blanksCreate;
 using PracticeControl.WebAPI.Views.blanksUpdate;
+using static PracticeControl.WebAPI.Converters.PracticeScheduleConverter;
 
 namespace PracticeControl.WebAPI.Converters
 {
@@ -48,10 +49,45 @@ namespace PracticeControl.WebAPI.Converters
             employeeView.EmployeeID = Convert.ToInt32(employee.Id);
             employeeView.Login = employee.Login;
 
+            /*var practiceScheduleView = new List<PracticeScheduleView>();
 
+            foreach (var schedule in employee.Practiceschedules)
+            {
+                practiceScheduleView.Add(new PracticeScheduleView
+                {
+                    Abbreviation = schedule.IdPracticeNavigation.Abbreviation,
+                    PracticeModule = schedule.IdPracticeNavigation.Practicemodule,
+                    Specialty = schedule.IdPracticeNavigation.Specialty,
+                    StartDate = schedule.Startdate.ToString(),
+                    EndDate = schedule.Enddate.ToString(),
+                    Attendances = schedule.Attendances.Select(attendance => new AttendanceView
+                    {
+                        AttendanceID = Convert.ToInt32(attendance.Id),
+                        Date = attendance.Date.ToString(),
+                        IsPresent = attendance.Ispresent,
+                        Photo = attendance.Photo,
+                        StudentView = new StudentView
+                        {
+                            StudentID = Convert.ToInt32(attendance.IdStudentNavigation.Id),
+                            LastName = attendance.IdStudentNavigation.Lastname,
+                            FirstName = attendance.IdStudentNavigation.Firstname,
+                            MiddleName = attendance.IdStudentNavigation.Middlename,
+                            Login = attendance.IdStudentNavigation.Login,
+                            Group = new GroupView
+                            {
+                                GroupID = Convert.ToInt32(attendance.IdStudentNavigation.IdGroup),
+                                GroupName = attendance.IdStudentNavigation.IdGroupNavigation.Name,
+
+                            }
+                        }
+                    }).ToList()
+
+                });
+            }*/
 
             var practiceSchedulesView = new List<PracticeScheduleView>();
 
+            if (employee.Practiceschedules is not null)
 
             foreach (var item in employee.Practiceschedules)
             {

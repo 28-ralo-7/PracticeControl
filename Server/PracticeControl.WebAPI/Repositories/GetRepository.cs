@@ -107,15 +107,19 @@ namespace PracticeControl.WebAPI.Repositories
         public async Task<List<Student>> GetStudentsGroup(string groupName)
         {
             var studentsGroup = await _context.Students
-                .Where(student => student.IdGroupNavigation.Name == groupName)
+                .Include(student => student.IdGroupNavigation)
+                .Where(student => student.IdGroupNavigation.Name == groupName && student.Isdeleted == false)
                 .ToListAsync();
 
             return studentsGroup;
         }
-
+        //Список всех студентов
         public async Task<List<Student>> GetStudents()
         {
-            var students = await _context.Students.Where(student => student.Isdeleted != true).ToListAsync();
+            var students = await _context.Students
+                .Where(student => student.Isdeleted != true)
+                .Include(student => student.IdGroupNavigation)
+                .ToListAsync();
 
             return students;
         }

@@ -77,5 +77,11 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             PracticesData();
         }
+
+        private void PracticesPage_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PracticesData();
+        }
+
     }
 }

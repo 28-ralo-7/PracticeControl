@@ -32,5 +32,16 @@ namespace PracticeControl.WebAPI.Repositories
             }
             return null;
         }
+
+        public Student CreateStudent(Student student)
+        {
+            if (student is not null)
+            {      
+                _context.Add(student);
+                _context.SaveChanges();
+                return student;
+            }
+            return null;
+        }
     }
 }

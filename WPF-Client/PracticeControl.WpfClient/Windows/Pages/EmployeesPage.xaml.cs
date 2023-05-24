@@ -75,7 +75,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             {
                 var response = await DeleteRequests.DeleteEmployeeAsync(employee.Login); 
 
-                if (response is not null)
+                if ((bool)response)
                 {
                     MessageBox.Show("Сотрудник удален");
                     EmployeesData();
@@ -84,6 +84,12 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 MessageBox.Show("Не удалось удалить");
 
             }
+        }
+
+        private void Employees_Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            EmployeesData();
+
         }
     }
 

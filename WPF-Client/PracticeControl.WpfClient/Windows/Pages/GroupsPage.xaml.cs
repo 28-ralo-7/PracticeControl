@@ -24,7 +24,6 @@ namespace PracticeControl.WpfClient.Windows.Pages
     public partial class GroupsPage : Page
     {
         private EmployeeView User { get; set; }
-
         private GroupOut SelectedGroup { get; set; }
         private List<GroupView> GroupView { get; set; }
  
@@ -73,27 +72,43 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             dataGridGroups.ItemsSource = null;
             dataGridGroups.ItemsSource = Groups;
-        }
+        }//Готово
+
         //Открытие студентов группы
         private void dataGridGroups_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            gridGroup.Visibility = Visibility.Hidden;
-            gridStudents.Visibility = Visibility.Visible;
+            try
+            {
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
 
-            SelectedGroup = (GroupOut)dataGridGroups.SelectedItem;
 
-            StudentsData(SelectedGroup.GroupView);
-        }
+                    SelectedGroup = (GroupOut)dataGridGroups.SelectedItem;
+                    if (SelectedGroup is not null)
+                    {
+                        gridGroup.Visibility = Visibility.Hidden;
+                        gridStudents.Visibility = Visibility.Visible; 
+                        StudentsData(SelectedGroup.GroupView);
+                    }
+
+                }
+            }
+            catch
+            {
+
+            }
+
+        }//Готово
+
         //Добавление группы
         private void buttonCreateNewGroup_Click(object sender, RoutedEventArgs e)
         {
-            var groups = (List<GroupOut>)dataGridGroups.ItemsSource;
-
-            GroupModalWindow createGroup = new GroupModalWindow(groups);
+            GroupModalWindow createGroup = new GroupModalWindow();
             createGroup.ShowDialog();
 
             GroupsData();
-        }
+        }//Добавление существующего студента
+
         //Вывод студентов
         private async void StudentsData(GroupView group)
         {
@@ -135,7 +150,8 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             dataGridStudents.ItemsSource = null;
             dataGridStudents.ItemsSource = studentsList.OrderBy(b => b.StudentName);
-        }
+        }//Готово
+
         //Возврат к списку групп
         private void bttnBackGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -143,17 +159,18 @@ namespace PracticeControl.WpfClient.Windows.Pages
             gridStudents.Visibility = Visibility.Hidden;
 
             GroupsData();
-        }
+        }//Готово
+
         //Изменение студента
         private async void editStudent_Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 var studentOut = (StudentOut)dataGridStudents.SelectedItem;
-
+                
                 studentOut.Group = GroupView.FirstOrDefault(group => group.GroupName == SelectedGroup.GroupView.GroupName);
 
-                var updateStudent = new UpdateStudentView();
+                
 
                 StudentEditModalWindow studentEditWindow = new StudentEditModalWindow(studentOut, false);
                 studentEditWindow.ShowDialog();
@@ -171,11 +188,88 @@ namespace PracticeControl.WpfClient.Windows.Pages
             {
                 return;
             }
-        }
+        }//Готово
+
         //Удаление студента
-        private void deleteStudent_Button_Click(object sender, RoutedEventArgs e)
+        private async void deleteStudent_Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить выбранную запись?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    var deleteStudent = dataGridStudents.SelectedItem as StudentOut;
+                    var deleteStudentLogin = deleteStudent.Login;
+
+                    var response = await DeleteRequests.DeleteStudentAsync(deleteStudentLogin);
+
+                    if (response is not null)
+                    {
+                        MessageBox.Show("Студент удален");
+                        StudentsData(SelectedGroup.GroupView);
+                        return;
+                    }
+                    MessageBox.Show("Не удалось удалить");
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ошибка при удалении");
+
+            }
+        }//Готово
+
+        //Изменение названия
+        private async void editGroup_Button_Click(object sender, RoutedEventArgs e)
         {
 
+            var group = dataGridGroups.SelectedItem as GroupOut;
+            if (group is not null)
+            {
+                var groupName = group.GroupView.GroupName;
+                GroupModalWindow groupModalWindow = new GroupModalWindow(groupName);
+                groupModalWindow.ShowDialog();
+                GroupsData();
+            }
+
+        }
+        //Удаление группы
+        private async void deleteGroup_Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить выбранную запись?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    var deleteGroup = dataGridGroups.SelectedItem as GroupOut;
+                    if(deleteGroup is not null)
+                    {
+                        var deleteGroupName = deleteGroup.GroupView.GroupName;
+                        var response = await DeleteRequests.DeleteGroupAsync(deleteGroupName);
+
+                        if (response is not null)
+                        {
+                            MessageBox.Show("Группа удалена");
+                            GroupsData();
+                            return;
+                        }
+                        MessageBox.Show("Не удалось удалить");
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ошибка при удалении");
+
+            }
+        }//Готово
+
+        private void Groups_Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            GroupsData();
         }
     }
 

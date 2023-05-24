@@ -5,12 +5,12 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="1227"
-      Title="EmployeesPage">
+      d:DesignHeight="1000" d:DesignWidth="1627"
+      Title="EmployeesPage" x:Name="Employees_Page" Loaded="Employees_Page_Loaded">
 
-    <Grid Background="White" Height="800" Width="1227">
+    <Grid Background="White" Height="1000" Width="1627">
 
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,5,0,5" Width="1207">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="0,5,0,5" Width="1607">
 
             <StackPanel x:Name="adminPanel_Stackpanel" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="addPracticeLead_Button"
@@ -19,11 +19,13 @@
                         Margin="0,20,15,0" FontSize="18"
                         Width="232" Height="45"></Button>
             </StackPanel>
+                
+            <TextBlock Text="Список преподавателей" FontSize="30" HorizontalAlignment="Center"></TextBlock>
 
             <DataGrid x:Name="dataGridEmployees" ScrollViewer.VerticalScrollBarVisibility="Visible"
                       IsReadOnly="True" HorizontalAlignment="Center" CanUserResizeColumns="False"
                       Margin="10,20,15,10"
-                      AutoGenerateColumns="False" Width="1068" MaxHeight="620" Height="620">
+                      AutoGenerateColumns="False" Width="1468" MaxHeight="620">
 
                 <DataGrid.ContextMenu>
                     <ContextMenu>
@@ -52,6 +54,11 @@
                                 <Setter Property="FontSize" Value="18"></Setter>
                                 <Setter Property="Height" Value="30"></Setter>
                                 <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
@@ -75,6 +82,11 @@
                                 <Setter Property="FontSize" Value="18"></Setter>
                                 <Setter Property="Height" Value="30"></Setter>
                                 <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
@@ -98,6 +110,11 @@
                                 <Setter Property="FontSize" Value="18"></Setter>
                                 <Setter Property="Height" Value="30"></Setter>
                                 <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>

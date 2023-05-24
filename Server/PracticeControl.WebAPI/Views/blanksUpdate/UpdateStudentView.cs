@@ -9,6 +9,5 @@
         public string Password { get; set; }
         public string GroupName { get; set; }
         public string LoginForSearch { get; set; }
-
     }
 }

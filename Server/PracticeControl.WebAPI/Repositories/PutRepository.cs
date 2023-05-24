@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Interfaces.IRepositories;
 using System.Security.Cryptography.X509Certificates;
@@ -8,9 +9,11 @@ namespace PracticeControl.WebAPI.Repositories
     public class PutRepository : IPutRepository
     {
         private readonly ProductionPracticeControlContext _context;
-        public PutRepository(ProductionPracticeControlContext context)
+        private readonly IPostRepository _postRepository;
+        public PutRepository(ProductionPracticeControlContext context, IPostRepository postRepository)
         {
             _context= context;
+            _postRepository= postRepository;
         }
         public async Task<Employee> UpdateEmployee(Employee employeeForUpdate, string loginSearch)
         {
@@ -40,7 +43,7 @@ namespace PracticeControl.WebAPI.Repositories
 
         public async Task<Student> UpdateStudent(Student studentForUpdate, string loginSearch)
         {
-            Student studentFromDb = await _context.Students.FirstOrDefaultAsync(student => student.Login == loginSearch);
+            Student? studentFromDb = await _context.Students.FirstOrDefaultAsync(student => student.Login == loginSearch);
 
             if (studentFromDb is null)
             {
@@ -62,6 +65,19 @@ namespace PracticeControl.WebAPI.Repositories
             await _context.SaveChangesAsync();
 
             return studentFromDb;
+        }
+
+        public async Task<Group> UpdateGroup(string oldName, string newName)
+        {
+            Group group = await _context.Groups.FirstOrDefaultAsync(group => group.Name == oldName);
+
+            if (group is not null) 
+            { 
+                group.Name = newName;
+                await _context.SaveChangesAsync();
+                return group;
+            }
+            return null;
         }
     }
 }

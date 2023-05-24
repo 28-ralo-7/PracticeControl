@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using PracticeControl.WebAPI.Interfaces.IServices;
 using PracticeControl.WebAPI.Views.blanks;
 using PracticeControl.WebAPI.Views.blanksCreate;
@@ -29,6 +30,14 @@ namespace PracticeControl.WebAPI.Controllers
             var response = _postService.CreateGroup(groupView);
 
             return Ok(response);
+        }
+
+        [HttpPost("createStudent")]
+        public IActionResult CreateStudent([FromBody] CreateStudentView? student)
+        {
+            var response = _postService.CreateStudent(student);
+
+            return Ok(response is not null ? true : false);
         }
     }
 }

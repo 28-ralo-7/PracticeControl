@@ -6,5 +6,6 @@ namespace PracticeControl.WebAPI.Interfaces.IRepositories
     {
         Task<Employee> UpdateEmployee(Employee employee, string loginSearch);
         Task<Student> UpdateStudent(Student student, string loginSearch);
+        Task<Group> UpdateGroup(string oldName, string nameSearch);
     }
 }

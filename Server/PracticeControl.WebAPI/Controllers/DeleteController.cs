@@ -20,5 +20,21 @@ namespace PracticeControl.WebAPI.Controllers
 
             return Ok(response.Result);
         }
+
+        [HttpDelete("deleteStudent/{login}")]
+        public IActionResult DeleteStudent(string login)
+        {
+            var response = _deleteService.DeleteStudent(login);
+
+            return Ok(response.Result);
+        }
+
+        [HttpDelete("deleteGroup/{name}")]
+        public IActionResult DeleteGroup(string name)
+        {
+            var response = _deleteService.DeleteGroup(name);
+
+            return Ok(response.Result);
+        }
     }
 }

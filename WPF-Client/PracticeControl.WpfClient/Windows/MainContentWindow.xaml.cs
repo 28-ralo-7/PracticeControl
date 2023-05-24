@@ -25,6 +25,7 @@ namespace PracticeControl.WpfClient.Windows
             this.User = user;
 
             InitializeComponent();
+
             tbItemPractices.IsSelected = true;
 
             frameGroups.Content = new GroupsPage(User);
@@ -34,10 +35,14 @@ namespace PracticeControl.WpfClient.Windows
             {
                 frameEmployees.Content = new EmployeesPage();
                 tbItemEmployees.Visibility = Visibility.Visible;
+
+                frameStudents.Content = new StudentPage();
+                tbItemStudents.Visibility = Visibility.Visible;
             }
             else
             {
                 tbItemEmployees.Visibility = Visibility.Collapsed;
+                tbItemStudents.Visibility = Visibility.Collapsed;
             }
 
             

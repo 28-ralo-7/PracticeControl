@@ -56,9 +56,9 @@ namespace PracticeControl.WebAPI.Controllers
         [HttpGet("getStudentGroup/{groupName}")]
         public async Task<IActionResult> GetStudentsGroup([FromRoute] string groupName)
         {
-            var response = _getService.GetStudentGroup(groupName);
+            var response = await _getService.GetStudentGroup(groupName);
 
-            return Ok(response.Result);
+            return Ok(response);
         }
 
         [HttpGet("getAllStudents")]

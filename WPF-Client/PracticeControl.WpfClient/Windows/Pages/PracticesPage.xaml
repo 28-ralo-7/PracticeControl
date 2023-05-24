@@ -5,12 +5,12 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="1227"
-      Title="PracticesPage">
+      d:DesignHeight="1000" d:DesignWidth="1627"
+      Title="PracticesPage" x:Name="Practices_Page" Loaded="PracticesPage_GotFocus" >
     <Canvas Background="White">
 
-
-        <Grid HorizontalAlignment="Left" Visibility="Collapsed" x:Name="gridAttendance" Height="800" VerticalAlignment="Center" Width="1227">
+        <!--Посещаемость-->
+        <Grid HorizontalAlignment="Left" Visibility="Collapsed" x:Name="gridAttendance" Height="1000" VerticalAlignment="Center" Width="1627">
             <Grid.RowDefinitions>
                 <RowDefinition Height="65*"></RowDefinition>
                 <RowDefinition Height="498*"></RowDefinition>
@@ -149,7 +149,7 @@
 
         </Grid>
 
-        <Grid HorizontalAlignment="Left" Visibility="Visible" x:Name="gridPractices" Height="800" VerticalAlignment="Center" Width="1227">
+        <Grid HorizontalAlignment="Left" Visibility="Visible" x:Name="gridPractices" Height="1000" VerticalAlignment="Center" Width="1627">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="rowAdmin" Height="65*"></RowDefinition>
                 <RowDefinition Height="498*"></RowDefinition>
@@ -159,14 +159,15 @@
                 <Button Background="White" Content="Добавить практику"  FontSize="15" Margin="23,5" Width="160" Height="45"></Button>
             </StackPanel>
 
-            <StackPanel Orientation="Vertical" Grid.Row="1">
+            <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,-50,0,0">
                 <TextBlock Text="Практики" Margin="10" HorizontalAlignment="Center" FontSize="22"></TextBlock>
-                <DataGrid x:Name="dataGridPractices" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True" HorizontalAlignment="Center" CanUserResizeColumns="False" AutoGenerateColumns="False" Margin="10,5,15,10"  MaxHeight="426" ItemsSource="{Binding PracticeScheduleView}" Width="1188" PreviewMouseDoubleClick="dataGridPractices_PreviewMouseDoubleClick">
+                <DataGrid x:Name="dataGridPractices" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True" HorizontalAlignment="Center"
+                          CanUserResizeColumns="False" AutoGenerateColumns="False" Margin="10,5,15,10"  MaxHeight="800" ItemsSource="{Binding PracticeScheduleView}"
+                          Width="1500" PreviewMouseDoubleClick="dataGridPractices_PreviewMouseDoubleClick">
                     <DataGrid.Columns>
 
-                        <DataGridTextColumn Header="Аббревиатура" Width="150" Binding="{Binding Abbreviation}">
+                        <DataGridTextColumn Header="Аббревиатура" Width="150" Binding="{Binding Abbreviation}" >
                             <DataGridTextColumn.HeaderStyle>
-
                                 <Style TargetType="DataGridColumnHeader">
                                     <Setter Property="TextBlock.Margin" Value="2"></Setter>
                                     <Setter Property="FontSize" Value="19"></Setter>
@@ -176,6 +177,7 @@
                                     <Setter Property="Foreground" Value="Black"></Setter>
                                 </Style>
                             </DataGridTextColumn.HeaderStyle>
+                            
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="DataGridCell">
                                     <Setter Property="Background" Value="White"></Setter>
@@ -184,12 +186,16 @@
                                     <Setter Property="FontSize" Value="18"></Setter>
                                     <Setter Property="Height" Value="40"></Setter>
                                     <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
                                 </Style>
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn Header="Модуль" Width="150" Binding="{Binding PracticeModule}">
+                        <DataGridTextColumn Header="Модуль" Width="350" Binding="{Binding PracticeModule}">
                             <DataGridTextColumn.HeaderStyle>
                                 <Style TargetType="DataGridColumnHeader">
                                     <Setter Property="TextBlock.Margin" Value="2"></Setter>
@@ -208,6 +214,12 @@
                                     <Setter Property="FontSize" Value="18"></Setter>
                                     <Setter Property="Height" Value="40"></Setter>
                                     <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True"></Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
                                 </Style>
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
@@ -231,6 +243,11 @@
                                     <Setter Property="FontSize" Value="18"></Setter>
                                     <Setter Property="Height" Value="40"></Setter>
                                     <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
                                 </Style>
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
@@ -245,6 +262,7 @@
                                     <Setter Property="Background" Value="White"></Setter>
                                     <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                     <Setter Property="Foreground" Value="Black"></Setter>
+                                    
                                 </Style>
                             </DataGridTextColumn.HeaderStyle>
                             <DataGridTextColumn.CellStyle>
@@ -255,7 +273,11 @@
                                     <Setter Property="FontSize" Value="18"></Setter>
                                     <Setter Property="Height" Value="40"></Setter>
                                     <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
                                 </Style>
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
@@ -279,6 +301,11 @@
                                     <Setter Property="FontSize" Value="18"></Setter>
                                     <Setter Property="Height" Value="40"></Setter>
                                     <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
                                 </Style>
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
@@ -302,6 +329,11 @@
                                     <Setter Property="FontSize" Value="18"></Setter>
                                     <Setter Property="Height" Value="40"></Setter>
                                     <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
                                 </Style>
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
@@ -325,6 +357,11 @@
                                     <Setter Property="FontSize" Value="18"></Setter>
                                     <Setter Property="Height" Value="40"></Setter>
                                     <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
                                 </Style>
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>

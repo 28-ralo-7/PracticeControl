@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AemProjectConfiguration">
+    <option name="wasInitialized" value="true" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="988c7086-4473-43d2-9cf9-a1cfa2a66fb7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Controllers/DeleteController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Controllers/DeleteController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Controllers/GetController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Controllers/GetController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Controllers/PostController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Controllers/PostController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Controllers/PutController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Controllers/PutController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Converters/EmployeeConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Converters/EmployeeConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Converters/GroupConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Converters/GroupConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Converters/StudentConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Converters/StudentConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Database/ProductionPracticeControlContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Database/ProductionPracticeControlContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Interfaces/IRepositories/IDeleteRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Interfaces/IRepositories/IDeleteRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Interfaces/IRepositories/IPostRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Interfaces/IRepositories/IPostRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Interfaces/IRepositories/IPutRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Interfaces/IRepositories/IPutRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Interfaces/IServices/IDeleteService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Interfaces/IServices/IDeleteService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Interfaces/IServices/IPostService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Interfaces/IServices/IPostService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Interfaces/IServices/IPutService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Interfaces/IServices/IPutService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Repositories/DeleteRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Repositories/DeleteRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Repositories/GetRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Repositories/GetRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Repositories/PostRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Repositories/PostRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Repositories/PutRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Repositories/PutRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Services/DeleteService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Services/DeleteService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Services/PostService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Services/PostService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Services/PutService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Services/PutService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Views/blanksCreate/CreateStudentView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Views/blanksCreate/CreateStudentView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Views/blanksUpdate/UpdateStudentView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/PracticeControl.WebAPI/Views/blanksUpdate/UpdateStudentView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/API/DeleteRequests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/API/DeleteRequests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/API/PostRequests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/API/PostRequests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/API/UpdateRequests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/API/UpdateRequests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Model/ViewCreate/CreateGroupView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Model/ViewCreate/CreateGroupView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Model/ViewCreate/CreateStudentView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Model/ViewCreate/CreateStudentView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/PracticeControl.WpfClient.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/PracticeControl.WpfClient.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/DialogWindows/StudentEditModalWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/DialogWindows/StudentEditModalWindow.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/DialogWindows/StudentEditModalWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/DialogWindows/StudentEditModalWindow.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/MainContentWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/MainContentWindow.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/MainContentWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/MainContentWindow.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/Pages/EmployeesPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/Pages/EmployeesPage.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/Pages/EmployeesPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/Pages/EmployeesPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/Pages/GroupsPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/Pages/GroupsPage.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/Pages/GroupsPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/Pages/GroupsPage.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/Pages/PracticesPage.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/Pages/PracticesPage.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/Pages/PracticesPage.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPF-Client/PracticeControl.WpfClient/Windows/Pages/PracticesPage.xaml.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="2QFOQ1OLE7TmatvCEpLyILKgNb9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\vorde\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\vorde\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\vorde\\AppData\\Local\\Symbols\\src"
+    ]
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="988c7086-4473-43d2-9cf9-a1cfa2a66fb7" name="Changes" comment="" />
+      <created>1684945848426</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1684945848426</updated>
+      <workItem from="1684945849169" duration="52000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>
