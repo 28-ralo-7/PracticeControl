@@ -89,6 +89,9 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 AttendanceDates(SelectPractice);
             }
 
+
+            textBlockDayAttendance.Text = SelectDate.ToShortDateString().Replace(".2023", "");
+
             var attendances = new List<AttendanceView>();
 
             foreach (var item in SelectPractice.Attendances.Where(x=>Convert.ToDateTime(x.Date) == SelectDate))

@@ -50,7 +50,7 @@
                             <Image Source="D:\GitHub's\PracticeControl\PracticeControl\WPF-Client\PracticeControl.WpfClient/arrow-left.png" Height="29" Width="40"/>
                         </DockPanel>
                     </Button>
-                    <TextBlock x:Name="textBlockDayAttendance" Text="20.09" Margin="10" FontSize="40" Width="97" Height="64"  Foreground="#4f4f4f"/>
+                    <TextBlock x:Name="textBlockDayAttendance" Text="" Margin="10" FontSize="40" Width="97" Height="64"  Foreground="#4f4f4f"/>
                     <Button   x:Name="buttonNextDay" Click="buttonNextDay_Click" Height="32" Width="43" Margin="5">
                         <Button.Style>
                             <Style TargetType="Button">
@@ -67,7 +67,6 @@
                           HorizontalAlignment="Center" CanUserResizeColumns="False" AutoGenerateColumns="False" Margin="10,5,15,10"
                           MaxHeight="426" ItemsSource="{Binding Attendances}" Width="1338">
                     <DataGrid.Columns>
-
                         <DataGridTextColumn Header="Студенты" Width="520" Binding="{Binding StudentName}">
                             <DataGridTextColumn.HeaderStyle>
                                 <Style TargetType="DataGridColumnHeader">
@@ -110,11 +109,6 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-
-                        <DataGridComboBoxColumn Header="Order Status"  SelectedItemBinding="{Binding Status}" ItemsSource="{Binding Source={StaticResource myEnum}}">
-                            
-                        </DataGridComboBoxColumn>
-                       
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
