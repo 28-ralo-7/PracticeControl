@@ -12,25 +12,68 @@
         <!--Посещаемость-->
         <Grid HorizontalAlignment="Left" Visibility="Collapsed" x:Name="gridAttendance" Height="1000" VerticalAlignment="Center" Width="1627">
             <Grid.RowDefinitions>
-                <RowDefinition Height="65*"></RowDefinition>
-                <RowDefinition Height="498*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="23*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <StackPanel  Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Left">
-                <Button x:Name="backPractices" Content="Назад" Width="160" Height="45" Background="White" Margin="10" Click="backPractices_Click" ></Button>
+            <StackPanel  Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Left" Width="180">
+                <Button x:Name="backPractices" Content="Назад" Width="160" Height="45" FontSize="25"  Background="White" Margin="10" Click="backPractices_Click" ></Button>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="1">
-                <TextBlock Text="Посещаемость" Margin="10" HorizontalAlignment="Center" FontSize="22"></TextBlock>
-                <DataGrid x:Name="dataGridAttendance" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True" HorizontalAlignment="Center" CanUserResizeColumns="False" AutoGenerateColumns="False" Margin="10,5,15,10"  MaxHeight="426" ItemsSource="{Binding PracticeView}" Width="948">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                    <TextBlock Text="ПП.01" x:Name="textBlockAbbreviation" Margin="10" FontSize="40" Width="111"/>
+                    <TextBlock Text="группа" Margin="5,10" FontSize="40" Width="126"/>
+                    <TextBlock Text="41911" x:Name="textBlockGroupName" Margin="5,10" FontSize="40" Width="146"/>
+                </StackPanel>
+                <TextBlock Text="c 20.05 по 05.06" x:Name="textBlockDatePractice" Margin="5,5" FontSize="40" Width="313"/>
+
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <TextBlock Text="Посещаемость на" Margin="10" FontSize="40" Width="330" Height="64"/>
+                    <Button x:Name="buttonBackDay" Click="buttonBackDay_Click" Height="32" Width="43" Margin="5" RenderTransformOrigin="0.5,0.5">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Style>
+                        </Button.Style>
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-180"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                        <DockPanel>
+                            <Image Source="D:\GitHub's\PracticeControl\PracticeControl\WPF-Client\PracticeControl.WpfClient/arrow-left.png" Height="29" Width="40"/>
+                        </DockPanel>
+                    </Button>
+                    <TextBlock x:Name="textBlockDayAttendance" Text="20.09" Margin="10" FontSize="40" Width="97" Height="64"  Foreground="#4f4f4f"/>
+                    <Button   x:Name="buttonNextDay" Click="buttonNextDay_Click" Height="32" Width="43" Margin="5">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Style>
+                        </Button.Style>
+                        <DockPanel>
+                            <Image Source="D:\GitHub's\PracticeControl\PracticeControl\WPF-Client\PracticeControl.WpfClient/arrow-left.png" Height="29" Width="40"/>
+                        </DockPanel>
+                    </Button>
+
+                </StackPanel>
+                <DataGrid x:Name="dataGridAttendance" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"
+                          HorizontalAlignment="Center" CanUserResizeColumns="False" AutoGenerateColumns="False" Margin="10,5,15,10"
+                          MaxHeight="426" ItemsSource="{Binding Attendances}" Width="1338">
                     <DataGrid.Columns>
 
-                        <DataGridTextColumn Header="Студенты" Width="220" Binding="{Binding Students}">
+                        <DataGridTextColumn Header="Студенты" Width="520" Binding="{Binding StudentName}">
                             <DataGridTextColumn.HeaderStyle>
                                 <Style TargetType="DataGridColumnHeader">
                                     <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="FontSize" Value="19"></Setter>
-                                    <Setter Property="Height" Value="35"></Setter>
+                                    <Setter Property="FontSize" Value="25"></Setter>
+                                    <Setter Property="Height" Value="55"></Setter>
                                     <Setter Property="Background" Value="White"></Setter>
                                     <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                     <Setter Property="Foreground" Value="Black"></Setter>
@@ -49,100 +92,29 @@
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
 
-
-                        <!--<DataGridTextColumn Header="Модуль" Width="220" Binding="{Binding PracticeName}">
-                            <DataGridTextColumn.HeaderStyle>
-
+                        <DataGridTemplateColumn Header="Фото" Width="420">
+                            <DataGridTemplateColumn.HeaderStyle>
                                 <Style TargetType="DataGridColumnHeader">
                                     <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="FontSize" Value="19"></Setter>
-                                    <Setter Property="Height" Value="35"></Setter>
+                                    <Setter Property="FontSize" Value="25"></Setter>
+                                    <Setter Property="Height" Value="55"></Setter>
                                     <Setter Property="Background" Value="White"></Setter>
                                     <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                     <Setter Property="Foreground" Value="Black"></Setter>
                                 </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="40"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+                            </DataGridTemplateColumn.HeaderStyle>
 
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image x:Name="AttendanceStudent_image" Width="200" Height="250" Source="{Binding Photo}"></Image>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
-                        <DataGridTextColumn Header="Группа" Width="220" Binding="{Binding Group}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="FontSize" Value="19"></Setter>
-                                    <Setter Property="Height" Value="35"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="40"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
-
-                        <DataGridTextColumn Header="Дата начала" Width="220" Binding="{Binding DateBegin}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="FontSize" Value="19"></Setter>
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="Height" Value="35"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="40"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
-
-                        <DataGridTextColumn Header="Дата конца" Width="*" Binding="{Binding DateEnd}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="FontSize" Value="19"></Setter>
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="Height" Value="35"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="40"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>-->
+                        <DataGridComboBoxColumn Header="Order Status"  SelectedItemBinding="{Binding Status}" ItemsSource="{Binding Source={StaticResource myEnum}}">
+                            
+                        </DataGridComboBoxColumn>
+                       
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
@@ -177,7 +149,7 @@
                                     <Setter Property="Foreground" Value="Black"></Setter>
                                 </Style>
                             </DataGridTextColumn.HeaderStyle>
-                            
+
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="DataGridCell">
                                     <Setter Property="Background" Value="White"></Setter>
@@ -262,7 +234,7 @@
                                     <Setter Property="Background" Value="White"></Setter>
                                     <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                     <Setter Property="Foreground" Value="Black"></Setter>
-                                    
+
                                 </Style>
                             </DataGridTextColumn.HeaderStyle>
                             <DataGridTextColumn.CellStyle>
