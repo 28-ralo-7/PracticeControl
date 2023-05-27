@@ -51,7 +51,8 @@ namespace PracticeControl.WebAPI.Converters
                         LastName = student.Lastname,
                         FirstName = student.Firstname,
                         MiddleName = student.Middlename,
-                        Login = student.Login
+                        Login = student.Login,
+                     
                     }).ToList()
                 };
 

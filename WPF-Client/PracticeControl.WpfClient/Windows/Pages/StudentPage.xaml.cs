@@ -68,11 +68,13 @@ namespace PracticeControl.WpfClient.Windows.Pages
             try
             {
                 var studentForm = (StudentForm)dataGridStudents.SelectedItem;
- 
-                StudentEditModalWindow studentEditWindow = new StudentEditModalWindow(studentForm);
-                studentEditWindow.ShowDialog();
+                if (studentForm is not null)
+                {
+                    StudentEditModalWindow studentEditWindow = new StudentEditModalWindow(studentForm);
+                    studentEditWindow.ShowDialog();
 
-                StudentData();
+                    StudentData();
+                }
             }
             catch (Exception)
             {

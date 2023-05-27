@@ -1,4 +1,5 @@
-﻿using PracticeControl.WpfClient.API;
+﻿using DocumentFormat.OpenXml.Office2010.PowerPoint;
+using PracticeControl.WpfClient.API;
 using PracticeControl.WpfClient.Model.View;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,11 @@ namespace PracticeControl.WpfClient.Windows.Pages
         private List<DateTime> PracticeDates { get; set; } = new List<DateTime>();
         private DateTime SelectDate { get;set; }
         private PracticeScheduleView SelectPractice { get;set; }
+        private List<AttendanceViewDaniil> AttendanceRows { get; set; }
+
+        private List<AttendanceView> AttendanceAll { get; set; }//главная
+        private List<AttendanceView> CurrentAttendance { get; set; }//используемая страница
+        private List<UpdateAttendanceView> UpdateAttendance { get; set; } = new List<UpdateAttendanceView>();
         public PracticesPage(EmployeeView User)
         {
             this.User = User;
@@ -28,7 +34,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             PracticesData();
         }
 
-        #region
+        #region Расписание практик
         private async void PracticesData()
         {
             if (User.IsAdmin)
@@ -58,9 +64,11 @@ namespace PracticeControl.WpfClient.Windows.Pages
             gridPractices.Visibility = Visibility.Hidden;
             gridAttendance.Visibility = Visibility.Visible;
 
-            var practiceSchedule = (PracticeScheduleView)dataGridPractices.SelectedItem;
+            PracticeDates.Clear();
+            SelectPractice = (PracticeScheduleView)dataGridPractices.SelectedItem;
+            AttendanceAll = SelectPractice.Attendances;
 
-            AttendanceData(practiceSchedule);
+            AttendanceData();
         }
 
         private void backPractices_Click(object sender, RoutedEventArgs e)
@@ -80,35 +88,53 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
 
 
-        private void AttendanceData(PracticeScheduleView practiceSchedule)
+        private async void AttendanceData() // вывод практик по дням
         {
-            SelectPractice = practiceSchedule;
-
             if (PracticeDates.Count == 0)
             {
                 AttendanceDates(SelectPractice);
             }
 
-
             textBlockDayAttendance.Text = SelectDate.ToShortDateString().Replace(".2023", "");
 
-            var attendances = new List<AttendanceView>();
+            AttendanceRows = new List<AttendanceViewDaniil>();//OUT
 
-            foreach (var item in SelectPractice.Attendances.Where(x=>Convert.ToDateTime(x.Date) == SelectDate))
+            List<StudentView> students = SelectPractice.Group.StudentsView.ToList();
+
+            CurrentAttendance = AttendanceAll.Where(x => Convert.ToDateTime(x.Date) == SelectDate).ToList();
+
+            foreach (var student in students)
             {
-                string path = Environment.CurrentDirectory + item.Photo;
+                var currentAttendanceStudent = CurrentAttendance
+                .FirstOrDefault(x => x.StudentView.StudentID == student.StudentID);
 
-                attendances.Add(new AttendanceView
+                if (currentAttendanceStudent is null)
                 {
-                    Date = Convert.ToDateTime(item.Date),
-                    AttendanceID = item.AttendanceID,
-                    StudentName = item.StudentView.LastName + " " + item.StudentView.FirstName + " " + item.StudentView.MiddleName,
-                    IsPresence = item.IsPresent,
-                    Photo = path,
-                });
+                    AttendanceRows.Add(new AttendanceViewDaniil
+                    {
+                        StudentID = student.StudentID,
+                        StudentName = student.LastName + " " + student.FirstName + " " + student.MiddleName,
+                        Photo = null,
+                        IsPresence = false,
+                        Date = SelectDate.ToShortDateString(),
+                        
+                    }) ;
+                }
+                else
+                {
+                    AttendanceRows.Add(new AttendanceViewDaniil
+                    {
+                        StudentID = student.StudentID,
+                        AttendanceID = currentAttendanceStudent.AttendanceID,
+                        StudentName = student.LastName + " " + student.FirstName + " " + student.MiddleName,
+                        Photo = currentAttendanceStudent.Photo,
+                        IsPresence = currentAttendanceStudent.IsPresent
+
+                    });
+                }
             }
 
-            dataGridAttendance.ItemsSource = attendances;
+            dataGridAttendance.ItemsSource = AttendanceRows;
         }
 
         private void AttendanceDates(PracticeScheduleView practice)
@@ -121,26 +147,73 @@ namespace PracticeControl.WpfClient.Windows.Pages
             }
 
             SelectDate = PracticeDates[0];
-            textBlockDatePractice.Text = $"c {PracticeDates[0].ToShortDateString().Replace(".2023", "")} по {PracticeDates[PracticeDates.Count-1].ToShortDateString().Replace(".2023", "")}";
+            date_TextBlock.Text = $"c {PracticeDates[0].ToShortDateString().Replace(".2023", "")} по {PracticeDates[PracticeDates.Count-1].ToShortDateString().Replace(".2023", "")}";
         }
 
-        private void Presence_comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
+            var selectStudentAttendance = (AttendanceViewDaniil)dataGridAttendance.SelectedItem;
 
+            selectStudentAttendance.Photo = "fdfs";
+
+            var checkBox = (CheckBox)sender;
+
+            if (string.IsNullOrEmpty(selectStudentAttendance.Photo)) 
+            {
+                checkBox.IsChecked = false;
+                MessageBox.Show("Для выставления присутствия необходимо фото");
+                return;
+            }
+
+            if (UpdateAttendance.Any(n => n.AttendanceID == selectStudentAttendance.AttendanceID))
+            {
+                var updateStudentAttendance = UpdateAttendance.FirstOrDefault(x => x.AttendanceID == selectStudentAttendance.AttendanceID);
+
+                if (updateStudentAttendance.IsPresence)
+                {
+                    updateStudentAttendance.IsPresence = false;
+                    checkBox.IsChecked = false;
+                }
+                else
+                {
+                    updateStudentAttendance.IsPresence = true;
+                    checkBox.IsChecked = true;
+                }
+            }
+            else
+            {
+                var updateStudentAttendance = new UpdateAttendanceView
+                {
+                    AttendanceID = selectStudentAttendance.AttendanceID,
+                    Date = SelectDate.ToShortDateString(),
+                    PracticeID = SelectPractice.PracticeScheduleID,
+                    StudentID = selectStudentAttendance.StudentID,
+                    IsPresence = selectStudentAttendance.IsPresence
+                };
+
+                UpdateAttendance.Add(updateStudentAttendance);
+                checkBox.IsChecked = true;
+            }
         }
 
+
+        //КНОПКА СОХРАНИТЬ ВСЕ ИЗМЕНЕНИЯ
+        //И ОТПРАВКА UpdateAttendance на сервер
+
+        //Назад дата
         private void buttonBackDay_Click(object sender, RoutedEventArgs e)
         {
             DateTime beginDate = PracticeDates[0];
 
-            if (SelectDate>=beginDate)
+            if (SelectDate>beginDate)
             {
                 SelectDate = SelectDate.AddDays(-1);
-                AttendanceData(SelectPractice);
+                AttendanceData();
                 return;
             }
         }
-
+        //Вперед дата
         private void buttonNextDay_Click(object sender, RoutedEventArgs e)
         {
             DateTime endDate = PracticeDates[PracticeDates.Count-1];
@@ -148,18 +221,31 @@ namespace PracticeControl.WpfClient.Windows.Pages
             if (SelectDate < endDate)
             {
                 SelectDate = SelectDate.AddDays(1);
-                AttendanceData(SelectPractice);
+                AttendanceData();
                 return;
             }
         }
+
     }
 
-    public class AttendanceView
+    public class AttendanceViewDaniil
     {
         public int AttendanceID { get; set; }
+        public int StudentID { get; set; }
         public string StudentName { get; set; }
+        public string Date { get; set; }
         public string Photo { get; set; }
-        public DateTime Date { get; set; }
+        public bool IsPresence { get; set; }
+    }
+
+
+
+    public class UpdateAttendanceView
+    {
+        public int AttendanceID { get; set; }
+        public int StudentID { get; set; }
+        public int PracticeID { get; set; }
+        public string Date { get; set; }
         public bool IsPresence { get; set; }
     }
 }

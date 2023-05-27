@@ -158,5 +158,11 @@ namespace PracticeControl.WpfClient.API
 
             return PracticesLead;
         }
+        
+        
+        public static async Task<List<AttendanceView>> GetAllAttendance()
+        {
+            return null;
+        }
     }
 }

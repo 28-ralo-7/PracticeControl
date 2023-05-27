@@ -10,7 +10,7 @@
     <Canvas Background="White">
 
         <!--Посещаемость-->
-        <Grid HorizontalAlignment="Left" Visibility="Collapsed" x:Name="gridAttendance" Height="1000" VerticalAlignment="Center" Width="1627">
+        <Grid HorizontalAlignment="Left" Visibility="Visible" x:Name="gridAttendance" Height="1000" VerticalAlignment="Center" Width="1627">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"></RowDefinition>
                 <RowDefinition Height="23*"></RowDefinition>
@@ -21,49 +21,65 @@
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="1">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
-                    <TextBlock Text="ПП.01" x:Name="textBlockAbbreviation" Margin="10" FontSize="40" Width="111"/>
-                    <TextBlock Text="группа" Margin="5,10" FontSize="40" Width="126"/>
-                    <TextBlock Text="41911" x:Name="textBlockGroupName" Margin="5,10" FontSize="40" Width="146"/>
-                </StackPanel>
-                <TextBlock Text="c 20.05 по 05.06" x:Name="textBlockDatePractice" Margin="5,5" FontSize="40" Width="313"/>
+
+                <Grid x:Name="infoAboutPractice" Width="1400" Height="150" Margin="0,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="41911" x:Name="group_speciality_TextBlock" FontSize="20"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="10.05-24.05" x:Name="date_TextBlock" FontSize="20"/>
+                    
+                    <TextBlock TextWrapping="Wrap" Grid.Row="0" Grid.Column="1" Text="ПП.01 Тестирование ПО" x:Name="abbreviation_module_TextBlock" FontSize="20"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Руководитель: Карташова Е.В." x:Name="practiceLead_TextBlock" FontSize="20"/>
+
+                    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                        <TextBlock  Grid.Row="1" Grid.Column="2" Text="Посещаемость на" FontSize="30" Width="330" Height="64"/>
+
+                        <Button x:Name="buttonBackDay" Click="buttonBackDay_Click" Height="32" Width="43" Margin="5" RenderTransformOrigin="0.5,0.5">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                </Style>
+                            </Button.Style>
+                            <Button.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-180"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Button.RenderTransform>
+                            <DockPanel>
+                                <!--<Image Source="D:\GitHub's\PracticeControl\PracticeControl\WPF-Client\PracticeControl.WpfClient/arrow-left.png" Height="29" Width="40"/>-->
+                            </DockPanel>
+                        </Button>
+                        <TextBlock x:Name="textBlockDayAttendance" Text="" Margin="10" FontSize="20" Width="97" Height="64"  Foreground="#4f4f4f"/>
+                        <Button   x:Name="buttonNextDay" Click="buttonNextDay_Click" Height="32" Width="43" Margin="5">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                </Style>
+                            </Button.Style>
+                            <DockPanel>
+                                <!--<Image Source="D:\GitHub's\PracticeControl\PracticeControl\WPF-Client\PracticeControl.WpfClient/arrow-left.png" Height="29" Width="40"/>-->
+                            </DockPanel>
+                        </Button>
+
+                    </StackPanel>
+                </Grid>
 
 
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                    <TextBlock Text="Посещаемость на" Margin="10" FontSize="40" Width="330" Height="64"/>
-                    <Button x:Name="buttonBackDay" Click="buttonBackDay_Click" Height="32" Width="43" Margin="5" RenderTransformOrigin="0.5,0.5">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="Transparent"/>
-                            </Style>
-                        </Button.Style>
-                        <Button.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="-180"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Button.RenderTransform>
-                        <DockPanel>
-                            <Image Source="D:\GitHub's\PracticeControl\PracticeControl\WPF-Client\PracticeControl.WpfClient/arrow-left.png" Height="29" Width="40"/>
-                        </DockPanel>
-                    </Button>
-                    <TextBlock x:Name="textBlockDayAttendance" Text="" Margin="10" FontSize="40" Width="97" Height="64"  Foreground="#4f4f4f"/>
-                    <Button   x:Name="buttonNextDay" Click="buttonNextDay_Click" Height="32" Width="43" Margin="5">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="Transparent"/>
-                            </Style>
-                        </Button.Style>
-                        <DockPanel>
-                            <Image Source="D:\GitHub's\PracticeControl\PracticeControl\WPF-Client\PracticeControl.WpfClient/arrow-left.png" Height="29" Width="40"/>
-                        </DockPanel>
-                    </Button>
 
-                </StackPanel>
-                <DataGrid x:Name="dataGridAttendance" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True"
+
+                <DataGrid x:Name="dataGridAttendance" IsReadOnly="True"
                           HorizontalAlignment="Center" CanUserResizeColumns="False" AutoGenerateColumns="False" Margin="10,5,15,10"
                           MaxHeight="426" ItemsSource="{Binding Attendances}" Width="1338">
                     <DataGrid.Columns>
@@ -83,10 +99,7 @@
                                     <Setter Property="Background" Value="White"></Setter>
                                     <Setter Property="Foreground" Value="Black"></Setter>
                                     <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="40"></Setter>
                                     <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-
                                 </Style>
                             </DataGridTextColumn.CellStyle>
                         </DataGridTextColumn>
@@ -105,17 +118,28 @@
 
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Image x:Name="AttendanceStudent_image" Width="200" Height="250" Source="{Binding Photo}"></Image>
+                                    <Image Source="{Binding Photo}" Width="50" Height="50"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Присутствие">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsPresence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
+                    
+                    
                 </DataGrid>
             </StackPanel>
 
         </Grid>
-
-        <Grid HorizontalAlignment="Left" Visibility="Visible" x:Name="gridPractices" Height="1000" VerticalAlignment="Center" Width="1627">
+        
+        <!--Расписание-->
+        <Grid HorizontalAlignment="Left" Visibility="Collapsed" x:Name="gridPractices" Height="1000" VerticalAlignment="Center" Width="1627">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="rowAdmin" Height="65*"></RowDefinition>
                 <RowDefinition Height="498*"></RowDefinition>
