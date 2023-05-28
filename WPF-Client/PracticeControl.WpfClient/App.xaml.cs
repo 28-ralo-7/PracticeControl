@@ -13,5 +13,9 @@ namespace PracticeControl.WpfClient
     /// </summary>
     public partial class App : Application
     {
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

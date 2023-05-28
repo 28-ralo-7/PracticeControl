@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="EmployeeModalWindow" Height="500" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Border   BorderBrush="Black" BorderThickness="2">
-        <Grid>
+        <Grid Background="#cfcfce">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -44,14 +44,15 @@
 
             <Label Content="Параметры" Width="120" Height="40" FontSize="20" Grid.Column="0" Grid.Row="6"        />
             <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
-                <CheckBox x:Name="isAdmin_CheckBox" Width="15" Height="20" />
+                <CheckBox Style="{StaticResource chkBullet}" x:Name="isAdmin_CheckBox" Width="50" Background="#5387b9" Margin="10" IsChecked="False" Content="Off" Tag="On"    />
+
                 <Label Content="Права администратора" Width="140" Height="30"/>
             </StackPanel>
             
-
-            <Button x:Name="cancel_Button" Content="Отмена" Click="cancel_Button_Click" Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Grid.Column="0" Grid.Row="7"/> 
-            <Button x:Name="create_Button" Content="Добавить" Click="create_Button_Click" Visibility="Collapsed" Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Grid.Column="1" Grid.Row="7"/> 
-            <Button x:Name="edit_Button" Content="Изменить" Click="edit_Button_Click" Visibility="Collapsed" Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Grid.Column="1" Grid.Row="7"/> 
+            
+            <Button x:Name="cancel_Button" Content="Отмена" Click="cancel_Button_Click" Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="7"/> 
+            <Button x:Name="create_Button" Content="Добавить" Click="create_Button_Click" Visibility="Collapsed" Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="7"/> 
+            <Button x:Name="edit_Button" Content="Изменить" Click="edit_Button_Click" Visibility="Collapsed" Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="7"/> 
 
         </Grid>
     </Border>

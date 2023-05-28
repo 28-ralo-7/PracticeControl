@@ -6,14 +6,18 @@
         xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows"
         mc:Ignorable="d"
         Title="" Height="365" Width="420" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Grid>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Width="280">
-            <TextBlock Text="Авторизация" Height="35" HorizontalAlignment="Center" FontSize="20" />
-            <TextBlock Text="Логин" Height="35" HorizontalAlignment="Center" FontSize="17" Margin="10"/>
-            <TextBox x:Name="login_TextBox" Text="" Height="35" FontSize="17"/>
-            <TextBlock Text="Пароль" Height="35" HorizontalAlignment="Center" FontSize="17" Margin="10"/>
-            <PasswordBox x:Name="passwordBox" Height="35" FontSize="17"/>
-            <Button x:Name="auth_button" Click="Auth_button_Click" Content="Войти" HorizontalAlignment="Center" FontSize="17"  Height="35" Margin="20" Width="180"/>
+    <Grid Style="{StaticResource LoginGridStyle}">
+        <StackPanel Style="{StaticResource LoginStackPanelStyle}" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Width="280">
+            <TextBlock Style="{StaticResource LoginTextBlockStyle}" Text="Авторизация" Height="35" HorizontalAlignment="Center" FontSize="20" />
+
+            <TextBlock Style="{StaticResource LoginTextBlockStyle}" Text="Логин" />
+            <TextBox Style="{StaticResource LoginTextBoxStyle}" x:Name="login_TextBox" />
+
+            <TextBlock Style="{StaticResource LoginTextBlockStyle}" Text="Пароль"/>
+            <PasswordBox Style="{StaticResource LoginPasswordBoxStyle}" x:Name="passwordBox"/> 
+
+            <Button x:Name="auth_button" Style="{StaticResource LoginButtonStyle}" Click="Auth_button_Click" Content="Войти" />
+        
         </StackPanel>
     </Grid>
 </Window>

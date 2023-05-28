@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="StudentEditModalWindow" Height="600" Width="405" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Border   BorderBrush="Black" BorderThickness="2">
-        <Grid x:Name="gridStudentModal">
+        <Grid x:Name="gridStudentModal" Background="#cfcfce">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="38*"></ColumnDefinition>
                 <ColumnDefinition Width="43*"></ColumnDefinition>
@@ -40,7 +40,7 @@
             <TextBox x:Name="middleName_TextBox" Grid.Row="3" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
             <TextBox x:Name="login_TextBox" Grid.Row="4" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
             <TextBox x:Name="password_TextBox" Grid.Row="5" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
-            <ComboBox x:Name="group_ComboBox" Grid.Row="6" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" Visibility="Collapsed"/>
+            <ComboBox x:Name="group_ComboBox" BorderBrush="Transparent" Grid.Row="6" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" Visibility="Collapsed"/>
 
             <Button x:Name="editStudent_Button" Click="EditStudent_Button_Click" 
                     Content="Изменить" FontSize="17"  Grid.Column="1"

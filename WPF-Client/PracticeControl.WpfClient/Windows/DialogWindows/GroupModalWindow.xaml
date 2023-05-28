@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows.DialogWindows"
         mc:Ignorable="d"
         Title="Добавление группы" Height="600" Width="565" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" >
-    <Grid>
+    <Grid Background="#cfcfce">
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="30,20,30,0" Width="444">
                 <TextBlock Text="Введите название группы:"  FontSize="20" Height="34" Width="247"></TextBlock>
@@ -33,16 +33,6 @@
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="300" Header="Студенты" Binding="{Binding StudentName}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="{x:Type DataGridColumnHeader}">
-                                    <Setter Property="Margin" Value="2"/>
-                                    <Setter Property="FontSize" Value="20"/>
-                                    <Setter Property="Height" Value="45"/>
-                                    <Setter Property="Background" Value="White"/>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                    <Setter Property="Foreground" Value="Black"/>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}">
                                     <Setter Property="Background" Value="White"/>
@@ -56,16 +46,6 @@
                         </DataGridTextColumn>
 
                         <DataGridTextColumn Width="*" x:Name="columnStudentLogin" Header="Логин" Binding="{Binding Login}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="{x:Type DataGridColumnHeader}">
-                                    <Setter Property="Margin" Value="2"/>
-                                    <Setter Property="FontSize" Value="20"/>
-                                    <Setter Property="Height" Value="45"/>
-                                    <Setter Property="Background" Value="White"/>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                    <Setter Property="Foreground" Value="Black"/>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
                             <DataGridTextColumn.CellStyle>
                                 <Style TargetType="{x:Type DataGridCell}">
                                     <Setter Property="Background" Value="White"/>

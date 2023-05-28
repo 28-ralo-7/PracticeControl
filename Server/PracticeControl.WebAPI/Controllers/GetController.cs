@@ -19,7 +19,7 @@ namespace PracticeControl.WebAPI.Controllers
         }
 
         [HttpGet("getGroups")]
-        public async Task<IActionResult> GetAttendanceView()
+        public async Task<IActionResult> GetGroups()
         {
             var attendances = await _getService.GetGroupViews();
             return Ok(attendances);
@@ -47,11 +47,6 @@ namespace PracticeControl.WebAPI.Controllers
 
             return Ok(practiceList);
         }
-        [HttpGet("getAttendance")]
-        public IActionResult GetAttendanceViews()
-        {
-            return null;
-        }
 
         [HttpGet("getStudentGroup/{groupName}")]
         public async Task<IActionResult> GetStudentsGroup([FromRoute] string groupName)
@@ -62,7 +57,7 @@ namespace PracticeControl.WebAPI.Controllers
         }
 
         [HttpGet("getAllStudents")]
-        public async Task<IActionResult> GetAllStudents()
+        public async Task<IActionResult> GetStudentList()
         {
             var response = await _getService.GetStudents();
 

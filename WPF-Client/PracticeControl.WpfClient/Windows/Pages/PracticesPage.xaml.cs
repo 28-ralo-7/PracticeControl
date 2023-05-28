@@ -84,7 +84,13 @@ namespace PracticeControl.WpfClient.Windows.Pages
             PracticesData();
         }
 
-#endregion
+        private void buttonAddPracitce_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        #endregion
 
 
 
@@ -108,6 +114,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 var currentAttendanceStudent = CurrentAttendance
                 .FirstOrDefault(x => x.StudentView.StudentID == student.StudentID);
 
+
                 if (currentAttendanceStudent is null)
                 {
                     AttendanceRows.Add(new AttendanceViewDaniil
@@ -122,6 +129,8 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 }
                 else
                 {
+                    
+
                     AttendanceRows.Add(new AttendanceViewDaniil
                     {
                         StudentID = student.StudentID,
@@ -152,33 +161,44 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
+        { 
             var selectStudentAttendance = (AttendanceViewDaniil)dataGridAttendance.SelectedItem;
 
-            selectStudentAttendance.Photo = "fdfs";
+            if (selectStudentAttendance == null)
+            {
+                return;
+            }
 
             var checkBox = (CheckBox)sender;
 
             if (string.IsNullOrEmpty(selectStudentAttendance.Photo)) 
             {
-                checkBox.IsChecked = false;
                 MessageBox.Show("Для выставления присутствия необходимо фото");
                 return;
             }
 
-            if (UpdateAttendance.Any(n => n.AttendanceID == selectStudentAttendance.AttendanceID))
+            var selectAttendance = AttendanceAll.FirstOrDefault(x => x.StudentView.StudentID == selectStudentAttendance.StudentID);
+
+            if (selectAttendance is null)
+            {
+                return;
+            }
+
+            if (UpdateAttendance.Any(n => n.StudentID == selectStudentAttendance.StudentID))
             {
                 var updateStudentAttendance = UpdateAttendance.FirstOrDefault(x => x.AttendanceID == selectStudentAttendance.AttendanceID);
 
                 if (updateStudentAttendance.IsPresence)
                 {
                     updateStudentAttendance.IsPresence = false;
-                    checkBox.IsChecked = false;
+                    selectAttendance.IsPresent = false;
+                    return;
                 }
                 else
                 {
                     updateStudentAttendance.IsPresence = true;
-                    checkBox.IsChecked = true;
+                    selectAttendance.IsPresent = true;
+                    return;
                 }
             }
             else
@@ -193,7 +213,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 };
 
                 UpdateAttendance.Add(updateStudentAttendance);
-                checkBox.IsChecked = true;
+                return;
             }
         }
 
@@ -225,6 +245,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 return;
             }
         }
+
 
     }
 

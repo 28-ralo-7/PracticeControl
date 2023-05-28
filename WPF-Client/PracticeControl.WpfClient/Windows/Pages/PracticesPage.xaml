@@ -7,17 +7,17 @@
       mc:Ignorable="d" 
       d:DesignHeight="1000" d:DesignWidth="1627"
       Title="PracticesPage" x:Name="Practices_Page" Loaded="PracticesPage_GotFocus" >
-    <Canvas Background="White">
+    <Canvas Background="#cfcfce">
 
         <!--Посещаемость-->
-        <Grid HorizontalAlignment="Left" Visibility="Visible" x:Name="gridAttendance" Height="1000" VerticalAlignment="Center" Width="1627">
+        <Grid HorizontalAlignment="Left" Visibility="Collapsed" x:Name="gridAttendance" Height="1000" VerticalAlignment="Center" Width="1627">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"></RowDefinition>
                 <RowDefinition Height="23*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <StackPanel  Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Left" Width="180">
-                <Button x:Name="backPractices" Content="Назад" Width="160" Height="45" FontSize="25"  Background="White" Margin="10" Click="backPractices_Click" ></Button>
+                <Button x:Name="backPractices" Content="Назад" Width="160" Height="45" Margin="10" Click="backPractices_Click" ></Button>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="1">
@@ -76,60 +76,30 @@
                 </Grid>
 
 
-
-
-
                 <DataGrid x:Name="dataGridAttendance" IsReadOnly="True"
                           HorizontalAlignment="Center" CanUserResizeColumns="False" AutoGenerateColumns="False" Margin="10,5,15,10"
                           MaxHeight="426" ItemsSource="{Binding Attendances}" Width="1338">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Студенты" Width="520" Binding="{Binding StudentName}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="FontSize" Value="25"></Setter>
-                                    <Setter Property="Height" Value="55"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Студенты" Width="520" Binding="{Binding StudentName}"/>
 
                         <DataGridTemplateColumn Header="Фото" Width="420">
-                            <DataGridTemplateColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="FontSize" Value="25"></Setter>
-                                    <Setter Property="Height" Value="55"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTemplateColumn.HeaderStyle>
 
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Image Source="{Binding Photo}" Width="50" Height="50"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
+                            
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Присутствие">
+                        <DataGridTemplateColumn Header="Присутствие" Width="*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsPresence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"/>
+                                    <CheckBox Style="{StaticResource chkBullet}" Background="#5387b9" Content="Отсутствует" Tag="Присутствует" IsChecked="{Binding IsPresence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+                        
                     </DataGrid.Columns>
                     
                     
@@ -139,14 +109,14 @@
         </Grid>
         
         <!--Расписание-->
-        <Grid HorizontalAlignment="Left" Visibility="Collapsed" x:Name="gridPractices" Height="1000" VerticalAlignment="Center" Width="1627">
+        <Grid HorizontalAlignment="Left" Visibility="Visible" x:Name="gridPractices" Height="1000" VerticalAlignment="Center" Width="1627">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="rowAdmin" Height="65*"></RowDefinition>
                 <RowDefinition Height="498*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <StackPanel x:Name="stPanFuncAdminPractices" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Background="White" Content="Добавить практику"  FontSize="15" Margin="23,5" Width="160" Height="45"></Button>
+                <Button x:Name="buttonAddPracitce" Content="Добавить практику" Margin="23,5" Width="160" Height="45" Click="buttonAddPracitce_Click"></Button>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,-50,0,0">
@@ -156,205 +126,18 @@
                           Width="1500" PreviewMouseDoubleClick="dataGridPractices_PreviewMouseDoubleClick">
                     <DataGrid.Columns>
 
-                        <DataGridTextColumn Header="Аббревиатура" Width="150" Binding="{Binding Abbreviation}" >
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="FontSize" Value="19"></Setter>
-                                    <Setter Property="Height" Value="35"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn Header="Аббревиатура" Width="150" Binding="{Binding Abbreviation}" />
 
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="40"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Модуль" Width="350" Binding="{Binding PracticeModule}"/>
 
-                        <DataGridTextColumn Header="Модуль" Width="350" Binding="{Binding PracticeModule}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="FontSize" Value="19"></Setter>
-                                    <Setter Property="Height" Value="35"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="40"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True"></Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Специальность" Width="150" Binding="{Binding Specialty}"/>
 
-                        <DataGridTextColumn Header="Специальность" Width="150" Binding="{Binding Specialty}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="FontSize" Value="19"></Setter>
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="Height" Value="35"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="40"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Руководитель" x:Name="columnPracticeLead" Visibility="Visible" Width="180" Binding="{Binding Employee.LastName}"/>
 
-                        <DataGridTextColumn Header="Руководитель" x:Name="columnPracticeLead" Visibility="Visible" Width="180" Binding="{Binding Employee.LastName}">
-                            <DataGridTextColumn.HeaderStyle>
 
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="FontSize" Value="19"></Setter>
-                                    <Setter Property="Height" Value="35"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
+                        <DataGridTextColumn Header="Группа" Width="*" Binding="{Binding Group.GroupName}"/>
 
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="40"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
-
-                        <DataGridTextColumn Header="Группа" Width="*" Binding="{Binding Group.GroupName}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="FontSize" Value="19"></Setter>
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="Height" Value="35"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="40"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
-
-                        <DataGridTextColumn Header="Дата начала" Width="*" Binding="{Binding StartDate}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="FontSize" Value="19"></Setter>
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="Height" Value="35"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="40"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
-
-                        <DataGridTextColumn Header="Дата конца" Width="*" Binding="{Binding EndDate}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="FontSize" Value="19"></Setter>
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="Height" Value="35"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="40"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Дата конца" Width="*" Binding="{Binding EndDate}"/>
 
                     </DataGrid.Columns>
                 </DataGrid>
