@@ -1,13 +1,20 @@
 ﻿using DocumentFormat.OpenXml.Office2010.ExcelAc;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Vml;
+using DocumentFormat.OpenXml.Wordprocessing;
 using PracticeControl.WpfClient.API;
 using PracticeControl.WpfClient.Model.View;
 using PracticeControl.WpfClient.Model.ViewCreate;
+using PracticeControl.WpfClient.Model.ViewOut;
 using PracticeControl.WpfClient.Model.ViewUpdate;
 using PracticeControl.WpfClient.Windows.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using static PracticeControl.WpfClient.Helpers.ValidationTools;
 
 namespace PracticeControl.WpfClient.Windows.DialogWindows
 {
@@ -23,6 +30,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
         private bool IsExcelStudent { get; set; } = false;
 
+        //Изменение студентов в окне добавления группы
         public StudentEditModalWindow(StudentOut? student, bool isExcelStudent)
         {
             Student = student;
@@ -40,21 +48,35 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
             StudentEditData();
         }
-        public StudentEditModalWindow(StudentForm student)
+
+        //Изменение студентов в окне студенты
+        public StudentEditModalWindow(StudentForm? student)
         {
             StudentForm = student;
 
             InitializeComponent();
 
+            gridStudentModal.RowDefinitions.Insert(7, new RowDefinition());
+                
+            this.Height = 700;
             editStudent_Button.Visibility = Visibility.Visible;
-            this.Height = 600;
-            group_ComboBox.Visibility = Visibility.Collapsed;
+            editStudent_Button.SetValue(Grid.RowProperty, 7);
+            group_ComboBox.Visibility = Visibility.Visible;
             addStudent_Button.Visibility = Visibility.Collapsed;
-            group_TextBlock.Visibility = Visibility.Collapsed;
+            group_TextBlock.Visibility = Visibility.Visible;
             title_Label.Content = "Изменение студента";
+
+            var groups = GetRequests.GetGroupsAsync().Result.ToList();
+
+            var groupsName = groups.Select(group => group.GroupName).ToList();
+
+            group_ComboBox.ItemsSource = groupsName;
+            group_ComboBox.SelectedIndex = 0;
 
             StudentEditData();
         }
+
+        //Добавление студентов в окне студенты
         public StudentEditModalWindow(List<StudentView> student)
         {
             AllStudents = student;       
@@ -77,6 +99,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
         }
 
+        //Обновление TextBox
         private void StudentEditData()
         {
             if (StudentForm is null)
@@ -85,6 +108,10 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 firstName_TextBox.Text = Student.StudentName.Split(' ')[1];
                 middleName_TextBox.Text = Student.StudentName.Split(' ')[2];
                 login_TextBox.Text = Student.Login;
+                if (Student.Group is not null)
+                {
+                    group_ComboBox.SelectedItem = Student.Group.GroupName;
+                }
             }
             else
             {
@@ -92,9 +119,14 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 firstName_TextBox.Text = StudentForm.StudentName.Split(' ')[1];
                 middleName_TextBox.Text = StudentForm.StudentName.Split(' ')[2];
                 login_TextBox.Text = StudentForm.Login;
+                if (StudentForm.GroupName is not null)
+                {
+                    group_ComboBox.SelectedItem = StudentForm.GroupName;
+                }
             }
         }
 
+        //Изменить студента
         private async void EditStudent_Button_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(lastName_TextBox.Text) ||
@@ -190,6 +222,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             }
         }
 
+        //Добавить студента
         private async void addStudent_Button_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(lastName_TextBox.Text) ||
@@ -248,9 +281,22 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             }
         }
 
+        //Отмена
         private void cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        
+        //Запрет на цифры и символы
+        private void TextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            AllowOnlyCharacter(e);
+        }
+
+        //Отчистка пробелов
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ClearWhiteSpace(sender);
         }
     }
 }

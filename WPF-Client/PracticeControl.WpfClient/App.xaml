@@ -43,56 +43,56 @@
             </Style>  <!--Стиль для вкладок-->
 
             <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
-                  <Setter Property="Background" Value="#0273b2"/>
-                  <Setter Property="Foreground" Value="White"/>
-                  <Setter Property="AlternatingRowBackground" Value="#006196"/>
-                  <Setter Property="RowHeight" Value="30"/>
-                  <Setter Property="ColumnHeaderHeight" Value="30"/>
-                  <Setter Property="BorderBrush" Value="#006196"/>
-                  <Setter Property="RowBackground" Value="White"/>
-                  <Setter Property="FontSize" Value="20"/>
-                  <Setter Property="Padding" Value="5"/>
-
-                  <Setter Property="SelectionMode" Value="Single"/>
-                  <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                  <Setter Property="VerticalContentAlignment" Value="Center"/>
-                  <Setter Property="RowHeaderWidth" Value="0"/>
-                  <Setter Property="CanUserAddRows" Value="False"/>
-                  <Setter Property="CanUserDeleteRows" Value="False"/>
-                  <Setter Property="CanUserResizeRows" Value="False"/>
-                  <Setter Property="CanUserResizeColumns" Value="False"/>
-                  <Setter Property="CanUserReorderColumns" Value="False"/>
-                  <Setter Property="CanUserSortColumns" Value="True"/>
-                  <Setter Property="IsReadOnly" Value="True"/>
-                  <Setter Property="ColumnHeaderStyle">
-                    <Setter.Value>
-                      <Style TargetType="{x:Type DataGridColumnHeader}">
-                        <Setter Property="Background" Value="#0273b2"/>
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="BorderBrush" Value="#006196"/>
-                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                        <Setter Property="FontWeight" Value="Bold"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                      </Style>
-                    </Setter.Value>
-                  </Setter>
-                  <Setter Property="CellStyle">
-                    <Setter.Value>
-                      <Style TargetType="{x:Type DataGridCell}">
-                            <Setter Property="Background" Value="White"></Setter>
-                            <Setter Property="Foreground" Value="Black"></Setter>
-                            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                            <Setter Property="FontSize" Value="18"></Setter>
-                            <Setter Property="Height" Value="40"></Setter>
-                            <Setter Property="TextBlock.VerticalAlignment" Value="Top"></Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Setter.Value>
-                  </Setter>
+                <Setter Property="Background" Value="#0273b2"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="AlternatingRowBackground" Value="#006196"/>
+                <Setter Property="RowHeight" Value="30"/>
+                <Setter Property="ColumnHeaderHeight" Value="30"/>
+                <Setter Property="BorderBrush" Value="#006196"/>
+                <Setter Property="RowBackground" Value="White"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Padding" Value="5"/>
+                
+                <Setter Property="SelectionMode" Value="Single"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="RowHeaderWidth" Value="0"/>
+                <Setter Property="CanUserAddRows" Value="False"/>
+                <Setter Property="CanUserDeleteRows" Value="False"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <Setter Property="CanUserReorderColumns" Value="False"/>
+                <Setter Property="CanUserSortColumns" Value="True"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#0273b2"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderBrush" Value="#006196"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                </Setter.Value>
+                </Setter>
+                <Setter Property="CellStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="Background" Value="White"></Setter>
+                        <Setter Property="Foreground" Value="Black"></Setter>
+                        <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+                        <Setter Property="FontSize" Value="18"></Setter>
+                        <Setter Property="Height" Value="40"></Setter>
+                        <Setter Property="TextBlock.VerticalAlignment" Value="Top"></Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}"></Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+                </Setter>
                 <Setter Property="RowStyle">
                     <Setter.Value>
                         <Style TargetType="{x:Type DataGridRow}">
@@ -196,42 +196,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
-            <Style TargetType="ComboBox">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type ComboBox}">
-                            <Grid>
-                                <Popup Name="PART_Popup" IsOpen="{TemplateBinding IsDropDownOpen}"
-                                       AllowsTransparency="True" 
-                                       Focusable="False" 
-                                       PopupAnimation="Slide">
-                                       
-                                    <Border BorderBrush="Transparent" Background="#0273B2" Width="190" MaxHeight="200">
-                                        <ScrollViewer>
-                                            <ItemsPresenter />
-                                        </ScrollViewer>
-                                    </Border>
-                                </Popup>
-                                <ToggleButton Name="PART_ToggleButton" 
-                                              IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
-                                              Foreground="White"  
-                                              Background="#0273B2" BorderBrush="Transparent"
-                                              HorizontalContentAlignment="Center"> 
-                                    <ContentPresenter Content="{TemplateBinding SelectionBoxItem}" Margin="3,0,0,0" />
-                                </ToggleButton>
-                            </Grid>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter TargetName="PART_ToggleButton" Property="IsEnabled" Value="False" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Foreground" Value="White" />
-            </Style>
-
+        
             <Style TargetType="TextBox">
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="Background" Value="White"/>
@@ -247,47 +212,57 @@
             </Style>
 
             <Style x:Key="chkBullet" TargetType="CheckBox">
-                <Setter Property="IsChecked" Value="False"/>
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Foreground" Value="#999"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="CheckBox">
-                            <Border Width="250" Height="25" CornerRadius="10" Background="{TemplateBinding Background}" >
+
+                            <Border Height="30" 
+                                    CornerRadius="10" 
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="#0273b2"
+                                    Background="{TemplateBinding Background}" >
+
                                 <Grid>
-                                    <Border x:Name="border" Width="18" Height="18" CornerRadius="9" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="1 0" Background="White">
-                                        <Border.RenderTransform>
-                                            <TranslateTransform  X="0"/>
-                                        </Border.RenderTransform>
-                                    </Border>
-                                    <TextBlock x:Name="txt" Text="{TemplateBinding Content}" Margin="9 0" VerticalAlignment="Center" Foreground="White" >
-                                        <TextBlock.RenderTransform>
-                                            <TranslateTransform   X="18"></TranslateTransform>
-                                        </TextBlock.RenderTransform>
-                                    </TextBlock>
+                                    <TextBlock x:Name="txt"
+                                               Text="{TemplateBinding Content}"
+                                               Margin="9 0" 
+                                               VerticalAlignment="Center"
+                                               Foreground="{TemplateBinding Foreground}"
+                                    />
                                 </Grid>
+                                
                             </Border>
+                            
                             <ControlTemplate.Triggers>
+                                
                                 <Trigger Property="IsChecked" Value="true">
                                     <Setter Property="Text" TargetName="txt" Value="{Binding Tag,RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    <Setter Property="Background" Value="#0273b2"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+
                                     <Trigger.EnterActions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="40" Duration="00:00:0.2"/>
                                                 <DoubleAnimation Storyboard.TargetName="txt" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="0" Duration="00:00:0.2"/>
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </Trigger.EnterActions>
+
                                     <Trigger.ExitActions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="0" Duration="00:00:0.2"/>
                                                 <DoubleAnimation Storyboard.TargetName="txt" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" To="18" Duration="00:00:0.2"/>
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </Trigger.ExitActions>
+                                    
                                 </Trigger>
+                                
                                 <Trigger Property="IsChecked" Value="False">
+                                    <Setter Property="Background" Value="White"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Setter Property="BorderThickness" Value="2"/>
                                     <Setter Property="Text" TargetName="txt" Value="{Binding Content,RelativeSource={RelativeSource TemplatedParent}}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>

@@ -2,6 +2,7 @@
 using PracticeControl.WpfClient.Helpers;
 using PracticeControl.WpfClient.Model;
 using PracticeControl.WpfClient.Model.View;
+using PracticeControl.WpfClient.Model.ViewOut;
 using PracticeControl.WpfClient.Model.ViewUpdate;
 using PracticeControl.WpfClient.Windows.DialogWindows;
 using System;

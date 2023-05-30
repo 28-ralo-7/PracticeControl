@@ -11,6 +11,7 @@ using static PracticeControl.WebAPI.Converters.GroupConverter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace PracticeControl.WebAPI.Services
 {
@@ -79,6 +80,7 @@ namespace PracticeControl.WebAPI.Services
             return false;
         }
 
+        //Обновление группы
         public async Task<GroupView> UpdateGroup(string oldName, string groupName)
         {
             if (groupName is not null && oldName is not null)
@@ -92,5 +94,25 @@ namespace PracticeControl.WebAPI.Services
             return null;
         }
 
+        //Обновление посещений
+        public async Task<bool> UpdateAttendance(List<UpdateAttendanceView> attendanceView)
+        {
+            if (attendanceView is not null)
+            {
+                List<Attendance> attendances = attendanceView.Select(attendance => new Attendance
+                {
+                    Id = attendance.AttendanceID,
+                    IdStudent = attendance.StudentID,
+                    IdPractice = attendance.PracticeID,
+                    Date = DateOnly.Parse(attendance.Date),
+                    Ispresent = attendance.IsPresence
+                }).ToList();
+
+                var response = _putRepository.UpdateAttendance(attendances);
+
+                return response;
+            }
+            return false;
+        }
     }
 }

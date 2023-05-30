@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="PracticeScheduleModalWindow" Height="450" Width="800">
     <Grid>
-        
+        <ComboBox x:Name="combo" ItemsSource="{Binding listPractice }"
+                    DisplayMemberPath="Description"
+                    SelectedValuePath="Description"
+                  Width="400" Height="40" SelectionChanged="combo_SelectionChanged">
+            
+        </ComboBox>
     </Grid>
 </Window>

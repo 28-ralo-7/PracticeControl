@@ -1,6 +1,7 @@
-﻿using DocumentFormat.OpenXml.Office2010.PowerPoint;
-using PracticeControl.WpfClient.API;
+﻿using PracticeControl.WpfClient.API;
 using PracticeControl.WpfClient.Model.View;
+using PracticeControl.WpfClient.Model.ViewUpdate;
+using PracticeControl.WpfClient.Windows.DialogWindows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,8 @@ namespace PracticeControl.WpfClient.Windows.Pages
         private EmployeeView User { get; set; }
 
         private List<DateTime> PracticeDates { get; set; } = new List<DateTime>();
-        private DateTime SelectDate { get;set; }
-        private PracticeScheduleView SelectPractice { get;set; }
+        private DateTime SelectDate { get; set; }
+        private PracticeScheduleView SelectPractice { get; set; }
         private List<AttendanceViewDaniil> AttendanceRows { get; set; }
 
         private List<AttendanceView> AttendanceAll { get; set; }//главная
@@ -27,7 +28,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
         {
             this.User = User;
 
-            
+
 
             InitializeComponent();
 
@@ -42,7 +43,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 columnPracticeLead.Visibility = Visibility.Visible;
                 stPanFuncAdminPractices.Visibility = Visibility.Visible;
 
-                var Practices = await GetRequests.GetAllPracticesAsync();
+                var Practices = await GetRequests.GetAllPracticeSchedulesAsync();
 
                 dataGridPractices.ItemsSource = Practices;
             }
@@ -57,7 +58,8 @@ namespace PracticeControl.WpfClient.Windows.Pages
             }
         }
 
-       
+
+
 
         private void dataGridPractices_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -86,7 +88,8 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
         private void buttonAddPracitce_Click(object sender, RoutedEventArgs e)
         {
-
+            PracticeScheduleModalWindow createPractice = new PracticeScheduleModalWindow();
+            createPractice.ShowDialog();
         }
 
 
@@ -114,33 +117,16 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 var currentAttendanceStudent = CurrentAttendance
                 .FirstOrDefault(x => x.StudentView.StudentID == student.StudentID);
 
-
-                if (currentAttendanceStudent is null)
+                AttendanceRows.Add(new AttendanceViewDaniil
                 {
-                    AttendanceRows.Add(new AttendanceViewDaniil
-                    {
-                        StudentID = student.StudentID,
-                        StudentName = student.LastName + " " + student.FirstName + " " + student.MiddleName,
-                        Photo = null,
-                        IsPresence = false,
-                        Date = SelectDate.ToShortDateString(),
-                        
-                    }) ;
-                }
-                else
-                {
-                    
+                    StudentID = student.StudentID,
+                    AttendanceID = currentAttendanceStudent.AttendanceID,
+                    StudentName = student.LastName + " " + student.FirstName + " " + student.MiddleName,
+                    Photo = currentAttendanceStudent.Photo,
+                    IsPresence = currentAttendanceStudent.IsPresent
 
-                    AttendanceRows.Add(new AttendanceViewDaniil
-                    {
-                        StudentID = student.StudentID,
-                        AttendanceID = currentAttendanceStudent.AttendanceID,
-                        StudentName = student.LastName + " " + student.FirstName + " " + student.MiddleName,
-                        Photo = currentAttendanceStudent.Photo,
-                        IsPresence = currentAttendanceStudent.IsPresent
+                });
 
-                    });
-                }
             }
 
             dataGridAttendance.ItemsSource = AttendanceRows;
@@ -152,39 +138,37 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             for (DateTime i = Convert.ToDateTime(practice.StartDate); i <= Convert.ToDateTime(practice.EndDate); i = i.AddDays(1))
             {
+                if (i.DayOfWeek == DayOfWeek.Sunday || i.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    continue;
+                }
+
                 PracticeDates.Add(i);
             }
 
             SelectDate = PracticeDates[0];
-            date_TextBlock.Text = $"c {PracticeDates[0].ToShortDateString().Replace(".2023", "")} по {PracticeDates[PracticeDates.Count-1].ToShortDateString().Replace(".2023", "")}";
+            date_TextBlock.Text = $"c {PracticeDates[0].ToShortDateString().Replace(".2023", "")} по {PracticeDates[PracticeDates.Count - 1].ToShortDateString().Replace(".2023", "")}";
         }
 
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        { 
+        {
             var selectStudentAttendance = (AttendanceViewDaniil)dataGridAttendance.SelectedItem;
 
-            if (selectStudentAttendance == null)
+
+            if (selectStudentAttendance is null)
             {
                 return;
             }
 
-            var checkBox = (CheckBox)sender;
-
-            if (string.IsNullOrEmpty(selectStudentAttendance.Photo)) 
-            {
-                MessageBox.Show("Для выставления присутствия необходимо фото");
-                return;
-            }
-
-            var selectAttendance = AttendanceAll.FirstOrDefault(x => x.StudentView.StudentID == selectStudentAttendance.StudentID);
+            var selectAttendance = AttendanceAll.FirstOrDefault(x => x.AttendanceID == selectStudentAttendance.AttendanceID);
 
             if (selectAttendance is null)
             {
                 return;
             }
 
-            if (UpdateAttendance.Any(n => n.StudentID == selectStudentAttendance.StudentID))
+            if (UpdateAttendance.Any(n => n.AttendanceID == selectStudentAttendance.AttendanceID))
             {
                 var updateStudentAttendance = UpdateAttendance.FirstOrDefault(x => x.AttendanceID == selectStudentAttendance.AttendanceID);
 
@@ -192,12 +176,18 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 {
                     updateStudentAttendance.IsPresence = false;
                     selectAttendance.IsPresent = false;
+
+                    var obj = AttendanceAll;
+
                     return;
                 }
                 else
                 {
                     updateStudentAttendance.IsPresence = true;
                     selectAttendance.IsPresent = true;
+
+                    var obj = AttendanceAll;
+
                     return;
                 }
             }
@@ -212,31 +202,35 @@ namespace PracticeControl.WpfClient.Windows.Pages
                     IsPresence = selectStudentAttendance.IsPresence
                 };
 
+                selectAttendance.IsPresent = selectStudentAttendance.IsPresence;
+
+                var obj = AttendanceAll;
+
                 UpdateAttendance.Add(updateStudentAttendance);
                 return;
             }
+
+
+            
         }
-
-
-        //КНОПКА СОХРАНИТЬ ВСЕ ИЗМЕНЕНИЯ
-        //И ОТПРАВКА UpdateAttendance на сервер
 
         //Назад дата
         private void buttonBackDay_Click(object sender, RoutedEventArgs e)
         {
             DateTime beginDate = PracticeDates[0];
 
-            if (SelectDate>beginDate)
+            if (SelectDate > beginDate)
             {
                 SelectDate = SelectDate.AddDays(-1);
                 AttendanceData();
                 return;
             }
         }
+
         //Вперед дата
         private void buttonNextDay_Click(object sender, RoutedEventArgs e)
         {
-            DateTime endDate = PracticeDates[PracticeDates.Count-1];
+            DateTime endDate = PracticeDates[PracticeDates.Count - 1];
 
             if (SelectDate < endDate)
             {
@@ -246,8 +240,38 @@ namespace PracticeControl.WpfClient.Windows.Pages
             }
         }
 
+        private async void buttonSaveAttendance_Click(object sender, RoutedEventArgs e)
+        {
+            if (UpdateAttendance.Count > 0)
+            {
+                var response = await UpdateRequests.UpdateAttendanceAsync(UpdateAttendance);
 
+                if (response)
+                {
+                    MessageBox.Show("Изменения прошли успешно");
+
+                    var practices = await GetRequests.GetAllPracticeSchedulesAsync();
+
+                    SelectPractice = practices.FirstOrDefault(x => x.PracticeScheduleID == SelectPractice.PracticeScheduleID);
+
+                    AttendanceAll = SelectPractice.Attendances;
+                    PracticeDates.Clear();
+
+                    AttendanceData();
+
+                    return;
+                }
+
+                MessageBox.Show("Изменить не удалось");
+                return;
+            }
+
+            MessageBox.Show("Изменений нет");
+        }
     }
+
+
+
 
     public class AttendanceViewDaniil
     {
@@ -259,14 +283,4 @@ namespace PracticeControl.WpfClient.Windows.Pages
         public bool IsPresence { get; set; }
     }
 
-
-
-    public class UpdateAttendanceView
-    {
-        public int AttendanceID { get; set; }
-        public int StudentID { get; set; }
-        public int PracticeID { get; set; }
-        public string Date { get; set; }
-        public bool IsPresence { get; set; }
-    }
 }

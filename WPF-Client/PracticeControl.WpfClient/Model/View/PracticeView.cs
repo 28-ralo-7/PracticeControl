@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace PracticeControl.WpfClient.Model.View
 {
-    public class GroupOut
+    public class PracticeView
     {
-        public GroupView GroupView { get; set; }
-        public int CountStudents { get; set; }
+        public string Abbreviation { get; set; }
+        public string PracticeModule { get; set; }
+        public string Specialty { get; set; }
+
     }
 }

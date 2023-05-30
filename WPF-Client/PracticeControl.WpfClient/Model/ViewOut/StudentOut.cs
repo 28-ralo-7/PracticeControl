@@ -1,11 +1,12 @@
-﻿using PracticeControl.WpfClient.Windows.Pages;
+﻿using PracticeControl.WpfClient.Model.View;
+using PracticeControl.WpfClient.Windows.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PracticeControl.WpfClient.Model.View
+namespace PracticeControl.WpfClient.Model.ViewOut
 {
     public class StudentOut
     {

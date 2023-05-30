@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static PracticeControl.WpfClient.Helpers.ValidationTools;
 
 namespace PracticeControl.WpfClient.Windows.DialogWindows
 {
@@ -26,6 +27,8 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
     {
         private readonly List<EmployeeView>? employeeViews;
         private readonly EmployeeView? employee;
+
+        //Добавление сотрудника
         public EmployeeModalWindow(List<EmployeeView>? employeeViews)
         {
             InitializeComponent();
@@ -33,6 +36,8 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             title_Label.Content = "Добавление пользователя";
             this.employeeViews = employeeViews;
         }
+        
+        //Измение сотрудника
         public EmployeeModalWindow(List<EmployeeView>? employeeViews, EmployeeForm employeeForm)
         {
             InitializeComponent();
@@ -53,6 +58,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             }
         }
 
+        //Метод добавления
         private async void create_Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -108,11 +114,13 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
         }
 
+        //Отмена
         private void cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        //Метод изменения
         private async void edit_Button_Click(object sender, RoutedEventArgs e)
         {
             var count = employeeViews
@@ -166,6 +174,18 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             {
                 MessageBox.Show("Ошибка сохранения");
             }
+        }
+        
+        //Пропуск для букв
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            AllowOnlyCharacter(e);
+        }
+
+        //Очистка пробелов
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ClearWhiteSpace(sender);
         }
     }
 }

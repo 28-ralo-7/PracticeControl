@@ -16,7 +16,7 @@
             <TextBlock Style="{StaticResource LoginTextBlockStyle}" Text="Пароль"/>
             <PasswordBox Style="{StaticResource LoginPasswordBoxStyle}" x:Name="passwordBox"/> 
 
-            <Button x:Name="auth_button" Style="{StaticResource LoginButtonStyle}" Click="Auth_button_Click" Content="Войти" />
+            <Button x:Name="auth_button" IsDefault="True" Style="{StaticResource LoginButtonStyle}" Click="Auth_button_Click" Content="Войти" />
         
         </StackPanel>
     </Grid>

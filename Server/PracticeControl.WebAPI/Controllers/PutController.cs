@@ -37,5 +37,13 @@ namespace PracticeControl.WebAPI.Controllers
 
             return Ok(response.Result);
         }
+
+        [HttpPut("updateAttendances")]
+        public async Task<IActionResult> UpdateAttendance([FromBody] List<UpdateAttendanceView> attendanceView)
+        {
+            var response = _putService.UpdateAttendance(attendanceView);
+
+            return Ok(response.Result);
+        }
     }
 }

@@ -78,5 +78,29 @@ namespace PracticeControl.WpfClient.API
         }
 
 
+
+        public static async Task<bool> UpdateAttendanceAsync(List<UpdateAttendanceView> updateAttendances)
+        {
+            HttpClient client = new HttpClient();
+
+            var json = JsonConvert.SerializeObject(updateAttendances);
+
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"https://localhost:7063/api/put/updateAttendances/", data).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            var responseData = await response.Content.ReadAsStringAsync();
+            var updatedAttendances = JsonConvert.DeserializeObject<bool>(responseData);
+
+            return updatedAttendances;
+        }
+
+
+
     }
 }

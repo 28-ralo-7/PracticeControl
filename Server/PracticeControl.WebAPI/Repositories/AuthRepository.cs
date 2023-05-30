@@ -13,7 +13,7 @@ namespace PracticeControl.WebAPI.Repositories
 
         public Employee? GetEmployee(string login)
         {
-            var employee = _context.Employees.FirstOrDefault(x => x.Login == login);
+            var employee = _context.Employees.FirstOrDefault(x => x.Login == login && x.Isdeleted == false);
             return employee;
         }
     }

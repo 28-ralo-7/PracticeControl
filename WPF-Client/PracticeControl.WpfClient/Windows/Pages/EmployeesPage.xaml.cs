@@ -11,10 +11,12 @@ namespace PracticeControl.WpfClient.Windows.Pages
     public partial class EmployeesPage : Page
     {
         private List<EmployeeView>? employees;
-        public EmployeesPage()
+        private EmployeeView User { get; set; }
+
+        public EmployeesPage(EmployeeView User)
         {
             InitializeComponent();
-
+            this.User = User;
             EmployeesData();
         }
 
@@ -69,6 +71,32 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 return;
             }
 
+            if (employee.Login == User.Login)
+            {
+                MessageBoxResult resultMyself = MessageBox.Show("Вы уверены, что хотите удалить себя же?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (resultMyself == MessageBoxResult.Yes)
+                {
+                    var response = await DeleteRequests.DeleteEmployeeAsync(employee.Login);
+
+                    if ((bool)response)
+                    {
+                        MessageBox.Show("Сотрудник удален");
+                        EmployeesData();
+                        AuthorizationWindow authorizationWindow = new AuthorizationWindow();
+                        authorizationWindow.Show();
+                        Window window = Window.GetWindow(this);
+                        if (window != null)
+                        {
+                            window.Close();
+                        }
+                        return;
+                    }
+                    MessageBox.Show("Не удалось удалить");
+
+                }
+                return;
+            }
+
             MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить выбранную запись?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
@@ -91,6 +119,8 @@ namespace PracticeControl.WpfClient.Windows.Pages
             EmployeesData();
 
         }
+
+        
     }
 
     public class EmployeeForm

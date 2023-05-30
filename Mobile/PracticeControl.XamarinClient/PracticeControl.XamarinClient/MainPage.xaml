@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PracticeControl.XamarinClient.MainPage" 
+             x:Name="authPage">
+
+    <ContentPage.Content>
+        <StackLayout Background="#2196F3" VerticalOptions="FillAndExpand">
+            <StackLayout WidthRequest="350"
+                         HeightRequest="500"
+                         HorizontalOptions="CenterAndExpand"
+                         VerticalOptions="CenterAndExpand"
+                         >
+                <Label Text="Контроль практики" FontSize="40" TextColor="White" HorizontalOptions="Center" Margin="0 0 50 0"/>
+                
+                <!-- Поле ввода имени пользователя -->
+                <Entry Placeholder="Имя пользователя" 
+                       Text="{Binding Username}"
+                       
+                       Background="white"
+                       TextColor="Black"
+                       PlaceholderColor="Gray"
+                       
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Keyboard="Default" 
+                       
+                       WidthRequest="350" 
+                       HeightRequest="70"
+                       Margin="0 0 50 0"
+                       FontSize="30"
+                       
+                       />
+
+                <!-- Поле ввода пароля -->
+                <Entry Placeholder="Пароль"
+                       Text="{Binding Password}" 
+
+                       Background="white"
+                       TextColor="Black"
+                       PlaceholderColor="Gray"
+                       
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       
+                       WidthRequest="350" 
+                       HeightRequest="70"
+                       Margin="0 0 50 0"
+                       FontSize="30"
+                       
+                       IsPassword="true" />
+                       
+
+                <!-- Кнопка для входа -->
+                <Button Text="Войти" 
+                        Background="white" 
+                        HorizontalOptions="Center" 
+                        TextColor="Black"
+                        WidthRequest="300"
+                        Command="{Binding LoginCommand}" />
+            </StackLayout>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

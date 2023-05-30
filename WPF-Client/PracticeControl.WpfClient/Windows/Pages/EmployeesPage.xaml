@@ -25,21 +25,30 @@
             <DataGrid x:Name="dataGridEmployees" ScrollViewer.VerticalScrollBarVisibility="Visible"
                       IsReadOnly="True" HorizontalAlignment="Center" CanUserResizeColumns="False"
                       Margin="10,20,15,10"
-                      AutoGenerateColumns="False" Width="1468" MaxHeight="620">
+                      AutoGenerateColumns="False" Width="1468" MaxHeight="620" >
 
                 <DataGrid.ContextMenu>
-                    <ContextMenu>
+                    <ContextMenu >
                         <MenuItem x:Name="edit_Button" Click="edit_Button_Click" Header="Изменить"/>
-                        <MenuItem x:Name="delete_Button" Click="delete_Button_Click" Header="Удалить"/>
+                        <MenuItem x:Name="delete_Button"  Click="delete_Button_Click" Header="Удалить"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="500" MinWidth="100" MaxWidth="500" Header="Преподаватели" Binding="{Binding EmployeeName}"/>
+                    <DataGridTextColumn Width="500" 
+                                        MinWidth="100" 
+                                        MaxWidth="500" 
+                                        Header="Преподаватели" 
+                                        Binding="{Binding EmployeeName}"
+                                        />
 
-                    <DataGridTextColumn Width="300" Header="Логин" Binding="{Binding Login}"/>
+                    <DataGridTextColumn Width="300" 
+                                        Header="Логин" 
+                                        Binding="{Binding Login}"/>
 
-                    <DataGridTextColumn Width="*" Header="Роль" Binding="{Binding IsAdmin}"/>
+                    <DataGridTextColumn Width="*" 
+                                        Header="Роль" 
+                                        Binding="{Binding IsAdmin}"/>
 
                 </DataGrid.Columns>
             </DataGrid>

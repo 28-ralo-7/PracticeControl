@@ -19,6 +19,8 @@ public partial class Attendance
 
     public long IdPractice { get; set; }
 
+    public string? CompanyName { get; set; }
+
     public virtual Practiceschedule IdPracticeNavigation { get; set; } = null!;
 
     public virtual Student IdStudentNavigation { get; set; } = null!;

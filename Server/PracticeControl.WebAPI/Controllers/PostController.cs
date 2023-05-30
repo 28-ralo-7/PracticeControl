@@ -39,5 +39,12 @@ namespace PracticeControl.WebAPI.Controllers
 
             return Ok(response is not null ? true : false);
         }
+        [HttpPost("createPracticeSchedule")]
+        public IActionResult CreatePracticeSchedule([FromBody] CreatePracticeSchedule schedule)
+        {
+            var response = _postService.CreatePracticeSchedule(schedule);
+
+            return Ok(response);
+        }
     }
 }

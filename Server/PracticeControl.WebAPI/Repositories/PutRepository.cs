@@ -15,6 +15,7 @@ namespace PracticeControl.WebAPI.Repositories
             _context= context;
             _postRepository= postRepository;
         }
+        //Сотрудники
         public async Task<Employee> UpdateEmployee(Employee employeeForUpdate, string loginSearch)
         {
             Employee? employeeFromDb = await _context.Employees.FirstOrDefaultAsync(employee => employee.Login == loginSearch);
@@ -40,7 +41,8 @@ namespace PracticeControl.WebAPI.Repositories
 
             return employeeFromDb;
         }
-
+        
+        //Студенты
         public async Task<Student> UpdateStudent(Student studentForUpdate, string loginSearch)
         {
             Student? studentFromDb = await _context.Students.FirstOrDefaultAsync(student => student.Login == loginSearch);
@@ -67,6 +69,7 @@ namespace PracticeControl.WebAPI.Repositories
             return studentFromDb;
         }
 
+        //Группы
         public async Task<Group> UpdateGroup(string oldName, string newName)
         {
             Group group = await _context.Groups.FirstOrDefaultAsync(group => group.Name == oldName);
@@ -78,6 +81,27 @@ namespace PracticeControl.WebAPI.Repositories
                 return group;
             }
             return null;
+        }
+
+        //Посещения
+        public bool UpdateAttendance(List<Attendance> attendances)
+        {
+            try
+            {
+                foreach (var attendance in attendances)
+                {
+                    Attendance? attendanceFromDb = _context.Attendances
+                            .FirstOrDefault(a => a.Id ==attendance.Id);
+
+                    attendanceFromDb.Ispresent = attendance.Ispresent;
+                }
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

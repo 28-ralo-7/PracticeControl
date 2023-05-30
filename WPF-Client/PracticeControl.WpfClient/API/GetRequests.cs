@@ -46,6 +46,7 @@ namespace PracticeControl.WpfClient.API
 
             return user;
         }
+
         //Список групп
         public static async Task<List<GroupView>?> GetGroupsAsync()
         {
@@ -65,6 +66,7 @@ namespace PracticeControl.WpfClient.API
 
             return allGroups;
         }//Готово
+
         //Список студентов группы
         public static async Task<List<StudentView>?> GetStudentsGroupAsync(string groupName)
         {
@@ -84,7 +86,8 @@ namespace PracticeControl.WpfClient.API
             var studentGroup = JsonConvert.DeserializeObject<List<StudentView>>(data);
 
             return studentGroup;
-        }//ДОБАВИТЬ
+        }//Дописать
+
         //Все сотрудники
         public static async Task<List<EmployeeView>?> GetAllEmployeesAsync()
         {
@@ -104,6 +107,7 @@ namespace PracticeControl.WpfClient.API
 
             return allEmployees;
         }//Готово
+
         //Все студенты
         public static async Task<List<StudentView>?> GetAllStudentsAsync()
         {
@@ -122,9 +126,10 @@ namespace PracticeControl.WpfClient.API
             var allStudents = JsonConvert.DeserializeObject<List<StudentView>>(data);
 
             return allStudents;
-        }//ДОБАВИТЬ
+        }//Дописать
+
         //Все практики
-        public static async Task<List<PracticeScheduleView>?> GetAllPracticesAsync()
+        public static async Task<List<PracticeScheduleView>?> GetAllPracticeSchedulesAsync()
         {
             HttpClient client = new HttpClient();
 
@@ -143,6 +148,7 @@ namespace PracticeControl.WpfClient.API
 
             return allPractices;
         }//Готово
+
         //Все руководители
         public static async Task<List<PracticeScheduleView>> GetPracticesLeadAsync(int PracticeLeadId)
         {

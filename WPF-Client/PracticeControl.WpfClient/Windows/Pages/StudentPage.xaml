@@ -37,12 +37,12 @@
                     </DataGrid.ContextMenu>
 
                     <DataGrid.Columns>
+                        
+                        <DataGridTextColumn Width="*" x:Name="columnStudentGroup" Header="Группа" Binding="{Binding GroupName}"/>
 
                         <DataGridTextColumn Width="650" x:Name="columnStudentName" Header="Студенты" Binding="{Binding StudentName}"/>
 
                         <DataGridTextColumn Width="*" x:Name="columnStudentLogin" Header="Логин" Binding="{Binding Login}"/>
-
-                        <DataGridTextColumn Width="*" x:Name="columnStudentGroup" Header="Группа" Binding="{Binding GroupName}"/>
 
                     </DataGrid.Columns>
                 </DataGrid>

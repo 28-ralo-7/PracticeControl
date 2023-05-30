@@ -86,6 +86,22 @@ namespace PracticeControl.WebAPI.Services
             return null;
 
         }
+
+        public bool CreatePracticeSchedule(CreatePracticeSchedule schedule)
+        {
+            Practiceschedule practiceschedule = new Practiceschedule
+            {
+                IdPractice = schedule.PracticeID,
+                IdGroup = schedule.GroupID,
+                IdEmployee = schedule.EmployeeId,
+                Startdate = DateOnly.Parse(schedule.StartDate.ToShortDateString()),
+                Enddate = DateOnly.Parse(schedule.EndDate.ToShortDateString()),
+                
+            };
+
+            var response = _postRepository.CreatePracticeSchedule(practiceschedule);
+            return response;
+        }
     }
 
 }

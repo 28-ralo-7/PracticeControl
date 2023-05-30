@@ -10,5 +10,6 @@ namespace PracticeControl.WebAPI.Interfaces.IServices
         Task<EmployeeView> UpdateEmployee(UpdateEmployeeView employee);
         Task<bool> UpdateStudent(UpdateStudentView student);
         Task<GroupView> UpdateGroup(string oldName, string groupName);
+        Task<bool> UpdateAttendance(List<UpdateAttendanceView> attendanceView);
     }
 }

@@ -22,6 +22,51 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
         public PracticeScheduleModalWindow()
         {
             InitializeComponent();
+
+            var listPractice = new List<PracticeOut>
+            {
+                new PracticeOut
+                {
+                    PracticeID = 1,
+                    Description = "УП.01 | Практика"
+                },
+
+                 new PracticeOut
+                {
+                    PracticeID = 2,
+                    Description = "УП.01 | Практика"
+                },
+            };
+
+
+            combo.ItemsSource = null;
+            combo.ItemsSource = listPractice;
+            combo.DisplayMemberPath = "Description";
+            combo.SelectedValuePath = "Description";
+
         }
+
+
+
+        private void combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedPractice = combo.SelectedItem as PracticeOut;
+        }
+    }
+
+    class PracticeOut
+    {
+        public int PracticeID { get; set; }
+        public string Description { get; set; }
+    }
+
+    class CreatePracticeView
+    {
+        public int PracticeID { get; set; }
+        public int GroupID { get; set; }
+        public int EmployeeId{ get; set; }
+        public DateTime StartDate{ get; set; }
+        public DateTime EndDate{ get; set; }
+
     }
 }

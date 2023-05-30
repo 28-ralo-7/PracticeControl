@@ -40,6 +40,9 @@ public partial class ProductionPracticeControlContext : DbContext
             entity.ToTable("attendance");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CompanyName)
+                .HasColumnType("character varying")
+                .HasColumnName("companyName");
             entity.Property(e => e.Date).HasColumnName("date");
             entity.Property(e => e.IdPractice).HasColumnName("id_practice");
             entity.Property(e => e.IdStudent).HasColumnName("id_student");
@@ -149,6 +152,7 @@ public partial class ProductionPracticeControlContext : DbContext
 
             entity.HasOne(d => d.IdPracticeNavigation).WithMany(p => p.Practiceschedules)
                 .HasForeignKey(d => d.IdPractice)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_practice_id");
         });
 

@@ -4,9 +4,12 @@ using PracticeControl.WpfClient.API;
 using PracticeControl.WpfClient.Helpers;
 using PracticeControl.WpfClient.Model.View;
 using PracticeControl.WpfClient.Model.ViewCreate;
+using PracticeControl.WpfClient.Model.ViewOut;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using static PracticeControl.WpfClient.Helpers.ValidationTools;
+
 
 namespace PracticeControl.WpfClient.Windows.DialogWindows
 {
@@ -18,6 +21,8 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
         private List<CreateStudentView> Students { get; set; }
         private string oldName { get; set; }
         private List<StudentView> AllStudents { get; set; }
+
+        //Создание новой группы из Excel
         public GroupModalWindow()
         {
             InitializeComponent();
@@ -27,7 +32,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
         }
 
-        //Переименование
+        //Переименование группы
         public GroupModalWindow(string name)
         {
             InitializeComponent();
@@ -41,7 +46,6 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             this.Height = 250;
 
         }
-
 
         //Файловый диалог
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -63,6 +67,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             }
         }
 
+        //Обновление таблицы студентов
         private async void DataGridStudentsData()
         {
             var StudentsOut = new List<StudentOut>();
@@ -112,7 +117,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             DataGridStudentsData();
         }
 
-        //Удаление студента группы
+        //Удаление студента группы #Дописать
         private void deleteStudent_Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -174,6 +179,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             }
         }
 
+        //Переименование группы
         private async void buttonRenameGroup_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(textBoxGroupName.Text))
@@ -207,6 +213,18 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             {
                 MessageBox.Show("Ошибка сохранения");
             }
+        }
+
+        //Отчистка пробелов
+        private void textBoxGroupName_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            ClearWhiteSpace(sender);
+        }
+
+        //Пропуск только цифры
+        private void textBoxGroupName_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            AllowOnlyNumber(e);
         }
     }
 }
