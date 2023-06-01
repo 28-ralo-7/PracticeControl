@@ -1,4 +1,5 @@
-﻿using PracticeControl.WpfClient.API;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using PracticeControl.WpfClient.API;
 using PracticeControl.WpfClient.Model.View;
 using PracticeControl.WpfClient.Model.ViewUpdate;
 using PracticeControl.WpfClient.Windows.DialogWindows;
@@ -28,8 +29,6 @@ namespace PracticeControl.WpfClient.Windows.Pages
         {
             this.User = User;
 
-
-
             InitializeComponent();
 
             PracticesData();
@@ -57,9 +56,6 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 dataGridPractices.ItemsSource = Practices;
             }
         }
-
-
-
 
         private void dataGridPractices_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -90,6 +86,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
         {
             PracticeScheduleModalWindow createPractice = new PracticeScheduleModalWindow();
             createPractice.ShowDialog();
+            PracticesData();
         }
 
 
@@ -104,6 +101,8 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 AttendanceDates(SelectPractice);
             }
 
+
+            group_TextBlock.Text = "Группа: " + SelectPractice.Group.GroupName;
             textBlockDayAttendance.Text = SelectDate.ToShortDateString().Replace(".2023", "");
 
             AttendanceRows = new List<AttendanceViewDaniil>();//OUT
@@ -209,18 +208,24 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 UpdateAttendance.Add(updateStudentAttendance);
                 return;
             }
-
-
-            
         }
 
         //Назад дата
         private void buttonBackDay_Click(object sender, RoutedEventArgs e)
         {
-            DateTime beginDate = PracticeDates[0];
+                DateTime startDate = PracticeDates[0];
 
-            if (SelectDate > beginDate)
+                DateTime endDate = PracticeDates[PracticeDates.Count - 1];
+
+            if (SelectDate <= endDate && SelectDate > startDate)
             {
+
+                while (SelectDate.DayOfWeek == DayOfWeek.Sunday || SelectDate.DayOfWeek == DayOfWeek.Monday)
+                {
+                    SelectDate = SelectDate.AddDays(-1);
+
+                }
+
                 SelectDate = SelectDate.AddDays(-1);
                 AttendanceData();
                 return;
@@ -230,10 +235,19 @@ namespace PracticeControl.WpfClient.Windows.Pages
         //Вперед дата
         private void buttonNextDay_Click(object sender, RoutedEventArgs e)
         {
+            DateTime startDate = PracticeDates[0];
+
             DateTime endDate = PracticeDates[PracticeDates.Count - 1];
 
-            if (SelectDate < endDate)
+            if (SelectDate < endDate && SelectDate >= startDate)
             {
+
+                while (SelectDate.DayOfWeek == DayOfWeek.Friday || SelectDate.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    SelectDate = SelectDate.AddDays(1);
+
+                }
+
                 SelectDate = SelectDate.AddDays(1);
                 AttendanceData();
                 return;
@@ -262,16 +276,13 @@ namespace PracticeControl.WpfClient.Windows.Pages
                     return;
                 }
 
-                MessageBox.Show("Изменить не удалось");
+                MessageBox.Show("Изменить не удалось", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            MessageBox.Show("Изменений нет");
+            MessageBox.Show("Изменений нет", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
-
-
-
 
     public class AttendanceViewDaniil
     {

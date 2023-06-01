@@ -1,8 +1,8 @@
 ﻿using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Helpers;
-using PracticeControl.WebAPI.Views.blanks;
-using PracticeControl.WebAPI.Views.blanksCreate;
-using PracticeControl.WebAPI.Views.blanksUpdate;
+using PracticeControl.WebAPI.Views.View;
+using PracticeControl.WebAPI.Views.ViewCreate;
+using PracticeControl.WebAPI.Views.ViewUpdate;
 using static PracticeControl.WebAPI.Converters.StudentConverter;
 
 namespace PracticeControl.WebAPI.Converters
@@ -10,6 +10,8 @@ namespace PracticeControl.WebAPI.Converters
     public static class GroupConverter
     {
         private static byte[] PasswordSalt { get; set; }
+
+        //Из бд во View
         public static GroupView ConvertToGroupView(Group group)
         {
             return new GroupView
@@ -27,11 +29,24 @@ namespace PracticeControl.WebAPI.Converters
             };
         }
 
+        //Из View в бд
+        public static Group ConvertToGroup(GroupView group)
+        {
+            return new Group
+            {
+                Id = group.GroupID,
+                Name = group.GroupName,
+                
+            };
+        }
+
+        //Из лист бд в лист View
         public static List<GroupView>? ConvertToListGroupView(List<Database.Group> groups)
         {
             return groups.Select(g => ConvertToGroupView(g)).ToList();
         }
 
+        //Из ViewCreate в бд 
         public static Group? ConvertToGroup(CreateGroupView group)
         {
             var newGroup = new Group
@@ -55,6 +70,7 @@ namespace PracticeControl.WebAPI.Converters
             return newGroup;
         }
 
+        //Из ViewUpdate в бд
         public static Group? ConvertToGroup(UpdateGroupView group)
         {
             var newGroup = new Group
@@ -80,6 +96,7 @@ namespace PracticeControl.WebAPI.Converters
             return newGroup;
         }
 
+        //Генерация соли пароля
         private static byte[] GetSalt()
         {
             PasswordSalt = PasswordHelper.GetSalt();

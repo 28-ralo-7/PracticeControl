@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Logging;
 using PracticeControl.WebAPI.Controllers;
 using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Interfaces.IRepositories;
-using PracticeControl.WebAPI.Views.blanks;
+using PracticeControl.WebAPI.Views.View;
 
 namespace PracticeControl.WebAPI.Repositories
 {
@@ -16,6 +16,7 @@ namespace PracticeControl.WebAPI.Repositories
         {
             _context = context;
         }
+
         //Список групп
         public async Task<List<Group>> GetGroups()
         {
@@ -30,7 +31,8 @@ namespace PracticeControl.WebAPI.Repositories
             return groups;
            
         }
-        //Работние по ID лоя авторизации
+
+        //Работние по ID для авторизации
         public async Task<Employee> GetEmployee(int id)
         {
             var practicesEmployee = await _context.Employees
@@ -52,6 +54,7 @@ namespace PracticeControl.WebAPI.Repositories
             return practicesEmployee;
 
         }
+
         //Список сотрудников для админа
         public async Task<List<Employee>> GetEmployeeList()
         {
@@ -80,6 +83,7 @@ namespace PracticeControl.WebAPI.Repositories
 
             return employees;
         }
+
         //Список практик
         public async Task<List<Practiceschedule>> GetPracticeScheduleList()
         {
@@ -96,6 +100,7 @@ namespace PracticeControl.WebAPI.Repositories
 
             return practiceSchedule;
         }
+
         //Группа по названию
         public async Task<Group> GetGroup(string name)
         {
@@ -103,6 +108,64 @@ namespace PracticeControl.WebAPI.Repositories
 
             return group;
         }
+
+        //Практика по названию
+
+        public async Task<Group> GetPract(string name)
+        {
+            var group = await _context.Groups.FirstOrDefaultAsync(group => group.Name == name);
+
+            return group;
+        }
+
+        //Практика по названию
+        public async Task<Practice> GetPractice(string name)
+        {
+            string[] parts = name.Split(' ');
+
+            string abbreviation = parts[0];
+            string module = "";
+
+            for (int i = 1; i < parts.Length - 1; i++)
+            {
+                if (i != 1)
+                {
+                    module += " ";
+                }
+
+                module += parts[i];
+            }
+
+            string specialty = parts[parts.Length - 1];
+            specialty = specialty.Substring(1, specialty.Length - 2);
+
+            var practice = await _context.Practices.FirstOrDefaultAsync(p => 
+                                                p.Abbreviation == abbreviation && 
+                                                p.Practicemodule == module &&
+                                                p.Specialty == specialty
+                                                );
+            
+            return practice;
+        }
+
+        public async Task<Employee> GetEmployee(string name)
+        {
+            string[] parts = name.Split(' ');
+
+            string lastname = parts[0];
+            string firstname = parts[1];
+            string middlename = parts[2];
+
+            var employee = await _context.Employees.FirstOrDefaultAsync(em =>
+                                                em.Lastname == lastname &&
+                                                em.Firstname == firstname &&
+                                                em.Middlename == middlename
+                                                );
+            return employee;
+        }
+
+        //Сотрудник по имени
+
         //Список студентов группы
         public async Task<List<Student>> GetStudentsGroup(string groupName)
         {
@@ -113,6 +176,7 @@ namespace PracticeControl.WebAPI.Repositories
 
             return studentsGroup;
         }
+
         //Список всех студентов
         public async Task<List<Student>> GetStudents()
         {
@@ -123,5 +187,17 @@ namespace PracticeControl.WebAPI.Repositories
 
             return students;
         }
+
+        //Список всех студентов
+        public async Task<List<Practice>> GetPracticeList()
+        {
+            var practice = await _context.Practices
+                .Where(practice => practice.Isdeleted != true)
+                .ToListAsync();
+
+            return practice;
+        }
+
+
     }
 }

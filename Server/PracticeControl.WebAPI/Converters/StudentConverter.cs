@@ -1,8 +1,8 @@
 ﻿using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Helpers;
-using PracticeControl.WebAPI.Views.blanks;
-using PracticeControl.WebAPI.Views.blanksCreate;
-using PracticeControl.WebAPI.Views.blanksUpdate;
+using PracticeControl.WebAPI.Views.View;
+using PracticeControl.WebAPI.Views.ViewCreate;
+using PracticeControl.WebAPI.Views.ViewUpdate;
 
 namespace PracticeControl.WebAPI.Converters
 {
@@ -23,6 +23,7 @@ namespace PracticeControl.WebAPI.Converters
 
             return student;
         }
+
         //Из бд модели в представление для обновления
         public static StudentView ConvertToView(Student student)
         {
@@ -61,6 +62,7 @@ namespace PracticeControl.WebAPI.Converters
             return studentView;
         }
 
+        //Из бд в ViewCreate
         public static CreateStudentView ConvertToCreateView(Student student)
         {
             var studentCreated = new CreateStudentView
@@ -75,10 +77,27 @@ namespace PracticeControl.WebAPI.Converters
             
         }
 
+        //Из View модели в бд
+        public static Student ConvertToStudent(StudentView studentView)
+        {
+            return new Student
+            {
+                Id = studentView.StudentID,
+                Lastname = studentView.LastName,
+                Firstname = studentView.FirstName,
+                Middlename = studentView.MiddleName,
+                Login = studentView.Login,
+                IdGroup = studentView.Group.GroupID
+            };
+        }
+
+        //Соль для пароля
        private static byte[] GetSalt()
        {
             PasswordSalt = PasswordHelper.GetSalt();
             return PasswordSalt;
        }
+
+       
     }
 }

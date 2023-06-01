@@ -3,7 +3,7 @@ using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Interfaces.IRepositories;
 using PracticeControl.WebAPI.Interfaces.IServices;
 using PracticeControl.WebAPI.Services;
-using PracticeControl.WebAPI.Views.blanks;
+using PracticeControl.WebAPI.Views.View;
 
 namespace PracticeControl.WebAPI.Controllers
 {
@@ -21,9 +21,17 @@ namespace PracticeControl.WebAPI.Controllers
         [HttpGet("getGroups")]
         public async Task<IActionResult> GetGroups()
         {
-            var attendances = await _getService.GetGroupViews();
+            var groups = await _getService.GetGroupViews();
+            return Ok(groups);
+        }        
+        
+        [HttpGet("getGroupForName/{name}")]
+        public async Task<IActionResult> GetGroupForName(string name)
+        {
+            var attendances = await _getService.GetGroupForName(name);
             return Ok(attendances);
         }
+
 
         [HttpGet("getEmployee")]
         public async Task<IActionResult> GetEmployee([FromForm] int id)
@@ -31,6 +39,7 @@ namespace PracticeControl.WebAPI.Controllers
             var employee = await _getService.GetEmployee(id);
             return Ok(employee);
         }
+
 
         [HttpGet("getEmployeeList")]
         public async Task<IActionResult> GetEmployeeList()
@@ -40,6 +49,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(employeeList);
         }
 
+
         [HttpGet("getPracticeScheduleList")]
         public async Task<IActionResult> GetPracticeScheduleList()
         {
@@ -47,6 +57,7 @@ namespace PracticeControl.WebAPI.Controllers
 
             return Ok(practiceList);
         }
+
 
         [HttpGet("getStudentGroup/{groupName}")]
         public async Task<IActionResult> GetStudentsGroup([FromRoute] string groupName)
@@ -56,6 +67,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
+
         [HttpGet("getAllStudents")]
         public async Task<IActionResult> GetStudentList()
         {
@@ -63,5 +75,16 @@ namespace PracticeControl.WebAPI.Controllers
 
             return Ok(response);
         }
+
+
+        [HttpGet("getPracticeList")]
+        public async Task<IActionResult> GetPracticeList()
+        {
+            var response = await _getService.GetPracticeList();
+
+            return Ok(response);
+        }
+
+
     }
 }

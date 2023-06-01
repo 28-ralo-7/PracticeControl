@@ -5,7 +5,7 @@ namespace PracticeControl.WebAPI.Interfaces.IServices
 {
     public interface IAuthService
     {
-        Task<AuthResponse> Authenticate(string login, string password);
+        Task<AuthResponseDesktop> Authorize(string login, string password);
         string CreateToken(Employee employee);
     }
 }

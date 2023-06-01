@@ -27,7 +27,7 @@
 
             <DataGrid x:Name="practice_DataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
                           IsReadOnly="True" HorizontalAlignment="Center" CanUserResizeColumns="False"
-                          Margin="10,5,15,10"  MaxHeight="705" ItemsSource="{Binding Practice}"
+                          Margin="10,5,15,10"  MaxHeight="705" ItemsSource="{Binding PracticeViews}"
                           AutoGenerateColumns="False" Width="1072" >
 
                 <!--контекстное меню-->
@@ -40,9 +40,9 @@
 
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn Width="*" x:Name="abbreviationPractice_Column" Header="Аббревиатура" Binding="{Binding Abbreviation}"/>
+                    <DataGridTextColumn Width="*" x:Name="abbreviationPractice_Column" Header="Модуль" Binding="{Binding Abbreviation}"/>
 
-                    <DataGridTextColumn Width="650" x:Name="practiceModule_Column" Header="Учебный модуль" Binding="{Binding PracticeModule}"/>
+                    <DataGridTextColumn Width="650" x:Name="practiceModule_Column" Header="Название" Binding="{Binding PracticeModule}"/>
 
                     <DataGridTextColumn Width="200" x:Name="specialty_Column" Header="Специальность" Binding="{Binding Specialty}"/>
 

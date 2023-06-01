@@ -101,12 +101,12 @@ namespace PracticeControl.WpfClient.Windows.Pages
                         StudentData();
                         return;
                     }
-                    MessageBox.Show("Не удалось удалить");
+                    MessageBox.Show("Не удалось удалить", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             catch (Exception)
             {
-                MessageBox.Show("Ошибка при удалении");
+                MessageBox.Show("Ошибка при удалении", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
 
             }
         }//Готово

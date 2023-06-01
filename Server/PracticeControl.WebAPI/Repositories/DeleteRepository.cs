@@ -1,16 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.Extensions.Logging.Abstractions;
 using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Interfaces.IRepositories;
+using System.Reflection.Metadata.Ecma335;
 
 namespace PracticeControl.WebAPI.Repositories
 {
     public class DeleteRepository : IDeleteRepository
     {
         private readonly ProductionPracticeControlContext _context;
-        public DeleteRepository(ProductionPracticeControlContext context)
+        private readonly IGetRepository _getRepository;
+
+        public DeleteRepository(ProductionPracticeControlContext context, IGetRepository getRepository)
         {
             _context = context;
+            _getRepository = getRepository;
         }
 
         //Сотрудники
@@ -18,6 +23,7 @@ namespace PracticeControl.WebAPI.Repositories
         {
             Employee? employee = await _context.Employees
                 .Include(employee=> employee.Practiceschedules)
+                .ThenInclude(schedule => schedule.Attendances)
                 .FirstOrDefaultAsync(employee => employee.Login == login);
 
             if (employee is null) 
@@ -25,14 +31,19 @@ namespace PracticeControl.WebAPI.Repositories
                 return null;
             }
 
-            employee.Isdeleted = true;
-            employee.Practiceschedules.Select(practice => practice.Isdeleted = true);
-
-            employee.Practiceschedules.ToList().ForEach(practice => practice.Isdeleted = true);
-
             List<Practiceschedule> practiceschedules = await _context.Practiceschedules.Where(schedule => schedule.IdEmployee == employee.Id).ToListAsync();
+            List<Attendance> attendances = new List<Attendance>();
 
-            practiceschedules.ForEach(schedule => schedule.Isdeleted = true);
+            foreach (var schedule in practiceschedules)
+            {
+                attendances.AddRange(schedule.Attendances);
+            }
+
+            _context.RemoveRange(attendances);
+
+            _context.RemoveRange(practiceschedules);
+
+            _context.Remove(employee);
 
             await _context.SaveChangesAsync();
 
@@ -51,8 +62,11 @@ namespace PracticeControl.WebAPI.Repositories
             if (student is null)
                 return null;
 
-            student.Isdeleted = true;
-            student.Attendances.Select(attendance => attendance.Isdeleted = true);
+
+            List<Attendance> attendances = await _context.Attendances.Where(att => att.IdStudent == student.Id).ToListAsync();
+
+            _context.RemoveRange(attendances);
+            _context.Remove(student);
 
             await _context.SaveChangesAsync();
 
@@ -64,27 +78,45 @@ namespace PracticeControl.WebAPI.Repositories
         {
             Group? group = await _context.Groups
                 .Include(group => group.Students)
+                .ThenInclude(student=> student.Attendances)
                 .Include(group => group.Practiceschedules)
                 .FirstOrDefaultAsync(group => group.Name == name);
 
             if (group is null)
                 return null;
 
-            group.Isdeleted = true;
 
-            group.Practiceschedules.Select(schedule => schedule.Isdeleted = true);
+            List<Attendance> attendances = new List<Attendance>();
 
-            var schedules = group.Practiceschedules.ToList();
-            schedules.ForEach(schedules => schedules.Isdeleted = true);
-            group.Practiceschedules = schedules;
+            foreach(var student in group.Students)
+            {
+                attendances.AddRange(student.Attendances);
+            }
 
-            var students = group.Students.ToList();
-            students.ForEach(student => student.Isdeleted = true);
-            group.Students = students;
+            _context.RemoveRange(attendances);
+
+            _context.RemoveRange(group.Students);
+
+            _context.RemoveRange(group.Practiceschedules);
+
+            _context.Remove(group);
 
             await _context.SaveChangesAsync();
             
             return group;
+        }
+
+        //Практики
+        public async Task<Practice> DeletePracice(string name)
+        {
+            Practice practice = await _getRepository.GetPractice(name);
+
+            if (practice is null)
+                return null;
+
+            
+
+            return null;
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿namespace PracticeControl.WebAPI.Views.blanksCreate
+﻿namespace PracticeControl.WebAPI.Views.ViewMobile
 {
-    public class CreateStudentView
+    public class StudentViewMobile
     {
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string Login { get; set; }
-        public string Password { get; set; }
-        public string? GroupName { get; set; }
+        public string Group { get; set; }
+        public DateTime Date { get; set; }
     }
 }

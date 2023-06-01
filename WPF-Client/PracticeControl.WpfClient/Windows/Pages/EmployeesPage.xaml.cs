@@ -26,6 +26,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             if (employees is null)
             {
+                MessageBox.Show("Список сотрудников пуст", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -56,10 +57,12 @@ namespace PracticeControl.WpfClient.Windows.Pages
         private void edit_Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             var employee = dataGridEmployees.SelectedItem as EmployeeForm;
-            EmployeeModalWindow employeeModalWindow = new EmployeeModalWindow(employees, employee);
-            employeeModalWindow.ShowDialog();
-            EmployeesData();
-
+            if (employee is not null)
+            {
+                EmployeeModalWindow employeeModalWindow = new EmployeeModalWindow(employees, employee);
+                employeeModalWindow.ShowDialog();
+                EmployeesData();
+            }
         }
 
         private async void delete_Button_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -67,7 +70,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             var employee = dataGridEmployees.SelectedItem as EmployeeForm;
             if (employee is null)
             {
-                MessageBox.Show("Не удалось удалить");
+                MessageBox.Show("Не удалось удалить", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -91,7 +94,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
                         }
                         return;
                     }
-                    MessageBox.Show("Не удалось удалить");
+                    MessageBox.Show("Не удалось удалить", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
 
                 }
                 return;
@@ -105,11 +108,11 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
                 if ((bool)response)
                 {
-                    MessageBox.Show("Сотрудник удален");
+                    MessageBox.Show("Сотрудник удален", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                     EmployeesData();
                     return;
                 }
-                MessageBox.Show("Не удалось удалить");
+                MessageBox.Show("Не удалось удалить", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
 
             }
         }

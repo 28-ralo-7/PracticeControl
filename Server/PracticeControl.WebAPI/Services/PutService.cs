@@ -3,8 +3,8 @@ using PracticeControl.WebAPI.Helpers;
 using PracticeControl.WebAPI.Interfaces.IRepositories;
 using PracticeControl.WebAPI.Interfaces.IServices;
 using PracticeControl.WebAPI.Repositories;
-using PracticeControl.WebAPI.Views.blanks;
-using PracticeControl.WebAPI.Views.blanksUpdate;
+using PracticeControl.WebAPI.Views.View;
+using PracticeControl.WebAPI.Views.ViewUpdate;
 using static PracticeControl.WebAPI.Converters.EmployeeConverter;
 using static PracticeControl.WebAPI.Converters.StudentConverter;
 using static PracticeControl.WebAPI.Converters.GroupConverter;
@@ -26,7 +26,8 @@ namespace PracticeControl.WebAPI.Services
             _putRepository = putRepository;
             _getRepository = getRepository;
         }
-        //Обновление сотрудника
+
+        //Сотрудник
         public async Task<EmployeeView> UpdateEmployee(UpdateEmployeeView updateEmployee)
         {
             if (updateEmployee is not null)
@@ -51,7 +52,7 @@ namespace PracticeControl.WebAPI.Services
             return null;
         }
 
-        //Обновление студента
+        //Студент
         public async Task<bool> UpdateStudent(UpdateStudentView updateStudent)
         {
             if(updateStudent is not null)
@@ -80,7 +81,7 @@ namespace PracticeControl.WebAPI.Services
             return false;
         }
 
-        //Обновление группы
+        //Группа
         public async Task<GroupView> UpdateGroup(string oldName, string groupName)
         {
             if (groupName is not null && oldName is not null)
@@ -94,7 +95,7 @@ namespace PracticeControl.WebAPI.Services
             return null;
         }
 
-        //Обновление посещений
+        //Посещение
         public async Task<bool> UpdateAttendance(List<UpdateAttendanceView> attendanceView)
         {
             if (attendanceView is not null)

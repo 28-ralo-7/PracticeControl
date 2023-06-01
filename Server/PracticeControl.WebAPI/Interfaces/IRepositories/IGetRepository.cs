@@ -1,5 +1,5 @@
 ﻿using PracticeControl.WebAPI.Database;
-using PracticeControl.WebAPI.Views.blanks;
+using PracticeControl.WebAPI.Views.View;
 
 namespace PracticeControl.WebAPI.Interfaces.IRepositories
 {
@@ -12,5 +12,9 @@ namespace PracticeControl.WebAPI.Interfaces.IRepositories
         Task<List<Student>> GetStudentsGroup(string groupName);
         Task<List<Student>> GetStudents();
         Task<Group> GetGroup(string name);
+        Task<Practice> GetPractice(string name);
+        Task<Employee> GetEmployee(string name);
+        Task<List<Practice>> GetPracticeList();
+
     }
 }

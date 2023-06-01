@@ -1,4 +1,4 @@
-﻿namespace PracticeControl.WebAPI.Views.blanksUpdate
+﻿namespace PracticeControl.WebAPI.Views.ViewUpdate
 {
     public class UpdateAttendanceView
     {

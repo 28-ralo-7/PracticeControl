@@ -1,5 +1,5 @@
 ﻿using PracticeControl.WebAPI.Database;
-using PracticeControl.WebAPI.Views.blanks;
+using PracticeControl.WebAPI.Views.View;
 
 namespace PracticeControl.WebAPI.Interfaces.IRepositories
 {

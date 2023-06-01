@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PracticeControl.WebAPI.Interfaces.IServices;
-using PracticeControl.WebAPI.Views.blanksCreate;
-using PracticeControl.WebAPI.Views.blanksUpdate;
+using PracticeControl.WebAPI.Views.ViewCreate;
+using PracticeControl.WebAPI.Views.ViewUpdate;
 
 namespace PracticeControl.WebAPI.Controllers
 {

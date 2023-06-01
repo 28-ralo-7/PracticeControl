@@ -134,7 +134,9 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 return;
             }
 
-            if (Groups.Any(group => group.GroupName == textBoxGroupName.Text.Trim()))
+            var checkUnique = await PostRequests.CheckUniqueGroup(textBoxGroupName.Text);
+
+            if (checkUnique)
             {
                 MessageBox.Show("Группа с таким названием уже существует");
                 return;
@@ -153,7 +155,6 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 MessageBox.Show("Этот логин занят");
                 return;
             }
-
 
             newGroup.GroupName = textBoxGroupName.Text;
             newGroup.Students = Students;

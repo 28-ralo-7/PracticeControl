@@ -1,0 +1,131 @@
+﻿<Window x:Class="PracticeControl.WpfClient.Windows.DialogWindows.PracticeModalWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows.DialogWindows"
+        mc:Ignorable="d"
+        Title="PracticeModalWindow" Height="300" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+    <Border   BorderBrush="Black" BorderThickness="2">
+        <Grid Background="#cfcfce">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label x:Name="title_Label" 
+                   Content="" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   FontSize="20"
+                   Grid.Column="0"
+                   Grid.Row="0" 
+                   Grid.ColumnSpan="2" 
+            />
+
+            <!--Модуль-->
+            <Label Content="Модуль"
+
+                   Height="40" 
+                   FontSize="20"
+                   Grid.Column="0" 
+                   Grid.Row="1"                     
+                   HorizontalAlignment="Right"
+                   HorizontalContentAlignment="Center"
+                   Margin="0 0 10 0"
+            />
+            <TextBox x:Name="module_TextBox" 
+                     Width="180" 
+                     Height="40" 
+                     FontSize="20"
+                     Grid.Column="1" 
+                     Grid.Row="1"
+                     TextChanged="TextBox_TextChanged"     
+            />
+
+            <!--Название-->
+            <Label Content="Название" 
+                   Margin="0 0 10 0"
+                   Height="40"
+                   FontSize="20"
+                   Grid.Column="0" 
+                   Grid.Row="2"                   
+                   HorizontalAlignment="Right"
+                   HorizontalContentAlignment="Center"
+            />
+            <TextBox x:Name="name_TextBox" 
+                    Width="180" 
+                    Height="40" 
+                    FontSize="20"
+                    Grid.Column="1" 
+                    Grid.Row="2"
+                    PreviewTextInput="TextBox_PreviewTextInput"
+            />
+
+            <!--Специальность-->
+            <Label Content="Специальность" 
+                Height="40" 
+                FontSize="20" 
+                Grid.Column="0" 
+                Grid.Row="3"                         
+                HorizontalAlignment="Right"
+                HorizontalContentAlignment="Center"
+                Margin="0 0 10 0"
+                   
+            />
+            <TextBox x:Name="specialty_TextBox" 
+                     Width="180" 
+                     Height="40" 
+                     FontSize="20"
+                     Grid.Column="1" 
+                     Grid.Row="3"
+                     PreviewTextInput="TextBox_PreviewTextInput"
+            />
+
+            <!--отмена-->
+            <Button x:Name="cancel_Button" 
+                    Content="Отмена" 
+                    Click="cancel_Button_Click" 
+                    Width="150" 
+                    Height="40"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Grid.Column="0"
+                    Grid.Row="4"
+            />
+
+            <!--добавить-->
+            <Button x:Name="create_Button"
+                    Content="Добавить"
+                    Click="create_Button_Click"
+                    Visibility="Collapsed" 
+                    Width="150"
+                    Height="40" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" 
+                    Grid.Column="1"
+                    Grid.Row="4"/>
+
+            <!--изменить-->
+            <Button x:Name="edit_Button" 
+                    Content="Изменить"
+                    Click="edit_Button_Click"
+                    Visibility="Collapsed"
+                    Width="150"
+                    Height="40"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Grid.Column="1" 
+                    Grid.Row="4"/>
+
+        </Grid>
+    </Border>
+</Window>

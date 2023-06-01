@@ -163,7 +163,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                     return;
                 }
 
-                 studentView = new UpdateStudentView
+                studentView = new UpdateStudentView
                 {
                     LastName = lastName_TextBox.Text,
                     FirstName = firstName_TextBox.Text,
@@ -174,16 +174,12 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                     LoginForSearch = Student.Login
                 };
             }
-            //Для обновления со станицы Студенты
+            //Для обновления со страницы Студенты
             else
             {
-                int loginVerification = AllStudents
-                    .Where(employeeView =>
-                    employeeView.Login.ToLower() == login_TextBox.Text.ToLower() &&
-                    employeeView.Login.ToLower() != StudentForm.Login.ToLower())
-                    .Count();
+                var checkUnique = await PostRequests.CheckUniqueStudent(login_TextBox.Text);
 
-                if (loginVerification > 0)
+                if (checkUnique)
                 {
                     MessageBox.Show("Этот логин занят");
                     return;
@@ -238,13 +234,9 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
             AllStudents = await GetRequests.GetAllStudentsAsync();
 
-            int loginVerification = AllStudents
-                    .Where(employeeView =>
-                    employeeView.Login.ToLower() == login_TextBox.Text.ToLower() &&
-                    employeeView.Login.ToLower() != Student.Login.ToLower())
-                    .Count();
+            var checkUnique = await PostRequests.CheckUniqueStudent(login_TextBox.Text);
 
-            if (loginVerification > 0)
+            if (checkUnique)
             {
                 MessageBox.Show("Этот логин занят");
                 return;

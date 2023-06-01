@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PracticeControl.WpfClient.Model.View;
 using PracticeControl.WpfClient.Model;
+using DocumentFormat.OpenXml.Office2016.Excel;
 
 namespace PracticeControl.WpfClient.API
 {
@@ -22,7 +23,9 @@ namespace PracticeControl.WpfClient.API
 
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("https://localhost:7063/api/auth/authorization/", content).ConfigureAwait(false);
+            var response = await client
+                .PostAsync("https://localhost:7063/api/auth/authorization/", content)
+                .ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -54,7 +57,9 @@ namespace PracticeControl.WpfClient.API
 
             //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
 
-            var response = await client.GetAsync("https://localhost:7063/api/get/getGroups/").ConfigureAwait(false);
+            var response = await client
+                .GetAsync("https://localhost:7063/api/get/getGroups/")
+                .ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -67,6 +72,29 @@ namespace PracticeControl.WpfClient.API
             return allGroups;
         }//Готово
 
+
+        //Группа
+        public static async Task<GroupView> GetGroupForNameAsync(string name)
+        {
+            HttpClient client = new HttpClient();
+
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
+
+            var response = await client
+                .GetAsync("https://localhost:7063/api/get/getGroupForName/")
+                .ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var data = await response.Content.ReadAsStringAsync();
+            var group = JsonConvert.DeserializeObject<GroupView>(data);
+
+            return group;
+        }//Готово
+
         //Список студентов группы
         public static async Task<List<StudentView>?> GetStudentsGroupAsync(string groupName)
         {
@@ -75,7 +103,9 @@ namespace PracticeControl.WpfClient.API
             //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
 
 
-            var response = await client.GetAsync($"https://localhost:7063/api/get/getStudentGroup/{groupName}").ConfigureAwait(false);
+            var response = await client
+                .GetAsync($"https://localhost:7063/api/get/getStudentGroup/{groupName}")
+                .ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -86,7 +116,7 @@ namespace PracticeControl.WpfClient.API
             var studentGroup = JsonConvert.DeserializeObject<List<StudentView>>(data);
 
             return studentGroup;
-        }//Дописать
+        }//Готово...
 
         //Все сотрудники
         public static async Task<List<EmployeeView>?> GetAllEmployeesAsync()
@@ -126,9 +156,9 @@ namespace PracticeControl.WpfClient.API
             var allStudents = JsonConvert.DeserializeObject<List<StudentView>>(data);
 
             return allStudents;
-        }//Дописать
+        }//Готово...
 
-        //Все практики
+        //Все расписания практики
         public static async Task<List<PracticeScheduleView>?> GetAllPracticeSchedulesAsync()
         {
             HttpClient client = new HttpClient();
@@ -149,26 +179,29 @@ namespace PracticeControl.WpfClient.API
             return allPractices;
         }//Готово
 
-        //Все руководители
-        public static async Task<List<PracticeScheduleView>> GetPracticesLeadAsync(int PracticeLeadId)
+        //Все практики
+        public static async Task<List<PracticeView>> GetAllPracticeAsync()
         {
             HttpClient client = new HttpClient();
 
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
 
-            var response = await client.GetAsync("GET-Practice-LeadID");
+            var response = await client
+                .GetAsync("https://localhost:7063/api/get/getPracticeList/")
+                .ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
 
             var data = await response.Content.ReadAsStringAsync();
 
-            var PracticesLead = JsonConvert.DeserializeObject<List<PracticeScheduleView>>(data);
+            var allPractices = JsonConvert.DeserializeObject<List<PracticeView>>(data);
 
-            return PracticesLead;
+            return allPractices;
         }
-        
-        
-        public static async Task<List<AttendanceView>> GetAllAttendance()
-        {
-            return null;
-        }
+
+
     }
 }

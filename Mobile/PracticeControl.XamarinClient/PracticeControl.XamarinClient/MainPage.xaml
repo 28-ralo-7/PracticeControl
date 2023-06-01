@@ -11,52 +11,56 @@
                          HorizontalOptions="CenterAndExpand"
                          VerticalOptions="CenterAndExpand"
                          >
-                <Label Text="Контроль практики" FontSize="40" TextColor="White" HorizontalOptions="Center" Margin="0 0 50 0"/>
+                <Label Text="Контроль практики" FontSize="40" TextColor="White" HorizontalOptions="Center" Margin="0, 0, 0, 50"/>
                 
                 <!-- Поле ввода имени пользователя -->
-                <Entry Placeholder="Имя пользователя" 
-                       Text="{Binding Username}"
+                <Frame BackgroundColor="Gray" CornerRadius="10" Padding="0" Margin="0,0,0,50">
+                    <Entry Placeholder="Имя пользователя" 
+                        x:Name="login_TextBox"
+                        Text="{Binding Username}"
                        
-                       Background="white"
-                       TextColor="Black"
-                       PlaceholderColor="Gray"
+                        Background="white"
+                        TextColor="Black"
+                        PlaceholderColor="Gray"
+
+                        HorizontalTextAlignment="Center"
+                        Keyboard="Default" 
+                        HeightRequest="70"
+                           
                        
-                       HorizontalOptions="Center"
-                       HorizontalTextAlignment="Center"
-                       Keyboard="Default" 
-                       
-                       WidthRequest="350" 
-                       HeightRequest="70"
-                       Margin="0 0 50 0"
-                       FontSize="30"
-                       
+                        FontSize="30"
                        />
+                </Frame>
 
                 <!-- Поле ввода пароля -->
-                <Entry Placeholder="Пароль"
-                       Text="{Binding Password}" 
+                <Frame BackgroundColor="Gray" CornerRadius="10" Padding="0" Margin="0,0,0,50">
+                    <Entry Placeholder="Пароль"
+                        x:Name="password_TextBox"
+                        Text="{Binding Password}" 
+                           
+                        Background="white"
+                        TextColor="Black"
+                        PlaceholderColor="Gray"
 
-                       Background="white"
-                       TextColor="Black"
-                       PlaceholderColor="Gray"
-                       
-                       HorizontalOptions="Center"
-                       HorizontalTextAlignment="Center"
-                       
-                       WidthRequest="350" 
-                       HeightRequest="70"
-                       Margin="0 0 50 0"
-                       FontSize="30"
-                       
-                       IsPassword="true" />
-                       
+                        HorizontalTextAlignment="Center"
+                        Keyboard="Default" 
+                        HeightRequest="70"
+
+                        IsPassword="true"
+                        FontSize="30"                       
+                       />
+                </Frame>
 
                 <!-- Кнопка для входа -->
                 <Button Text="Войти" 
+                        x:Name="login_Button"
+                        Clicked="login_Button_Clicked"
                         Background="white" 
                         HorizontalOptions="Center" 
                         TextColor="Black"
                         WidthRequest="300"
+                        HeightRequest="70"
+                        CornerRadius="10"
                         Command="{Binding LoginCommand}" />
             </StackLayout>
 

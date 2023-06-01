@@ -1,6 +1,6 @@
-﻿using PracticeControl.WebAPI.Views.blanks;
+﻿using PracticeControl.WebAPI.Views.ViewCreate;
 
-namespace PracticeControl.WebAPI.Views.blanksCreate
+namespace PracticeControl.WebAPI.Views.ViewCreate
 {
     public class CreateGroupView
     {

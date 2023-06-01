@@ -2,12 +2,13 @@
 using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Interfaces.IRepositories;
 using PracticeControl.WebAPI.Interfaces.IServices;
-using PracticeControl.WebAPI.Views.blanks;
+using PracticeControl.WebAPI.Views.View;
 using static PracticeControl.WebAPI.Converters.AttendanceConverter;
 using static PracticeControl.WebAPI.Converters.PracticeScheduleConverter;
 using static PracticeControl.WebAPI.Converters.EmployeeConverter;
 using static PracticeControl.WebAPI.Converters.StudentConverter;
 using static PracticeControl.WebAPI.Converters.GroupConverter;
+using static PracticeControl.WebAPI.Converters.PracticeConverter;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq;
@@ -61,6 +62,7 @@ namespace PracticeControl.WebAPI.Services
             return practiceScheduleViews;
         }
 
+        //Возврат списка студентов группы
         public async Task<List<StudentView>> GetStudentGroup(string groupName)
         {
 
@@ -76,6 +78,7 @@ namespace PracticeControl.WebAPI.Services
 
         }
 
+        //Возврат списка студентов
         public async Task<List<StudentView>> GetStudents()
         {
             List<Student> students = await _getRepository.GetStudents();
@@ -87,6 +90,23 @@ namespace PracticeControl.WebAPI.Services
             }
 
             return studentsGroupViews;
+        }
+
+        //Возврат списка практик
+        public async Task<List<PracticeView>> GetPracticeList()
+        {
+            List<Practice> practices = await _getRepository.GetPracticeList();
+            List<PracticeView> practiceViews = practices.Select(practice => ConvertToPracticeView(practice)).ToList(); 
+            
+            return practiceViews;
+        }
+
+        public async Task<GroupView> GetGroupForName(string name)
+        {
+            Database.Group group = await _getRepository.GetGroup(name);
+
+            return ConvertToGroupView(group);
+
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using PracticeControl.WebAPI.Database;
-using PracticeControl.WebAPI.Views.blanks;
-using PracticeControl.WebAPI.Views.blanksUpdate;
+using PracticeControl.WebAPI.Views.View;
+using PracticeControl.WebAPI.Views.ViewUpdate;
 
 
 namespace PracticeControl.WebAPI.Interfaces.IServices

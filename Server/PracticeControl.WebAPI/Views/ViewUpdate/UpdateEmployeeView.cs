@@ -1,6 +1,6 @@
-﻿namespace PracticeControl.WebAPI.Views.blanksCreate
+﻿namespace PracticeControl.WebAPI.Views.ViewUpdate
 {
-    public class CreateEmployeeView //Для создания нового сотрудника
+    public class UpdateEmployeeView
     {
         public string LastName { get; set; }
         public string FirstName { get; set; }
@@ -8,5 +8,6 @@
         public string Login { get; set; }
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
+        public string LoginForSearch { get; set; }
     }
 }

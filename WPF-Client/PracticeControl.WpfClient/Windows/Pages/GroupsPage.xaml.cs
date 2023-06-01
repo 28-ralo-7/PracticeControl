@@ -52,7 +52,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             if (GroupView is null)
             {
-                MessageBox.Show("Групп нет");
+                MessageBox.Show("Групп нет", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -211,12 +211,12 @@ namespace PracticeControl.WpfClient.Windows.Pages
                         StudentsData(SelectedGroup.GroupView);
                         return;
                     }
-                    MessageBox.Show("Не удалось удалить");
+                    MessageBox.Show("Не удалось удалить", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             catch (Exception)
             {
-                MessageBox.Show("Ошибка при удалении");
+                MessageBox.Show("Ошибка при удалении", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
 
             }
         }//Готово
@@ -256,14 +256,14 @@ namespace PracticeControl.WpfClient.Windows.Pages
                             GroupsData();
                             return;
                         }
-                        MessageBox.Show("Не удалось удалить");
+                        MessageBox.Show("Не удалось удалить", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
 
                 }
             }
             catch (Exception)
             {
-                MessageBox.Show("Ошибка при удалении");
+                MessageBox.Show("Ошибка при удалении", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
 
             }
         }//Готово

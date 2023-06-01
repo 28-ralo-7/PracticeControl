@@ -1,4 +1,4 @@
-﻿namespace PracticeControl.WebAPI.Views.blanksCreate
+﻿namespace PracticeControl.WebAPI.Views.ViewCreate
 {
     public class CreatePracticeSchedule
     {

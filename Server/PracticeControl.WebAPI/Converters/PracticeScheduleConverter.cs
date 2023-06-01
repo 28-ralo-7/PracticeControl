@@ -1,12 +1,12 @@
 ﻿using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Interfaces.IRepositories;
-using PracticeControl.WebAPI.Views.blanks;
+using PracticeControl.WebAPI.Views.View;
 
 namespace PracticeControl.WebAPI.Converters
 {
     public static class PracticeScheduleConverter
     {
-
+        //Из листа бд в лист View
         public static async Task<List<PracticeScheduleView>> ConvertToPracticeScheduleView(List<Practiceschedule> practiceSchedules, IGetRepository _getRepository)
         {
 
@@ -78,6 +78,17 @@ namespace PracticeControl.WebAPI.Converters
                 practiceScheduleViews.Add(practiceScheduleView);
             }
             return practiceScheduleViews;
+        }
+
+        public static async Task<Practiceschedule> ConvertToPracticeSchedule(PracticeScheduleView practiceScheduleView)
+        {
+            return new Practiceschedule
+            {
+                Id = practiceScheduleView.PracticeScheduleID,
+                Startdate =  DateOnly.Parse(practiceScheduleView.StartDate),
+                Enddate = DateOnly.Parse(practiceScheduleView.EndDate),
+                IdGroup = practiceScheduleView.Group.GroupID
+            };
         }
     }
 }

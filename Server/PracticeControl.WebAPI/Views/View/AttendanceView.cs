@@ -1,4 +1,4 @@
-﻿namespace PracticeControl.WebAPI.Views.blanks
+﻿namespace PracticeControl.WebAPI.Views.View
 {
     public class AttendanceView
     {

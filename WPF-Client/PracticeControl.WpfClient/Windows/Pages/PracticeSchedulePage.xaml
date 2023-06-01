@@ -30,18 +30,18 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="293"/>
+                        <ColumnDefinition Width="481*"/>
+                        <ColumnDefinition Width="564*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock  Grid.Row="0" Grid.Column="0" Text="41911" x:Name="group_speciality_TextBlock" FontSize="25"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="10.05-24.05" x:Name="date_TextBlock" FontSize="25"/>
+                    <TextBlock x:Name="group_TextBlock"  Grid.Row="0" Grid.Column="0" Text="Группа: 41911" FontSize="25"/>
+                    <TextBlock x:Name="date_TextBlock" Grid.Row="1" Grid.Column="0" Text="Дата: 10.05-24.05" FontSize="25"/>
 
-                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Grid.Row="0" Grid.Column="1" Text="ПП.01 Тестирование ПО" x:Name="abbreviation_module_TextBlock" FontSize="25"/>
-                    <TextBlock HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Text="Руководитель: Карташова Е.В." x:Name="practiceLead_TextBlock" FontSize="25"/>
+                    <TextBlock x:Name="abbreviation_module_TextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Grid.Row="0" Grid.Column="1" Text="ПП.01 Тестирование ПО" FontSize="25" Width="462"/>
+                    <TextBlock x:Name="practiceLead_TextBlock" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Text="Руководитель: Карташова Е.В." FontSize="25" Width="459"/>
 
-                    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10" Width="494">
                         <TextBlock  Grid.Row="1" Grid.Column="2" Text="Посещаемость на" FontSize="30" Width="276" Height="50"/>
 
                         <Button x:Name="buttonBackDay" Click="buttonBackDay_Click" Height="32" Width="43" Margin="5" RenderTransformOrigin="0.5,0.5">

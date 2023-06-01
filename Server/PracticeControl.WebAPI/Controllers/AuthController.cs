@@ -20,9 +20,9 @@ namespace PracticeControl.WebAPI.Controllers
 
         [HttpPost]
         [Route("authorization")]
-        public async Task<IActionResult> Login([FromBody] AuthRequest parameters)
+        public async Task<IActionResult> LoginDesktop([FromBody] AuthRequest parameters)
         {
-            AuthResponse response = await _authService.Authenticate(parameters.Login, parameters.PasswordString);
+            AuthResponseDesktop response = await _authService.Authorize(parameters.Login, parameters.PasswordString);
 
             if (response is not null)
             {
@@ -32,5 +32,18 @@ namespace PracticeControl.WebAPI.Controllers
             return Unauthorized();
         }
 
+        [HttpPost]
+        [Route("authorizationMobile")]
+        public async Task<IActionResult> LoginMobile([FromBody] AuthRequest parameters)
+        {
+            AuthResponseMobile response = null;
+
+            if (response is not null)
+            {
+                return Ok(response);
+            }
+
+            return Unauthorized();
+        }
     }
 }

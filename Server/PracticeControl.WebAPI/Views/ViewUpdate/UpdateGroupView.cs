@@ -1,6 +1,6 @@
-﻿using PracticeControl.WebAPI.Views.blanks;
+﻿using PracticeControl.WebAPI.Views.ViewUpdate;
 
-namespace PracticeControl.WebAPI.Views.blanksUpdate
+namespace PracticeControl.WebAPI.Views.ViewUpdate
 {
     public class UpdateGroupView
     {

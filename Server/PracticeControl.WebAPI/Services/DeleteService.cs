@@ -1,7 +1,7 @@
 ﻿using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Interfaces.IRepositories;
 using PracticeControl.WebAPI.Interfaces.IServices;
-using PracticeControl.WebAPI.Views.blanks;
+using PracticeControl.WebAPI.Views.View;
 using static PracticeControl.WebAPI.Converters.EmployeeConverter;
 using static PracticeControl.WebAPI.Converters.StudentConverter;
 using static PracticeControl.WebAPI.Converters.GroupConverter;
@@ -15,6 +15,7 @@ namespace PracticeControl.WebAPI.Services
         {
             _deleteRepository= deleteRepository;
         }
+
         //Сотрудники
         public async Task<bool> DeleteEmployee(string login)
         {
@@ -30,6 +31,7 @@ namespace PracticeControl.WebAPI.Services
             return true;
 
         }
+
         //Студенты
         public async Task<StudentView> DeleteStudent(string login)
         {
@@ -46,6 +48,7 @@ namespace PracticeControl.WebAPI.Services
             return studentView;
 
         }
+
         //Группы
         public async Task<GroupView> DeleteGroup(string name)
         {
@@ -61,5 +64,6 @@ namespace PracticeControl.WebAPI.Services
 
             return groupView;
         }
+
     }
 }
