@@ -12,9 +12,69 @@ namespace PracticeControl.XamarinClient.API
     public static class APIService
     {
 
+        public static async Task<CurrentPracticeStudentView> GetPracticeGroupAsync(string groupName)
+         {
+            try
+            {
+                HttpClient client = new HttpClient();
 
+                var response = await client
+                    .GetAsync($"https://littletealhouse37.conveyor.cloud/api/get/practiceGroup/{groupName}")
+                    .ConfigureAwait(false);
 
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
 
+                var data = await response.Content.ReadAsStringAsync();
+
+                var practice = JsonConvert.DeserializeObject<CurrentPracticeStudentView>(data);
+
+                if (practice is null)
+                {
+                    return null;
+                }
+
+                return practice;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+        public static async Task<bool> UpdateAttendanceAsync(StudentAttendanceView attendance)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+
+                string json = JsonConvert.SerializeObject(attendance);
+
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await client
+                    .PutAsync("https://littletealhouse37.conveyor.cloud/api/put/studentAttendance/", content)
+                    .ConfigureAwait(false);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return false;
+                }
+
+                var data = await response.Content.ReadAsStringAsync();
+
+                var attendanceUpdate = JsonConvert.DeserializeObject<bool>(data);
+
+                return attendanceUpdate;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
         public static async Task<AuthResponseMobile> Authorization(AuthRequest auth) 
         {
             try

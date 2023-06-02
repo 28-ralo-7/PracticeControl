@@ -1,27 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Drawing;
-using Plugin.Media;
+﻿using System.IO;
+using Xamarin.Essentials;
 
 namespace PracticeControl.XamarinClient.Helpers
 {
     public class ImageConvert
     {
-        public byte[] ImageToByteArray(Image imageIn)
+        public static byte[] ImageToByteArray(FileResult photoFile)
         {
-            var photo = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { });
-
-            byte[] imageArray = null;
-
-            using (MemoryStream memory = new MemoryStream())
-            {
-
-                Stream stream = photo.GetStream();
-                stream.CopyTo(memory);
-                imageArray = memory.ToArray();
-            }
+            var bytes = File.ReadAllBytes(photoFile.FullPath);
+            return bytes;
         }
     }
 
