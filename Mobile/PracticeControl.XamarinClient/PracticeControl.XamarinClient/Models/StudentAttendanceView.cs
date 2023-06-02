@@ -4,7 +4,10 @@ using System.Text;
 
 namespace PracticeControl.XamarinClient.Models
 {
-    internal class StudentAttendanceView
+    public class StudentAttendanceView
     {
+        public StudentViewMobile Student { get; set; }
+        public byte[] Photo { get; set; }
+        public DateTime DateNow { get; set; }
     }
 }
