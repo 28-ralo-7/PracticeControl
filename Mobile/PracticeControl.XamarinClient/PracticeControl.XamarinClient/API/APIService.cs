@@ -22,7 +22,7 @@ namespace PracticeControl.XamarinClient.API
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await client
-                    .PostAsync("http://192.168.1.228:3000/api/auth/authorization/", content)
+                    .PostAsync("https://littletealhouse37.conveyor.cloud/api/auth/authorizationMobile/", content)
                     .ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
@@ -47,6 +47,7 @@ namespace PracticeControl.XamarinClient.API
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return null;
             }
         }

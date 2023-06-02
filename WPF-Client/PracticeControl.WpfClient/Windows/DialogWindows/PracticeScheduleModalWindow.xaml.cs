@@ -37,16 +37,6 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             PracticeData();
         }
 
-        public PracticeScheduleModalWindow(PracticeScheduleView practiceView)
-        {
-            InitializeComponent();
-
-            this.practiceScheduleView = practiceView;
-            edit_Button.Visibility = Visibility.Visible;
-
-            PracticeData();
-        }
-
         public async void PracticeData()
         {
             practices = await GetRequests.GetAllPracticeAsync();
@@ -118,7 +108,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 MessageBox.Show("Дата конца практики не иожет быть раньше даты начала", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            CreatePracticeView createPracticeView = new CreatePracticeView
+            CreatePracticeScheduleView createPracticeView = new CreatePracticeScheduleView
             {
                 PracticeName = practice_ComboBox.SelectedItem.ToString(),
                 PracticeLead = employee_ComboBox.SelectedItem.ToString(),
@@ -137,13 +127,13 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
                     if (response)
                     {
-                        MessageBox.Show("Расписание практики сохранено", "Успешное сохранение", MessageBoxButton.OK);
+                        MessageBox.Show("Расписание практики сохранено", "Успешное сохранение", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                         return;
                     }
                     else
                     {
-                        MessageBox.Show("Не удалось сохранить расписание практики", "Сохранение не удалось",MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Не удалось сохранить расписание практики", "Сохранение не удалось",MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
                 }
@@ -152,7 +142,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             }
             catch (Exception)
             {
-                MessageBox.Show("У группы не может быть более одной практики одновременно", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Ошибка сохранения", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 

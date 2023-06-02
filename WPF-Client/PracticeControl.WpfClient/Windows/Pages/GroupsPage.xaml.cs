@@ -108,7 +108,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             createGroup.ShowDialog();
 
             GroupsData();
-        }//Добавление существующего студента
+        }
 
         //Вывод студентов
         private async void StudentsData(GroupView group)
@@ -207,7 +207,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
                     if (response is not null)
                     {
-                        MessageBox.Show("Студент удален");
+                        MessageBox.Show("Студент удален", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                         StudentsData(SelectedGroup.GroupView);
                         return;
                     }
@@ -216,7 +216,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             }
             catch (Exception)
             {
-                MessageBox.Show("Ошибка при удалении", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Ошибка при удалении", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
         }//Готово
@@ -235,6 +235,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             }
 
         }
+        
         //Удаление группы
         private async void deleteGroup_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -268,6 +269,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             }
         }//Готово
 
+        //Обновление при загрузке
         private void Groups_Page_Loaded(object sender, RoutedEventArgs e)
         {
             GroupsData();

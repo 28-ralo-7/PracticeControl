@@ -21,19 +21,31 @@ namespace PracticeControl.WpfClient.Windows
             }
             var userAuth = new AuthUser(login_TextBox.Text, passwordBox.Password);
 
-            var user = await GetRequests.Authorization(userAuth);
-
-            if (user is null)
+            try
             {
-                MessageBox.Show("Неверный логин или пароль");
-                return;
+                var user = await GetRequests.Authorization(userAuth);
+
+                if (user is null)
+                {
+                    MessageBox.Show("Неверный логин или пароль", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                MainContentWindow mainWindow = new MainContentWindow(user.user);
+                mainWindow.Show();
+                this.Close();
+            }
+            catch (System.Exception)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
 
-            MainContentWindow mainWindow = new MainContentWindow(user.user);
-            mainWindow.Show();
-            this.Close();
-            
+        }
+
+        private void close_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

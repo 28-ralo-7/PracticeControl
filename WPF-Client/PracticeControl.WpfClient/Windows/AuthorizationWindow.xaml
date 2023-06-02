@@ -5,16 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows"
         mc:Ignorable="d"
-        Title="" Height="365" Width="420" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Grid Style="{StaticResource LoginGridStyle}">
+        
+        Title="" Height="365" Width="420" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
+    <Grid Style="{StaticResource LoginGridStyle}" Background="#2196F3">
+        <Button x:Name="close_Button" 
+                Width="40"
+                Height="40"
+                FontSize="30" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top"
+                Background="Transparent" 
+                Click="close_Button_Click" 
+                Content="✕" 
+                Cursor="Hand"
+                />
+        
         <StackPanel Style="{StaticResource LoginStackPanelStyle}" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Width="280">
-            <TextBlock Style="{StaticResource LoginTextBlockStyle}" Text="Авторизация" Height="35" HorizontalAlignment="Center" FontSize="20" />
+            
+            <TextBlock Style="{StaticResource LoginTextBlockStyle}" Text="Контроль практики" FontSize="25" Height="35" HorizontalAlignment="Center"/>
 
-            <TextBlock Style="{StaticResource LoginTextBlockStyle}" Text="Логин" />
-            <TextBox Style="{StaticResource LoginTextBoxStyle}" x:Name="login_TextBox" />
+            <TextBlock Style="{StaticResource LoginTextBlockStyle}" FontSize="25" Text="Логин" />
+            <TextBox Style="{StaticResource LoginTextBoxStyle}" 
+                     FontSize="25"
+                     x:Name="login_TextBox"
+                     HorizontalContentAlignment="Center" >
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
 
-            <TextBlock Style="{StaticResource LoginTextBlockStyle}" Text="Пароль"/>
-            <PasswordBox Style="{StaticResource LoginPasswordBoxStyle}" x:Name="passwordBox"/> 
+            <TextBlock Style="{StaticResource LoginTextBlockStyle}" FontSize="25" Text="Пароль"/>
+            <PasswordBox Style="{StaticResource LoginPasswordBoxStyle}" 
+                         FontSize="25" HorizontalContentAlignment="Center" 
+                         x:Name="passwordBox">
+                           
+            </PasswordBox> 
+    
 
             <Button x:Name="auth_button" IsDefault="True" Style="{StaticResource LoginButtonStyle}" Click="Auth_button_Click" Content="Войти" />
         

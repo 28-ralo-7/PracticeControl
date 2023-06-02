@@ -31,6 +31,8 @@ namespace PracticeControl.WpfClient.Windows.Pages
             StudentData();
         }
 
+
+        //Обновление странмцы
         private async void StudentData()
         {
             StudentViews = await GetRequests.GetAllStudentsAsync();
@@ -56,6 +58,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             dataGridStudents.ItemsSource = students;
         }
 
+        //Добавление студента
         private void bttnAddStudent_Click(object sender, RoutedEventArgs e)
         {
             StudentEditModalWindow studentEditModalWindow = new StudentEditModalWindow(StudentViews);
@@ -63,6 +66,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             StudentData();
         }
 
+        //Изменение студента
         private async void editStudent_Button_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -81,6 +85,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 return;
             }
         }
+
         //Удаление студента
         private async void deleteStudent_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -97,7 +102,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
                     if (response is not null)
                     {
-                        MessageBox.Show("Студент удален");
+                        MessageBox.Show("Студент удален", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                         StudentData();
                         return;
                     }
@@ -106,11 +111,12 @@ namespace PracticeControl.WpfClient.Windows.Pages
             }
             catch (Exception)
             {
-                MessageBox.Show("Ошибка при удалении", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Ошибка при удалении", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
         }//Готово
 
+        //Обновление при загрузке
         private void StudentsPage_Loaded(object sender, RoutedEventArgs e)
         {
             StudentData();

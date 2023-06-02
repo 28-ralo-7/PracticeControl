@@ -84,11 +84,13 @@ namespace PracticeControl.WebAPI.Repositories
             return employees;
         }
 
-        //Список практик
+        //Список расписаний
         public async Task<List<Practiceschedule>> GetPracticeScheduleList()
         {
             var practiceSchedule = await _context.Practiceschedules
                 .Where(schedule => schedule.Isdeleted == false)
+
+                .Include(schedule => schedule.IdEmployeeNavigation)
 
                 .Include(ps => ps.IdPracticeNavigation)
 
@@ -103,15 +105,6 @@ namespace PracticeControl.WebAPI.Repositories
 
         //Группа по названию
         public async Task<Group> GetGroup(string name)
-        {
-            var group = await _context.Groups.FirstOrDefaultAsync(group => group.Name == name);
-
-            return group;
-        }
-
-        //Практика по названию
-
-        public async Task<Group> GetPract(string name)
         {
             var group = await _context.Groups.FirstOrDefaultAsync(group => group.Name == name);
 
@@ -148,6 +141,7 @@ namespace PracticeControl.WebAPI.Repositories
             return practice;
         }
 
+        //Сотрудник по имени
         public async Task<Employee> GetEmployee(string name)
         {
             string[] parts = name.Split(' ');
@@ -164,7 +158,6 @@ namespace PracticeControl.WebAPI.Repositories
             return employee;
         }
 
-        //Сотрудник по имени
 
         //Список студентов группы
         public async Task<List<Student>> GetStudentsGroup(string groupName)

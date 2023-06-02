@@ -16,7 +16,7 @@ namespace PracticeControl.WpfClient.API
 {
     public class PostRequests
     {
-        #region Employee
+        //Сотрудник
         public static async Task<CreateEmployeeView> CreateEmoloyeesAsync(CreateEmployeeView newEmployee)
         {
             HttpClient client = new HttpClient();
@@ -39,10 +39,7 @@ namespace PracticeControl.WpfClient.API
             return createdEmployee;
         } //Готово
 
-
-        #endregion
-
-        #region Group
+        //Группа
         public static async Task<bool?> CreateGroupAsync(CreateGroupView? newGroup)
         {
             HttpClient client = new HttpClient();
@@ -63,9 +60,9 @@ namespace PracticeControl.WpfClient.API
             var createdGroup = JsonConvert.DeserializeObject<bool>(responseData);
 
             return createdGroup;
-        }
-        #endregion
+        }//Готово
 
+        //Студент
         public static async Task<bool?> CreateStudentAsync(CreateStudentView? newStudent)
         {
             HttpClient client = new HttpClient();
@@ -86,9 +83,10 @@ namespace PracticeControl.WpfClient.API
             var createdGroup = JsonConvert.DeserializeObject<bool>(responseData);
 
             return createdGroup;
-        }
+        }//Готово
 
-        public static async Task<bool> CreatePracticeSchedule(CreatePracticeView practiceView)
+        //Расписание
+        public static async Task<bool> CreatePracticeSchedule(CreatePracticeScheduleView practiceView)
         {
             HttpClient client = new HttpClient();
 
@@ -108,7 +106,30 @@ namespace PracticeControl.WpfClient.API
             var createdGroup = JsonConvert.DeserializeObject<bool>(responseData);
 
             return createdGroup;
-        }
+        }//Готово
+
+        //Практика
+        public static async Task<bool> CreatePractice(PracticeView practiceView)
+        {
+            HttpClient client = new HttpClient();
+
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
+
+            var json = JsonConvert.SerializeObject(practiceView);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("https://localhost:7063/api/post/createPractice", data).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            var responseData = await response.Content.ReadAsStringAsync();
+            var createdGroup = JsonConvert.DeserializeObject<bool>(responseData);
+
+            return createdGroup;
+        }//Готово
 
         #region Уникальность
         //Проверка уникальности практики
@@ -212,7 +233,7 @@ namespace PracticeControl.WpfClient.API
         }
         #endregion
         //Проверка доступности дат
-        public static async Task<bool> CheckValidDateForPractice(CreatePracticeView practice)
+        public static async Task<bool> CheckValidDateForPractice(CreatePracticeScheduleView practice)
         {
             try
             {
@@ -241,6 +262,8 @@ namespace PracticeControl.WpfClient.API
                 return false;
             }
         }
+
+
 
     }
 }

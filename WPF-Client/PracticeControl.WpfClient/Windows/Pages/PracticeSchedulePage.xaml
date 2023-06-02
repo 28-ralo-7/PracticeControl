@@ -140,6 +140,12 @@
                 <DataGrid x:Name="dataGridPractices" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True" HorizontalAlignment="Center"
                           CanUserResizeColumns="False" AutoGenerateColumns="False" Margin="10,5,15,10"  MaxHeight="800" ItemsSource="{Binding PracticeScheduleView}"
                           Width="1500" PreviewMouseDoubleClick="dataGridPractices_PreviewMouseDoubleClick">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu x:Name="contextMenuStudents">
+
+                            <MenuItem x:Name="deleteSchedule_Button" Click="deleteSchedule_Button_Click" Header="Удалить"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
                     <DataGrid.Columns>
 
                         <DataGridTextColumn Header="Аббревиатура" Width="150" Binding="{Binding Abbreviation}" />

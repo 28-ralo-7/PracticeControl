@@ -1,4 +1,5 @@
-﻿using PracticeControl.WebAPI.Views.View;
+﻿using PracticeControl.WebAPI.Database;
+using PracticeControl.WebAPI.Views.View;
 
 namespace PracticeControl.WebAPI.Interfaces.IServices
 {
@@ -8,6 +9,8 @@ namespace PracticeControl.WebAPI.Interfaces.IServices
         Task<bool> DeleteEmployee(string login);
         Task<StudentView> DeleteStudent(string login);
         Task<GroupView> DeleteGroup(string name);
+        Task<bool> DeletePracice(int id);
+        Task<bool> DeletePracticeSchedule(int id);
 
     }
 }

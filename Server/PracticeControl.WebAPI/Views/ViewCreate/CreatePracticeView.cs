@@ -2,10 +2,8 @@
 {
     public class CreatePracticeView
     {
-        public string PracticeName { get; set; }
-        public string PracticeLead { get; set; }
-        public string GroupName { get; set; }
-        public string DateStart { get; set; }
-        public string DateEnd { get; set; }
+        public string Abbreviation { get; set; }
+        public string PracticeModule { get; set; }
+        public string Specialty { get; set; }
     }
 }

@@ -72,24 +72,82 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 return;
             }
 
-            PracticeView practiceView = new PracticeView
+            try
             {
+                PracticeView practiceViewgorCreate = new PracticeView
+                {
+                    Abbreviation = module_TextBox.Text,
+                    PracticeModule = name_TextBox.Text,
+                    Specialty = specialty_TextBox.Text
+                };
+
+                var checkUnique = await PostRequests.CheckUnique(practiceViewgorCreate);
+
+                if (checkUnique)
+                {
+                    MessageBox.Show("Такая практика уже существует");
+                    return;
+                }
+
+                var response = await PostRequests.CreatePractice(practiceViewgorCreate);
+                if (response)
+                {
+                    MessageBox.Show("Практика сохранена", "Уведомление", MessageBoxButton.OK);
+                    this.Close();
+                    return;
+                }
+                MessageBox.Show("Изменение не произошло", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ошибка изменения", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
+        }
+
+        private async void edit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(module_TextBox.Text) ||
+                string.IsNullOrWhiteSpace(name_TextBox.Text) ||
+                string.IsNullOrWhiteSpace(specialty_TextBox.Text)
+                )
+            {
+                MessageBox.Show("Заполните все поля");
+                return;
+            }
+
+            PracticeView practiceViewforUpdate = new PracticeView
+            {
+                Id = practiceView.Id,
                 Abbreviation = module_TextBox.Text,
                 PracticeModule = name_TextBox.Text,
                 Specialty = specialty_TextBox.Text
             };
-
-            var checkUnique = await PostRequests.CheckUnique(practiceView);
-
-            if (checkUnique) 
+            try
             {
-                MessageBox.Show("Такая практика уже существует");
-                return;
-            }
-        }
+                var checkUnique = await PostRequests.CheckUnique(practiceViewforUpdate);
 
-        private void edit_Button_Click(object sender, RoutedEventArgs e)
-        {
+                if (checkUnique)
+                {
+                    MessageBox.Show("Такая практика уже существует");
+                    return;
+                }
+
+                var response = await UpdateRequests.UpdatePracticeAsync(practiceViewforUpdate);
+                if (response)
+                {
+                    MessageBox.Show("Практика изменена", "Уведомление", MessageBoxButton.OK);
+                    this.Close();
+                    return;
+                }
+                MessageBox.Show("Изменение не произошло", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка изменения", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
 
         }
 

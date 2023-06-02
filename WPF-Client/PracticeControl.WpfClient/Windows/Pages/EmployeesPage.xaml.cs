@@ -19,7 +19,8 @@ namespace PracticeControl.WpfClient.Windows.Pages
             this.User = User;
             EmployeesData();
         }
-
+        
+        //Обновление страницы
         private async void EmployeesData()
         {
             employees = await GetRequests.GetAllEmployeesAsync();
@@ -47,13 +48,15 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
         }
 
+        //Добавить сотрудника
         private void addPracticeLead_Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             EmployeeModalWindow employeeModalWindow =  new EmployeeModalWindow(employees);
             employeeModalWindow.ShowDialog();
             EmployeesData();
         }
-
+        
+        //Изменить сотрудника
         private void edit_Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             var employee = dataGridEmployees.SelectedItem as EmployeeForm;
@@ -65,6 +68,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             }
         }
 
+        //Удалить сотрудника
         private async void delete_Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             var employee = dataGridEmployees.SelectedItem as EmployeeForm;
@@ -76,14 +80,14 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             if (employee.Login == User.Login)
             {
-                MessageBoxResult resultMyself = MessageBox.Show("Вы уверены, что хотите удалить себя же?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult resultMyself = MessageBox.Show("Вы уверены, что хотите удалить себя же?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (resultMyself == MessageBoxResult.Yes)
                 {
                     var response = await DeleteRequests.DeleteEmployeeAsync(employee.Login);
 
                     if ((bool)response)
                     {
-                        MessageBox.Show("Сотрудник удален");
+                        MessageBox.Show("Сотрудник удален", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                         EmployeesData();
                         AuthorizationWindow authorizationWindow = new AuthorizationWindow();
                         authorizationWindow.Show();
@@ -108,7 +112,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
                 if ((bool)response)
                 {
-                    MessageBox.Show("Сотрудник удален", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Сотрудник удален", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                     EmployeesData();
                     return;
                 }
@@ -117,13 +121,11 @@ namespace PracticeControl.WpfClient.Windows.Pages
             }
         }
 
+        //Обновление при загрузке
         private void Employees_Page_Loaded(object sender, RoutedEventArgs e)
         {
             EmployeesData();
-
         }
-
-        
     }
 
     public class EmployeeForm

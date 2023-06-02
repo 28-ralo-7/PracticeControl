@@ -103,5 +103,26 @@ namespace PracticeControl.WebAPI.Repositories
                 return false;
             }
         }
+
+        public bool UpdatePractice(Practice practice)
+        {
+            try
+            {
+
+                Practice? practiceFromDb = _context.Practices
+                        .FirstOrDefault(a => a.Id == practice.Id);
+
+                practiceFromDb.Abbreviation = practice.Abbreviation;
+                practiceFromDb.Practicemodule = practice.Practicemodule;
+                practiceFromDb.Specialty = practice.Specialty;
+
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

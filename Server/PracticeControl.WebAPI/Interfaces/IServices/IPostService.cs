@@ -8,7 +8,8 @@ namespace PracticeControl.WebAPI.Interfaces.IServices
         CreateEmployeeView CreateEmployee(CreateEmployeeView employeeView);
         CreateStudentView CreateStudent(CreateStudentView createStudentView);
         bool CreateGroup(CreateGroupView employeeView);
-        bool CreatePracticeSchedule(CreatePracticeView schedule);
+        bool CreatePracticeSchedule(CreatePracticeScheduleView schedule);
+        bool CreatePractice(CreatePracticeView schedule);
 
 
 
@@ -20,6 +21,6 @@ namespace PracticeControl.WebAPI.Interfaces.IServices
 
 
 
-        bool CheckValidDateForPractice(CreatePracticeView createPracticeView);
+        bool CheckValidDateForPractice(CreatePracticeScheduleView createPracticeView);
     }
 }

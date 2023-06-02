@@ -107,16 +107,62 @@ namespace PracticeControl.WebAPI.Repositories
         }
 
         //Практики
-        public async Task<Practice> DeletePracice(string name)
+        public async Task<bool> DeletePracice(int id)
         {
-            Practice practice = await _getRepository.GetPractice(name);
+            Practice? practice = await _context.Practices.FirstOrDefaultAsync(p => p.Id == id);
 
             if (practice is null)
-                return null;
+                return false;
+            try
+            {
+                List<Practiceschedule> schedules = await _context.Practiceschedules
+                    .Where(ps => ps.IdPractice == practice.Id)
+                    .Include(ps=>ps.Attendances)
+                    .ToListAsync();
+                List<Attendance> attendances = new List<Attendance>();
 
-            
+                foreach (var schedule in schedules)
+                {
+                    attendances.AddRange(schedule.Attendances);
+                }
 
-            return null;
+                _context.RemoveRange(attendances);
+                _context.RemoveRange(schedules);
+                _context.Remove(practice);
+
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        //Расписания
+        public async Task<bool> DeletePracticeSchedule(int id)
+        {
+            Practiceschedule? practicescheduleFromDb = await _context.Practiceschedules
+                .Include(schedule => schedule.Attendances)
+                .FirstOrDefaultAsync(ps=> ps.Id == id);
+
+            try
+            {
+                List<Attendance> attendances = practicescheduleFromDb.Attendances.ToList();
+
+                _context.RemoveRange(attendances);
+                _context.Remove(practicescheduleFromDb);
+
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

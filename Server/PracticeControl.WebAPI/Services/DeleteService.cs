@@ -4,6 +4,7 @@ using PracticeControl.WebAPI.Interfaces.IServices;
 using PracticeControl.WebAPI.Views.View;
 using static PracticeControl.WebAPI.Converters.EmployeeConverter;
 using static PracticeControl.WebAPI.Converters.StudentConverter;
+using static PracticeControl.WebAPI.Converters.PracticeScheduleConverter;
 using static PracticeControl.WebAPI.Converters.GroupConverter;
 
 namespace PracticeControl.WebAPI.Services
@@ -64,6 +65,22 @@ namespace PracticeControl.WebAPI.Services
 
             return groupView;
         }
+        
+        //Практики
+        public async Task<bool> DeletePracice(int id)
+        {
 
+            var isDeleted = await _deleteRepository.DeletePracice(id);
+
+            return isDeleted;            
+        }
+
+        //Расписания
+        public async Task<bool> DeletePracticeSchedule(int id)
+        {
+            var isDeleted = await _deleteRepository.DeletePracticeSchedule(id);
+
+            return isDeleted;
+        }
     }
 }

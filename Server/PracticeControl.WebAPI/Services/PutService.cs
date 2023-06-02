@@ -8,6 +8,7 @@ using PracticeControl.WebAPI.Views.ViewUpdate;
 using static PracticeControl.WebAPI.Converters.EmployeeConverter;
 using static PracticeControl.WebAPI.Converters.StudentConverter;
 using static PracticeControl.WebAPI.Converters.GroupConverter;
+using static PracticeControl.WebAPI.Converters.PracticeConverter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Microsoft.IdentityModel.Tokens;
@@ -114,6 +115,24 @@ namespace PracticeControl.WebAPI.Services
                 return response;
             }
             return false;
+        }
+
+        public async Task<bool> UpdatePractice(PracticeView practiceView)
+        {
+            try
+            {
+                Practice practice = ConvertToPractice(practiceView);
+
+                var isUpdate = _putRepository.UpdatePractice(practice);
+
+                return isUpdate;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+
         }
     }
 }

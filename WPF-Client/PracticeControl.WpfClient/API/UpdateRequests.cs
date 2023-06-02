@@ -34,7 +34,7 @@ namespace PracticeControl.WpfClient.API
             return employeeView;
         }
 
-
+        //Студент
         public static async Task<bool> UpdateStudentAsync(UpdateStudentView updateEmployee)
         {
             HttpClient client = new HttpClient();
@@ -56,6 +56,7 @@ namespace PracticeControl.WpfClient.API
             return studentView;
         }
 
+        //Группа
         public static async Task<GroupView> RenameGroup(string newName, string oldName)
         {
             HttpClient client = new HttpClient();
@@ -77,8 +78,7 @@ namespace PracticeControl.WpfClient.API
             return studentView;
         }
 
-
-
+        //Посещения
         public static async Task<bool> UpdateAttendanceAsync(List<UpdateAttendanceView> updateAttendances)
         {
             HttpClient client = new HttpClient();
@@ -100,7 +100,26 @@ namespace PracticeControl.WpfClient.API
             return updatedAttendances;
         }
 
+        public static async Task<bool> UpdatePracticeAsync(PracticeView practiceView)
+        {
+            HttpClient client = new HttpClient();
 
+            var json = JsonConvert.SerializeObject(practiceView);
+
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"https://localhost:7063/api/put/updatePractice/", data).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            var responseData = await response.Content.ReadAsStringAsync();
+            var updatedAttendances = JsonConvert.DeserializeObject<bool>(responseData);
+
+            return updatedAttendances;
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Views.View;
+using PracticeControl.WebAPI.Views.ViewCreate;
 
 namespace PracticeControl.WebAPI.Converters
 {
@@ -10,6 +11,7 @@ namespace PracticeControl.WebAPI.Converters
         {
             return new PracticeView
             {
+                Id = Convert.ToInt32(practice.Id),
                 Abbreviation = practice.Abbreviation,
                 PracticeModule = practice.Practicemodule,
                 Specialty = practice.Specialty 
@@ -18,6 +20,19 @@ namespace PracticeControl.WebAPI.Converters
 
         //Из View в бд
         public static Practice ConvertToPractice(PracticeView practiceView)
+        {
+            return new Practice
+            {
+                Id = practiceView.Id,
+                Abbreviation = practiceView.Abbreviation,
+                Practicemodule = practiceView.PracticeModule,
+                Specialty = practiceView.Specialty
+            };
+        }
+
+
+        //Из CreateView в бд
+        public static Practice ConvertToPractice(CreatePracticeView practiceView)
         {
             return new Practice
             {

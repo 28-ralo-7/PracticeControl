@@ -8,6 +8,7 @@ namespace PracticeControl.WebAPI.Interfaces.IRepositories
         Group CreateGroup(Group group);
         Student CreateStudent(Student student);
         bool CreatePracticeSchedule(Practiceschedule schedule);
+        bool CreatePractice(Practice practice);
 
 
         Task<bool> CheckUnique(Practice practice);

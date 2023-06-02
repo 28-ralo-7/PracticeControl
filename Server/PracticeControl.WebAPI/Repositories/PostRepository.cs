@@ -49,7 +49,7 @@ namespace PracticeControl.WebAPI.Repositories
                 return null;
             }
         }
-        //Практика
+        //Расписание
         public bool CreatePracticeSchedule(Practiceschedule schedule)
         {
             if (schedule is not null)
@@ -96,6 +96,21 @@ namespace PracticeControl.WebAPI.Repositories
             }
 
             return false;
+        }
+
+        //Практика
+        public bool CreatePractice(Practice practice)
+        {
+            try
+            {
+                _context.Practices.Add(practice);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         #region Проверка уникальности 

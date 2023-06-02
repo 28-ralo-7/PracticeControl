@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PracticeControl.WpfClient.Model.ViewCreate
+﻿namespace PracticeControl.WebAPI.Views.ViewCreate
 {
-    public class CreatePracticeView
+    public class CreatePracticeScheduleView
     {
         public string PracticeName { get; set; }
         public string PracticeLead { get; set; }

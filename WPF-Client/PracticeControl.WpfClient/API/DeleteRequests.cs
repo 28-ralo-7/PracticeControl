@@ -65,5 +65,46 @@ namespace PracticeControl.WpfClient.API
             return studentView;
 
         }
+
+        //Удаление практики
+        public static async Task<bool> DeletePracticeAsync(int id)
+        {
+            HttpClient client = new HttpClient();
+
+            var response = await client.DeleteAsync($"https://localhost:7063/api/delete/deletePractice/{id}").ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            var responseData = await response.Content.ReadAsStringAsync();
+            var isDeleted = JsonConvert.DeserializeObject<bool>(responseData);
+
+            return isDeleted;
+
+        }
+
+
+        //Удаление расписание практики
+        public static async Task<bool> DeletePracticeScheduleAsync(PracticeScheduleView practiceScheduleView)
+        {
+            HttpClient client = new HttpClient();
+
+            var response = await client
+                .DeleteAsync($"https://localhost:7063/api/delete/deletePracticeSchedule/{practiceScheduleView.PracticeScheduleID}")
+                .ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            var responseData = await response.Content.ReadAsStringAsync();
+            var isDelete = JsonConvert.DeserializeObject<bool>(responseData);
+
+            return isDelete;
+
+        }
     }
 }

@@ -90,7 +90,7 @@ namespace PracticeControl.WebAPI.Services
         }
 
         //Практика
-        public bool CreatePracticeSchedule(CreatePracticeView schedule)
+        public bool CreatePracticeSchedule(CreatePracticeScheduleView schedule)
         {
             var test = _getRepository.GetPractice(schedule.PracticeName).Result.Id;
             Practiceschedule practiceschedule = new Practiceschedule
@@ -157,7 +157,7 @@ namespace PracticeControl.WebAPI.Services
         }
         #endregion
 
-        public bool CheckValidDateForPractice(CreatePracticeView createPracticeView)
+        public bool CheckValidDateForPractice(CreatePracticeScheduleView createPracticeView)
         {
             List<Practiceschedule> practiceScheduleFromDb = _getRepository.GetPracticeScheduleList().Result
                 .Where(practice => practice.IdGroupNavigation.Name == createPracticeView.GroupName).ToList();
@@ -183,6 +183,14 @@ namespace PracticeControl.WebAPI.Services
         
         }
 
+        public bool CreatePractice(CreatePracticeView practiceView)
+        {
+            Practice practice = ConvertToPractice(practiceView);
+
+            var isCreated = _postRepository.CreatePractice(practice);
+
+            return isCreated;
+        }
     }
 
 }

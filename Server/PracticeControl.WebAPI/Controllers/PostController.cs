@@ -42,13 +42,21 @@ namespace PracticeControl.WebAPI.Controllers
         }
 
         [HttpPost("createPracticeSchedule")]
-        public IActionResult CreatePracticeSchedule([FromBody] CreatePracticeView schedule)
+        public IActionResult CreatePracticeSchedule([FromBody] CreatePracticeScheduleView schedule)
         {
             var response = _postService.CreatePracticeSchedule(schedule);
 
             return Ok(response);
         }
-        
+
+        [HttpPost("createPractice")]
+        public IActionResult CreatePractice([FromBody] CreatePracticeView schedule)
+        {
+            var response = _postService.CreatePractice(schedule);
+
+            return Ok(response);
+        }
+
         //+++++++++++++++++++++++++++++++++
         #region Блок проверки уникальности новых записей
         [HttpPost("checkUniquePractice")]
@@ -99,7 +107,7 @@ namespace PracticeControl.WebAPI.Controllers
 
 
         [HttpPost("checkValidDateForPractice")]
-        public IActionResult CheckValidDateForPractice([FromBody]CreatePracticeView createPracticeView)
+        public IActionResult CheckValidDateForPractice([FromBody]CreatePracticeScheduleView createPracticeView)
         {
             var response = _postService.CheckValidDateForPractice(createPracticeView);
 

@@ -8,5 +8,7 @@ namespace PracticeControl.WebAPI.Interfaces.IRepositories
         Task<Employee> DeleteEmployee(string login);
         Task<Student> DeleteStudent(string login);
         Task<Group> DeleteGroup(string name);
+        Task<bool> DeletePracice(int id);
+        Task<bool> DeletePracticeSchedule(int id);
     }
 }

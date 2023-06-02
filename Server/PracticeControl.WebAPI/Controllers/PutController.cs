@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PracticeControl.WebAPI.Interfaces.IServices;
+using PracticeControl.WebAPI.Views.View;
 using PracticeControl.WebAPI.Views.ViewCreate;
 using PracticeControl.WebAPI.Views.ViewUpdate;
 
@@ -42,6 +43,14 @@ namespace PracticeControl.WebAPI.Controllers
         public async Task<IActionResult> UpdateAttendance([FromBody] List<UpdateAttendanceView> attendanceView)
         {
             var response = _putService.UpdateAttendance(attendanceView);
+
+            return Ok(response.Result);
+        }
+
+        [HttpPut("updatePractice")]
+        public async Task<IActionResult> UpdatePractice([FromBody]PracticeView practiceView)
+        {
+            var response = _putService.UpdatePractice(practiceView);
 
             return Ok(response.Result);
         }

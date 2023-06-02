@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -30,6 +31,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             PracticeData();
         }
 
+        //Обновление практик
         private async void PracticeData()
         {
             PracticeViews = await GetRequests.GetAllPracticeAsync();
@@ -44,6 +46,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             practice_DataGrid.ItemsSource = PracticeViews;
         }
 
+        //Добавление практики
         private void addPractice_Button_Click(object sender, RoutedEventArgs e)
         {
             PracticeModalWindow modalWindow = new PracticeModalWindow(PracticeViews);
@@ -51,6 +54,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
             PracticeData();
         }
 
+        //Изменение практик
         private void editPractice_Button_Click(object sender, RoutedEventArgs e)
         {
             var selectedPractice = practice_DataGrid.SelectedItem as PracticeView;
@@ -62,9 +66,38 @@ namespace PracticeControl.WpfClient.Windows.Pages
             }
         }
 
-        private void deletePractice_Button_Click(object sender, RoutedEventArgs e)
+        //Удаление практики
+        private async void deletePractice_Button_Click(object sender, RoutedEventArgs e)
         {
-            PracticeData();
+            var practice = practice_DataGrid.SelectedItem as PracticeView;
+
+            if (practice is null)
+                return;
+
+            MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить выбранную запись?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.No)
+                return;
+            try
+            {
+                var isDeleted = await DeleteRequests.DeletePracticeAsync(practice.Id);
+
+                if (isDeleted)
+                {
+                    MessageBox.Show("Практика удалена", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    PracticeData();
+                    return;
+                }
+
+                MessageBox.Show("Не удалось удалить", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                PracticeData();
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка при удалении", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
         }
     }
 }
