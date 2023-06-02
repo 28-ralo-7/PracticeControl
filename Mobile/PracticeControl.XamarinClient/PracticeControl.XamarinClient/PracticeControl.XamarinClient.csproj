@@ -16,10 +16,18 @@
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2578" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.5" />
+	  
+	<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0-rc.2.22430.11" />
+	<PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0-rc.2.22430.11" />
+	<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0-rc.2.22430.11" />
+	<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0-rc.2.22430.11" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="WorkPage.xaml">
+    <EmbeddedResource Update="Pages\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\MainContentPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

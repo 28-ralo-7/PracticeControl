@@ -20,8 +20,7 @@ namespace PracticeControl.XamarinClient
 
         private async void login_Button_Clicked(object sender, EventArgs e)
         {
-
-            if (login_TextBox.Text is null )
+            if (login_TextBox.Text is null)
             {
                 DisplayAlert("Уведомление", "Введите логин", "ОК");
                 return;
@@ -31,8 +30,8 @@ namespace PracticeControl.XamarinClient
                 DisplayAlert("Уведомление", "Введите пароль ", "ОК");
                 return;
             }
-            AuthRequest authForm = new AuthRequest(login_TextBox.Text, password_TextBox.Text);
 
+            AuthRequest authForm = new AuthRequest(login_TextBox.Text, password_TextBox.Text);
             User = await Authorization(authForm);
 
             if (User is null)
@@ -41,12 +40,9 @@ namespace PracticeControl.XamarinClient
                 return;
             }
 
-            DisplayAlert("Успех", "Успех", "Успех");
 
-            WorkPage workPage = new WorkPage(User); 
-            
-            await Navigation.PushAsync(workPage);
 
+            //await Application.Current.MainPage.Navigation.PushAsync(new WorkPage(User));
         }
 
     }

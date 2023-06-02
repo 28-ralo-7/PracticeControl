@@ -6,6 +6,7 @@ using PracticeControl.WebAPI.Interfaces.IRepositories;
 using PracticeControl.WebAPI.Interfaces.IServices;
 using PracticeControl.WebAPI.Views;
 using PracticeControl.WebAPI.Views.View;
+using PracticeControl.WebAPI.Views.ViewMobile;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -43,6 +44,33 @@ namespace PracticeControl.WebAPI.Services
                 }
             }
           
+            return null;
+        }
+
+        //Авторизация
+        public async Task<AuthResponseMobile> Authorize(Views.ViewMobile.AuthRequest parameters)
+        {
+            Student student = _authRepository.GetStudent(parameters.Login);
+            if (student is not null)
+            {
+                var passwordHash = PasswordHelper.GetHash(student.Passwordsalt, parameters.PasswordString);
+
+                if (passwordHash == student.Passwordhash)
+                {
+                    AuthResponseMobile authResponse = new AuthResponseMobile
+                    {
+                        user = new StudentViewMobile
+                        {
+                            LastName = student.Lastname,
+                            FirstName = student.Firstname,
+                            MiddleName = student.Middlename,
+                            Login = student.Login,
+                            Group = student.IdGroupNavigation.Name
+                        }
+                    };
+                    return authResponse;
+                }
+            }
             return null;
         }
 

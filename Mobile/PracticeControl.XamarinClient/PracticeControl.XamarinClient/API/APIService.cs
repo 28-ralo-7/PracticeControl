@@ -6,12 +6,13 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace PracticeControl.XamarinClient.API
 {
     public static class APIService
     {
-
+        public static string urlPath = "https://lastblueglass57.conveyor.cloud";
         public static async Task<CurrentPracticeStudentView> GetPracticeGroupAsync(string groupName)
          {
             try
@@ -19,7 +20,7 @@ namespace PracticeControl.XamarinClient.API
                 HttpClient client = new HttpClient();
 
                 var response = await client
-                    .GetAsync($"https://littletealhouse37.conveyor.cloud/api/get/practiceGroup/{groupName}")
+                    .GetAsync($"https://newashlamp61.conveyor.cloud/api/get/practiceGroup/{groupName}")
                     .ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
@@ -55,7 +56,7 @@ namespace PracticeControl.XamarinClient.API
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await client
-                    .PutAsync("https://littletealhouse37.conveyor.cloud/api/put/studentAttendance/", content)
+                    .PutAsync("https://newashlamp61.conveyor.cloud/api/put/studentAttendance/", content)
                     .ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
@@ -86,7 +87,7 @@ namespace PracticeControl.XamarinClient.API
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await client
-                    .PostAsync("https://littletealhouse37.conveyor.cloud/api/auth/authorizationMobile/", content)
+                    .PostAsync($"{urlPath}/api/auth/authorizationMobile/", content)
                     .ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
