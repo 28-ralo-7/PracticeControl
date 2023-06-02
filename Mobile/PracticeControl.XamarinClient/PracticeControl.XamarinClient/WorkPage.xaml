@@ -4,9 +4,19 @@
              x:Class="PracticeControl.XamarinClient.WorkPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+
+            <StackLayout x:Name="stackLayoutNotPractice" HorizontalOptions="CenterAndExpand" IsVisible="false">
+                <Label x:Name="labelNotPractice"/>
+            </StackLayout>
+
+            <StackLayout x:Name="stackLayoutUpdateAttendance" IsVisible="false">
+                <Label x:Name="labelPracticeName"/>
+                <Label x:Name="labelPracticeDate"/>
+                <Label x:Name="labelDateNow"/>
+
+                <Button x:Name="buttonUpdateAttendance" Text="Отмениться на сегодня" Clicked="buttonUpdateAttendance_Clicked"/> 
+            </StackLayout>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

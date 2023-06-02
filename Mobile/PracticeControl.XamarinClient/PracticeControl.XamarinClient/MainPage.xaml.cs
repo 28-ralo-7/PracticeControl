@@ -43,7 +43,9 @@ namespace PracticeControl.XamarinClient
 
             DisplayAlert("Успех", "Успех", "Успех");
 
-            WorkPage workPage = new WorkPage(); 
+            WorkPage workPage = new WorkPage(User); 
+            
+            await Navigation.PushAsync(workPage);
 
         }
 

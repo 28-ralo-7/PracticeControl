@@ -11,6 +11,5 @@ namespace PracticeControl.XamarinClient.Models
         public string MiddleName { get; set; }
         public string Login { get; set; }
         public string Group { get; set; }
-        public DateTime Date { get; set; }
     }
 }

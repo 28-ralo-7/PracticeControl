@@ -11,6 +11,10 @@ namespace PracticeControl.XamarinClient.API
 {
     public static class APIService
     {
+
+
+
+
         public static async Task<AuthResponseMobile> Authorization(AuthRequest auth) 
         {
             try
