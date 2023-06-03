@@ -83,7 +83,7 @@ namespace PracticeControl.WebAPI.Repositories
             return null;
         }
 
-        //Посещения
+        //Посещения отметка
         public bool UpdateAttendance(List<Attendance> attendances)
         {
             try
@@ -104,6 +104,30 @@ namespace PracticeControl.WebAPI.Repositories
             }
         }
 
+        //Посещения фото
+        public bool UpdateAttendance(Attendance attendanceForUpdate)
+        {
+            try
+            {
+                Attendance? attendance =  _context.Attendances
+                    .FirstOrDefault(att => 
+                            att.IdStudent == attendanceForUpdate.IdStudent &&
+                            att.Date == attendanceForUpdate.Date
+                            );
+
+                attendance.Photo = attendanceForUpdate.Photo;
+
+                _context.SaveChanges();
+                
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        //Практика
         public bool UpdatePractice(Practice practice)
         {
             try

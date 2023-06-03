@@ -40,17 +40,12 @@ public partial class ProductionPracticeControlContext : DbContext
             entity.ToTable("attendance");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.CompanyName)
-                .HasColumnType("character varying")
-                .HasColumnName("companyName");
             entity.Property(e => e.Date).HasColumnName("date");
             entity.Property(e => e.IdPractice).HasColumnName("id_practice");
             entity.Property(e => e.IdStudent).HasColumnName("id_student");
             entity.Property(e => e.Isdeleted).HasColumnName("isdeleted");
             entity.Property(e => e.Ispresent).HasColumnName("ispresent");
-            entity.Property(e => e.Photo)
-                .HasColumnType("character varying")
-                .HasColumnName("photo");
+            entity.Property(e => e.Photo).HasColumnName("photo");
 
             entity.HasOne(d => d.IdPracticeNavigation).WithMany(p => p.Attendances)
                 .HasForeignKey(d => d.IdPractice)

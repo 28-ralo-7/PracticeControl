@@ -87,11 +87,16 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Студенты" Width="520" Binding="{Binding StudentName}"/>
 
-                        <DataGridTemplateColumn Header="Фото" Width="420">
+                        <DataGridTemplateColumn Header="Фото" Width="200" >
 
                             <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Image Source="{Binding Photo}" Width="50" Height="50"/>
+                            <DataTemplate>
+                                    <StackPanel>
+                                        <Button x:Name ="buttonOpenPhotoAttendance" Click="buttonOpenPhotoAttendance_Click" Width="100" Height="25" Content="Фото" Margin="5"></Button>
+                                        <Image Source="{Binding Photo}" Visibility="Collapsed">
+                                        </Image>
+                                    </StackPanel>
+                                  
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
 

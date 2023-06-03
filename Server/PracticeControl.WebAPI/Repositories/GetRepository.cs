@@ -4,6 +4,7 @@ using PracticeControl.WebAPI.Controllers;
 using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Interfaces.IRepositories;
 using PracticeControl.WebAPI.Views.View;
+using System.Net.Http.Headers;
 
 namespace PracticeControl.WebAPI.Repositories
 {
@@ -158,7 +159,6 @@ namespace PracticeControl.WebAPI.Repositories
             return employee;
         }
 
-
         //Список студентов группы
         public async Task<List<Student>> GetStudentsGroup(string groupName)
         {
@@ -191,6 +191,15 @@ namespace PracticeControl.WebAPI.Repositories
             return practice;
         }
 
+        //Посещение
+        public async Task<Attendance> GetAttendance(int idStudent, DateOnly date)
+        {
+            Attendance? attendance = await _context.Attendances
+                .Where(att => att.IdStudent == idStudent && att.Date == date)
+                .FirstOrDefaultAsync();
 
+            return attendance;
+            
+        }
     }
 }

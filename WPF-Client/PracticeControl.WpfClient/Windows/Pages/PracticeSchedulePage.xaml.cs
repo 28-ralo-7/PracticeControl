@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
 using PracticeControl.WpfClient.API;
+using PracticeControl.WpfClient.Helpers;
 using PracticeControl.WpfClient.Model.View;
 using PracticeControl.WpfClient.Model.ViewOut;
 using PracticeControl.WpfClient.Model.ViewUpdate;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace PracticeControl.WpfClient.Windows.Pages
 {
@@ -162,20 +164,21 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 {
                     var currentAttendanceStudent = CurrentAttendance
                     .FirstOrDefault(x => x.StudentView.StudentID == student.StudentID);
+
                     if (currentAttendanceStudent is null)
                         return;
+
                     AttendanceRows.Add(new AttendanceOutView
                     {
                         StudentID = student.StudentID,
                         AttendanceID = currentAttendanceStudent.AttendanceID,
                         StudentName = student.LastName + " " + student.FirstName + " " + student.MiddleName,
-                        Photo = currentAttendanceStudent.Photo,
+                        Photo = ImageConvert.ConvertByteArrayToImage(currentAttendanceStudent.Photo),
                         IsPresence = currentAttendanceStudent.IsPresent
 
                     });
 
                 }
-
                 dataGridAttendance.ItemsSource = AttendanceRows;
             }
             catch
@@ -203,6 +206,14 @@ namespace PracticeControl.WpfClient.Windows.Pages
             SelectDate = PracticeDates[0];
             date_TextBlock.Text = $"c {PracticeDates[0].ToShortDateString().Replace(".2023", "")} по {PracticeDates[PracticeDates.Count - 1].ToShortDateString().Replace(".2023", "")}";
         }
+
+        
+        //сел телефон - понял
+        //вот вывод по кнопке, если найдем решение как убирать кнопку если нет фото, то будет вполне неплохо
+        //окей, надо это просто в голове представить
+        //я думаю можно както программно перебрать каждый роу в гриде и посмотреть на ресурсы
+        // щас подумаю
+        // давай перерыв, заодно тел зарядишь+++в  10
 
         //Изменение посещений
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -338,6 +349,26 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
             MessageBox.Show("Изменений нет", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
+
+        private void Image_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Image img = (Image)sender;
+           
+            
+        }
+
+        private void buttonOpenPhotoAttendance_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+
+            StackPanel stackPanel = (StackPanel)button.Parent;
+
+            Image image = (Image)(stackPanel.Children[1]);
+
+            AttendancePhotoWindow attendancePhotoWindow = new AttendancePhotoWindow(image);
+            attendancePhotoWindow.Show();
+
+        }
     }
 
     public class AttendanceOutView
@@ -346,7 +377,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
         public int StudentID { get; set; }
         public string StudentName { get; set; }
         public string Date { get; set; }
-        public string Photo { get; set; }
+        public BitmapImage Photo { get; set; }
         public bool IsPresence { get; set; }
     }
 

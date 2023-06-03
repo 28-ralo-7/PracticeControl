@@ -12,15 +12,15 @@ namespace PracticeControl.XamarinClient.API
 {
     public static class APIService
     {
-        public static string urlPath = "https://lastblueglass57.conveyor.cloud";
-        public static async Task<CurrentPracticeStudentView> GetPracticeGroupAsync(string groupName)
+        public static string urlPath = "https://largeashbox44.conveyor.cloud";
+        public static async Task<CurrentPracticeInfoView> GetPracticeInfoAsync(string groupName)
          {
             try
             {
                 HttpClient client = new HttpClient();
 
                 var response = await client
-                    .GetAsync($"https://newashlamp61.conveyor.cloud/api/get/practiceGroup/{groupName}")
+                    .GetAsync($"{urlPath}/api/get/getPracticeInfo/{groupName}")
                     .ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
@@ -30,7 +30,7 @@ namespace PracticeControl.XamarinClient.API
 
                 var data = await response.Content.ReadAsStringAsync();
 
-                var practice = JsonConvert.DeserializeObject<CurrentPracticeStudentView>(data);
+                var practice = JsonConvert.DeserializeObject<CurrentPracticeInfoView>(data);
 
                 if (practice is null)
                 {
@@ -56,7 +56,7 @@ namespace PracticeControl.XamarinClient.API
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await client
-                    .PutAsync("https://newashlamp61.conveyor.cloud/api/put/studentAttendance/", content)
+                    .PutAsync($"{urlPath}/api/put/updateAttendanceStudentForMobile/", content)
                     .ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)

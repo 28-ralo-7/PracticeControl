@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using PracticeControl.WebAPI.Views.ViewMobile;
 
 namespace PracticeControl.WebAPI.Services
 {
@@ -117,6 +118,7 @@ namespace PracticeControl.WebAPI.Services
             return false;
         }
 
+        //Практика
         public async Task<bool> UpdatePractice(PracticeView practiceView)
         {
             try
@@ -133,6 +135,23 @@ namespace PracticeControl.WebAPI.Services
             }
 
 
+        }
+
+        //ФотоДобавить
+        public async Task<bool> UpdateAttendance(StudentAttendanceView attendanceView)
+        {
+            var studentID = attendanceView.Student.StudentID;
+            var date = DateOnly.Parse(attendanceView.DateNow.AddDays(2).ToShortDateString());
+
+            Attendance attendance = await _getRepository.GetAttendance(studentID, date);
+            if (attendance is null)
+                return false;
+
+            attendance.Photo = attendanceView.Photo;
+
+            var isUpdate = _putRepository.UpdateAttendance(attendance);
+
+            return isUpdate;
         }
     }
 }

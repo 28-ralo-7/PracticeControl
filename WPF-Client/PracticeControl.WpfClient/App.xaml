@@ -48,10 +48,10 @@
                 <Setter Property="AlternatingRowBackground" Value="#006196"/>
                 <Setter Property="RowHeight" Value="30"/>
                 <Setter Property="ColumnHeaderHeight" Value="30"/>
-                <Setter Property="BorderBrush" Value="#006196"/>
+                <!--<Setter Property="BorderBrush" Value="#006196"/>-->
                 <Setter Property="RowBackground" Value="White"/>
                 <Setter Property="FontSize" Value="20"/>
-                <Setter Property="Padding" Value="5"/>
+                <!--<Setter Property="Padding" Value="5"/>-->
 
                 <Setter Property="SelectionMode" Value="Single"/>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>

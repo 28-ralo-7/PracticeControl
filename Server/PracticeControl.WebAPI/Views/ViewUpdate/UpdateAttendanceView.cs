@@ -1,6 +1,6 @@
 ﻿namespace PracticeControl.WebAPI.Views.ViewUpdate
 {
-    public class UpdateAttendanceView
+    public class UpdateAttendanceView//WPF update AttendancesPage
     {
         public int AttendanceID { get; set; }
         public int StudentID { get; set; }

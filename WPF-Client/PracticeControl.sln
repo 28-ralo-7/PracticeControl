@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeControl.WebAPI", ".
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticeControl.XamarinClient.Android", "..\Mobile\PracticeControl.XamarinClient\PracticeControl.XamarinClient.Android\PracticeControl.XamarinClient.Android.csproj", "{091A6C84-7F91-4EE5-BD52-946582C4EEFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticeControl.XamarinClient", "..\Mobile\PracticeControl.XamarinClient\PracticeControl.XamarinClient\PracticeControl.XamarinClient.csproj", "{95A69086-6EDC-4D30-8AD5-618E19D1BC4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeControl.XamarinClient", "..\Mobile\PracticeControl.XamarinClient\PracticeControl.XamarinClient\PracticeControl.XamarinClient.csproj", "{95A69086-6EDC-4D30-8AD5-618E19D1BC4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

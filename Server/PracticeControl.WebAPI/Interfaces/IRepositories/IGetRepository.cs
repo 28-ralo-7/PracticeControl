@@ -1,5 +1,6 @@
 ﻿using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Views.View;
+using PracticeControl.WebAPI.Views.ViewMobile;
 
 namespace PracticeControl.WebAPI.Interfaces.IRepositories
 {
@@ -15,6 +16,7 @@ namespace PracticeControl.WebAPI.Interfaces.IRepositories
         Task<Practice> GetPractice(string name);
         Task<Employee> GetEmployee(string name);
         Task<List<Practice>> GetPracticeList();
+        Task<Attendance> GetAttendance(int idStudent, DateOnly date);
 
     }
 }

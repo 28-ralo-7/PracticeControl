@@ -2,6 +2,7 @@
 using PracticeControl.WebAPI.Interfaces.IServices;
 using PracticeControl.WebAPI.Views.View;
 using PracticeControl.WebAPI.Views.ViewCreate;
+using PracticeControl.WebAPI.Views.ViewMobile;
 using PracticeControl.WebAPI.Views.ViewUpdate;
 
 namespace PracticeControl.WebAPI.Controllers
@@ -15,6 +16,15 @@ namespace PracticeControl.WebAPI.Controllers
         {
             _putService = putService;
         }
+
+
+        [HttpPut("updateAttendanceStudentForMobile")]
+        public async Task<IActionResult> UpdateAttendanceStudentForMobile([FromBody] StudentAttendanceView updateAttendance)
+        {
+            var response = await _putService.UpdateAttendance(updateAttendance);
+            return Ok(response);
+        }
+
         [HttpPut("updateEmployee")]
         public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployeeView employee)
         {

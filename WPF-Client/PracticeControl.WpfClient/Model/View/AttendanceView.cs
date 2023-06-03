@@ -5,7 +5,7 @@
         public int AttendanceID { get; set; }
         public string Date { get; set; }
         public bool IsPresent { get; set; }
-        public string Photo { get; set; }
+        public byte[] Photo { get; set; }
 
         public StudentView StudentView { get; set; }
 

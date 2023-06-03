@@ -61,6 +61,7 @@ namespace PracticeControl.WebAPI.Services
                     {
                         user = new StudentViewMobile
                         {
+                            StudentID = (int)student.Id,
                             LastName = student.Lastname,
                             FirstName = student.Firstname,
                             MiddleName = student.Middlename,

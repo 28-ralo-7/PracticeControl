@@ -1,19 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.practicecontrol.xamarinclient">
-	<uses-sdk android:minSdkVersion="33" android:targetSdkVersion="33" />
-
-	
+	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="29" />
 	<application android:label="PracticeControl.XamarinClient.Android" android:theme="@style/MainTheme"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.CAMERA" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-	android:minSdkVersion="33" />
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-	android:minSdkVersion="33" />
-	<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" 
-	android:minSdkVersion="33"/>
-	<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" 
-	android:minSdkVersion="33"/>
-	<uses-permission android:name="android.permission.READ_MEDIA_VIDEO" 
-	android:minSdkVersion="33"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-feature android:name="android.hardware.camera" />
+	<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" android:minSdkVersion="33" />
+	<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" android:minSdkVersion="33" />
+	<uses-permission android:name="android.permission.READ_MEDIA_VIDEO" android:minSdkVersion="33" />
+	<uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 </manifest>

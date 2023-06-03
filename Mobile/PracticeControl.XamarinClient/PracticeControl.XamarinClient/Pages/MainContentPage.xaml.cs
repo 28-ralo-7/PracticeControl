@@ -2,10 +2,6 @@
 using PracticeControl.XamarinClient.Helpers;
 using PracticeControl.XamarinClient.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,7 +11,9 @@ namespace PracticeControl.XamarinClient.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainContentPage : ContentPage
     {
-
+        //СЕРВЕР ДОДЕЛАТЬ - SHIT
+        //СДЕЛАТЬ ЗАПРОС НА ПОЛУЧЕНИЕ ВСЕХ ДАННЫХ О ПРАКТИКЕ (CurrentPracticeView)
+        //СДЕЛАТЬ PUT ОБНОВЛЕНИЕ ПОСЕЩЕНИЯ (StudentAttendanceView)
         private StudentViewMobile Student { get; set; }
         public MainContentPage()
         {
@@ -27,12 +25,12 @@ namespace PracticeControl.XamarinClient.Pages
             Student = user;
             InitializeComponent();
 
-            //GetDataGroup();
+            GetDataGroup();
         }
 
         private async void GetDataGroup()
         {
-            var practice = await APIService.GetPracticeGroupAsync(Student.Group);
+            var practice = await APIService.GetPracticeInfoAsync(Student.Group);
 
             if (practice is null)
             {
@@ -61,9 +59,16 @@ namespace PracticeControl.XamarinClient.Pages
                         return;
                     }
                 }
-                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) != Permission.Granted)
+                var storageWriteStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+
+                if (storageWriteStatus != PermissionStatus.Granted)
                 {
-                    RequestPermissions(new string[] { Manifest.Permission.WriteExternalStorage }, 0);
+                    storageWriteStatus = await Permissions.RequestAsync<Permissions.StorageWrite>();
+                    if (storageWriteStatus != PermissionStatus.Granted)
+                    {
+                        // Отказано в разрешении записи
+                        return;
+                    }
                 }
 
                 var photo = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions
@@ -101,7 +106,6 @@ namespace PracticeControl.XamarinClient.Pages
                 }
 
                 await DisplayAlert("Успешно", "Вы успешно отметились", "ОК");
-
             }
             catch (Exception ex)
             {

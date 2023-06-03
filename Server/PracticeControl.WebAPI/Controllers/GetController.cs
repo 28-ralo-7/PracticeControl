@@ -4,6 +4,7 @@ using PracticeControl.WebAPI.Interfaces.IRepositories;
 using PracticeControl.WebAPI.Interfaces.IServices;
 using PracticeControl.WebAPI.Services;
 using PracticeControl.WebAPI.Views.View;
+using PracticeControl.WebAPI.Views.ViewMobile;
 
 namespace PracticeControl.WebAPI.Controllers
 {
@@ -16,6 +17,26 @@ namespace PracticeControl.WebAPI.Controllers
         public GetController(IGetService getService)
         {
             _getService = getService;
+        }
+
+        [HttpGet("getPracticeInfo/{groupName}")]
+        public async Task<IActionResult> GetPracticeInfo([FromRoute] string groupName)
+        {
+            var practice = _getService.GetPracticeScheduleViewList().Result.FirstOrDefault(b=>b.Group.GroupName == groupName && Convert.ToDateTime(b.StartDate).Date <= DateTime.Now.Date && DateTime.Now.Date <= Convert.ToDateTime(b.EndDate));
+
+            if (practice is null)
+            {
+                return null;
+            }
+
+            var practiceInfo = new CurrentPracticeInfoView
+            {
+                PracticeName = practice.Abbreviation + " " + practice.PracticeModule,
+                DateStart = practice.StartDate,
+                DateEnd = practice.EndDate,
+            };
+
+            return Ok(practiceInfo);
         }
 
         [HttpGet("getGroups")]

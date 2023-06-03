@@ -81,7 +81,7 @@ namespace PracticeControl.WebAPI.Repositories
                             Ispresent = false,
                             Photo = null,
                             IdPractice = schedule.IdPractice,
-                            CompanyName = string.Empty,
+
                         });
                     }
                 }
