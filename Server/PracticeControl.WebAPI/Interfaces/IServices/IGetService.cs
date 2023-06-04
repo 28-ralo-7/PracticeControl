@@ -1,5 +1,6 @@
 ﻿using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Views.View;
+using PracticeControl.WebAPI.Views.ViewMobile;
 using System.Net;
 
 namespace PracticeControl.WebAPI.Interfaces.IServices
@@ -15,7 +16,6 @@ namespace PracticeControl.WebAPI.Interfaces.IServices
         Task<GroupView> GetGroupForName(string name);
         Task<List<StudentView>> GetStudents();
         Task<List<PracticeView>> GetPracticeList();
-
 
     }
 }

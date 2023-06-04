@@ -7,19 +7,29 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout x:Name="stackLayoutNotPractice" HorizontalOptions="CenterAndExpand" IsVisible="false">
-                <Label x:Name="labelNotPractice"/>
+                <Label x:Name="labelNotPractice" FontSize="30"/>
             </StackLayout>
-
+            
             <StackLayout x:Name="stackLayoutUpdateAttendance" IsVisible="true">
-                <Label x:Name="labelPracticeName"/>
-                <Label x:Name="labelPracticeDate"/>
-                <Label x:Name="labelDateNow"/>
+                
+                <Label x:Name="labelUserName" FontSize="30" Text="jaeosfkh" TextColor="White" HorizontalTextAlignment="Center" />
 
-                <Button x:Name="buttonUpdateAttendance"
-                        WidthRequest="100"
-                        HeightRequest="40"
-                        Text="Отмениться на сегодня"
-                        Clicked="buttonUpdateAttendance_Clicked"/>
+                <StackLayout WidthRequest="300" HeightRequest="300" Margin="0,50,0,0">
+                    <Label x:Name="labelPracticeName" FontSize="30 " TextColor="White" HorizontalTextAlignment="Center" />
+                    <Label x:Name="labelPracticeDate" FontSize="25" TextColor="White"/>
+                    <Label x:Name="labelDateNow" FontSize="25" TextColor="White"/>
+
+                    <Image x:Name="imageAttendance"/>
+
+                    <Button x:Name="buttonUpdateAttendance"
+                            WidthRequest="300"
+                            HorizontalOptions="Center"
+                            HeightRequest="40"
+                            CornerRadius="10"
+                            Text="Отмениться на сегодня"
+                            Clicked="buttonUpdateAttendance_Clicked"/>
+
+                </StackLayout>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

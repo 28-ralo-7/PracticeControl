@@ -40,11 +40,11 @@
             <PasswordBox Style="{StaticResource LoginPasswordBoxStyle}" 
                          FontSize="25" HorizontalContentAlignment="Center" 
                          x:Name="passwordBox">
-                           
-            </PasswordBox> 
-    
 
-            <Button x:Name="auth_button" IsDefault="True" Style="{StaticResource LoginButtonStyle}" Click="Auth_button_Click" Content="Войти" />
+            </PasswordBox>
+            
+            <Button x:Name="auth_button" IsDefault="True" Style="{StaticResource LoginButtonStyle}" Background="White" Foreground="#2196F3" Click="Auth_button_Click" Content="Войти" />
+
         
         </StackPanel>
     </Grid>

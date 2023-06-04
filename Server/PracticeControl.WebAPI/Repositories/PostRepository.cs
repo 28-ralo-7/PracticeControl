@@ -113,6 +113,26 @@ namespace PracticeControl.WebAPI.Repositories
             }
         }
 
+        //Посещения
+        public bool CreateAttendance(Practiceschedule practiceschedule, long studentId)
+        {
+            List<Attendance> attendances = new List<Attendance>();
+
+            for (DateOnly date = practiceschedule.Startdate; date <= practiceschedule.Enddate; date = date.AddDays(1))
+            {
+                attendances.Add(new Attendance
+                {
+                    IdPractice = practiceschedule.Id,
+                    Date = date,
+                    IdStudent = studentId
+                });
+            }
+            _context.AddRange(attendances);
+            _context.SaveChanges();
+            return true;
+
+        }
+
         #region Проверка уникальности 
         public async Task<bool> CheckUnique(Practice practice)
         {

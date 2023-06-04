@@ -69,9 +69,15 @@ namespace PracticeControl.WebAPI.Services
             if (createStudentView is not null)
             {
                 Student student = ConvertToStudent(createStudentView);
-                
 
                 student.IdGroup = _getRepository.GetGroup(createStudentView.GroupName).Result.Id;
+
+                var schedule = _getRepository.GetPracticeScheduleList().Result
+                                .FirstOrDefault(ps => ps.IdGroup == student.IdGroup);
+                if (schedule is not null)
+                {
+                    _postRepository.CreateAttendance(schedule, student.Id);
+                }
 
                 var salt = PasswordHelper.GetSalt();
                 var passwordHash = PasswordHelper.GetHash(salt, createStudentView.Password);
@@ -82,7 +88,6 @@ namespace PracticeControl.WebAPI.Services
                 CreateStudentView studentView = ConvertToCreateView(_postRepository.CreateStudent(student));
 
                 return studentView;
-
             }
 
             return null;

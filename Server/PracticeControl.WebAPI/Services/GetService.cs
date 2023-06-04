@@ -101,6 +101,7 @@ namespace PracticeControl.WebAPI.Services
             return practiceViews;
         }
 
+        //Группа по имени
         public async Task<GroupView> GetGroupForName(string name)
         {
             Database.Group group = await _getRepository.GetGroup(name);

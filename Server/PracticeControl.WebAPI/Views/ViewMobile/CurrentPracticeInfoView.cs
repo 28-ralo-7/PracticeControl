@@ -5,5 +5,7 @@
         public string PracticeName { get; set; }
         public string DateStart { get; set; }
         public string DateEnd { get; set; }
+        public bool IsPresent { get; set; }
+        public byte[]? Photo { get; set; }
     }
 }

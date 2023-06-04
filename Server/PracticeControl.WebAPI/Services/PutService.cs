@@ -141,7 +141,7 @@ namespace PracticeControl.WebAPI.Services
         public async Task<bool> UpdateAttendance(StudentAttendanceView attendanceView)
         {
             var studentID = attendanceView.Student.StudentID;
-            var date = DateOnly.Parse(attendanceView.DateNow.AddDays(2).ToShortDateString());
+            var date = DateOnly.Parse(attendanceView.DateNow.ToShortDateString());
 
             Attendance attendance = await _getRepository.GetAttendance(studentID, date);
             if (attendance is null)

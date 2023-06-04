@@ -4,22 +4,66 @@
              x:Class="PracticeControl.XamarinClient.Pages.LoginPage"
              Background="#2196F3">
     <ContentPage.Content>
-        <StackLayout>
-            <Entry x:Name="entryLogin"
-                Placeholder="Login"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Background="#2196F3" VerticalOptions="FillAndExpand">
+            <StackLayout WidthRequest="350"
+                         HeightRequest="500"
+                         HorizontalOptions="CenterAndExpand"
+                         VerticalOptions="CenterAndExpand"
+                         >
+                <Label Text="Контроль практики" FontSize="35" TextColor="White" HorizontalTextAlignment="Center" HorizontalOptions="Center" Margin="0, 0, 0, 50"/>
 
-            <Entry x:Name="entryPassword"
-                Placeholder="Password" IsPassword="True"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                <!-- Поле ввода имени пользователя -->
+                <Frame BackgroundColor="Gray" CornerRadius="10" Padding="0" Margin="0,0,0,50">
+                    <Entry Placeholder="Имя пользователя" 
+                        x:Name="entryLogin"
+                        Text="{Binding Username}"
+                       
+                        Background="white"
+                        TextColor="Black"
+                        PlaceholderColor="Gray"
 
-            <Button x:Name="buttonLogIn"
-                Clicked="buttonLogIn_Clicked"
-                Text="Войти"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand"/>
+                        HorizontalTextAlignment="Center"
+                        Keyboard="Default" 
+                        HeightRequest="70"
+                           
+                       
+                        FontSize="30"
+                       />
+                </Frame>
+
+                <!-- Поле ввода пароля -->
+                <Frame BackgroundColor="Gray" CornerRadius="10" Padding="0" Margin="0,0,0,50">
+                    <Entry Placeholder="Пароль"
+                        x:Name="entryPassword"
+                        Text="{Binding Password}" 
+                           
+                        Background="white"
+                        TextColor="Black"
+                        PlaceholderColor="Gray"
+
+                        HorizontalTextAlignment="Center"
+                        Keyboard="Default" 
+                        HeightRequest="70"
+
+                        IsPassword="true"
+                        FontSize="30"                       
+                       />
+                </Frame>
+
+                <!-- Кнопка для входа -->
+                <Button Text="Войти" 
+                        x:Name="buttonLogIn"
+                        Clicked="buttonLogIn_Clicked"
+                        Background="white" 
+                        HorizontalOptions="Center" 
+                        TextColor="Black"
+                        WidthRequest="300"
+                        HeightRequest="70"
+                        CornerRadius="10"
+                        Command="{Binding LoginCommand}" />
+            </StackLayout>
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

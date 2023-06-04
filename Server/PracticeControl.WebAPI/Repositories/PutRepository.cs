@@ -45,7 +45,9 @@ namespace PracticeControl.WebAPI.Repositories
         //Студенты
         public async Task<Student> UpdateStudent(Student studentForUpdate, string loginSearch)
         {
-            Student? studentFromDb = await _context.Students.FirstOrDefaultAsync(student => student.Login == loginSearch);
+            Student? studentFromDb = await _context.Students
+                .Include(student=> student.Attendances)
+                .FirstOrDefaultAsync(student => student.Login == loginSearch);
 
             if (studentFromDb is null)
             {
@@ -56,6 +58,18 @@ namespace PracticeControl.WebAPI.Repositories
             studentFromDb.Firstname = studentForUpdate.Firstname;
             studentFromDb.Middlename = studentForUpdate.Middlename;
             studentFromDb.Login = studentForUpdate.Login;
+
+            if (studentFromDb.IdGroup != studentForUpdate.IdGroup)
+            {
+                List<Attendance> att = studentFromDb.Attendances.ToList();
+                _context.Attendances.RemoveRange(att);
+                
+                Practiceschedule? schedule = await _context.Practiceschedules
+                    .FirstOrDefaultAsync(ps=>ps.IdGroup == studentForUpdate.IdGroup);
+
+                _postRepository.CreateAttendance(schedule, studentFromDb.Id);
+            }
+
             studentFromDb.IdGroup = studentForUpdate.IdGroup;
 
             if (!string.IsNullOrWhiteSpace(studentForUpdate.Passwordhash))

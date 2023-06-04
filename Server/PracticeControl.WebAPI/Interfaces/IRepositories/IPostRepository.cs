@@ -9,6 +9,7 @@ namespace PracticeControl.WebAPI.Interfaces.IRepositories
         Student CreateStudent(Student student);
         bool CreatePracticeSchedule(Practiceschedule schedule);
         bool CreatePractice(Practice practice);
+        bool CreateAttendance(Practiceschedule practice, long studentId);
 
 
         Task<bool> CheckUnique(Practice practice);

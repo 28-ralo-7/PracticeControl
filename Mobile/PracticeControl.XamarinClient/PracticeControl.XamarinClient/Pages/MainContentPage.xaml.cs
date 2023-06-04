@@ -2,6 +2,7 @@
 using PracticeControl.XamarinClient.Helpers;
 using PracticeControl.XamarinClient.Models;
 using System;
+using System.IO;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -24,9 +25,16 @@ namespace PracticeControl.XamarinClient.Pages
         {
             Student = user;
             InitializeComponent();
+            if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday || DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
+            {
+                buttonUpdateAttendance.Text = "Сегодня выходной";
+                buttonUpdateAttendance.IsEnabled = false;
+                //return;
+            }
 
             GetDataGroup();
         }
+
 
         private async void GetDataGroup()
         {
@@ -38,9 +46,9 @@ namespace PracticeControl.XamarinClient.Pages
                 stackLayoutUpdateAttendance.IsVisible = false;
                 return;
             }
-
-            labelDateNow.Text = DateTime.Now.ToShortDateString();
-            labelPracticeDate.Text = practice.DateStart.Replace(".2023", "") + " по " + practice.DateEnd.Replace(".2023", "");
+            labelUserName.Text = "Студент: " + Student.LastName + " " + Student.FirstName[0] + "." + Student.MiddleName[0]+".";
+            labelDateNow.Text = "Сегодня: " + DateTime.Now.ToShortDateString();
+            labelPracticeDate.Text = "Расписание: с " +practice.DateStart.Replace(".2023", "") + " по " + practice.DateEnd.Replace(".2023", "");
             labelPracticeName.Text = practice.PracticeName;
         }
 
@@ -89,6 +97,12 @@ namespace PracticeControl.XamarinClient.Pages
                     await DisplayAlert("Ошибка", "Ошибка", "Ошибка");
                     return;
                 }
+
+                imageAttendance.Source = ImageSource.FromStream(() =>
+                {
+                    return new MemoryStream(photoBytes);
+                });
+
 
                 var updateAttendance = new StudentAttendanceView
                 {

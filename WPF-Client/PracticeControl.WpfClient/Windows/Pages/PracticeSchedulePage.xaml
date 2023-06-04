@@ -40,41 +40,16 @@
 
                     <TextBlock x:Name="abbreviation_module_TextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Grid.Row="0" Grid.Column="1" Text="ПП.01 Тестирование ПО" FontSize="25" Width="462"/>
                     <TextBlock x:Name="practiceLead_TextBlock" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Text="Руководитель: Карташова Е.В." FontSize="25" Width="459"/>
-
+                    <!--Кнопки даты-->
                     <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10" Width="494">
-                        <TextBlock  Grid.Row="1" Grid.Column="2" Text="Посещаемость на" FontSize="30" Width="276" Height="50"/>
+                        <Button x:Name="buttonBackDay" Click="buttonBackDay_Click" Height="32" Content="←" FontSize="30" Width="43" Padding="-100"/>
 
-                        <Button x:Name="buttonBackDay" Click="buttonBackDay_Click" Height="32" Width="43" Margin="5" RenderTransformOrigin="0.5,0.5">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                </Style>
-                            </Button.Style>
-                            <Button.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform Angle="-180"/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Button.RenderTransform>
-                            <DockPanel>
-                                <!--<Image Source="D:\GitHub's\PracticeControl\PracticeControl\WPF-Client\PracticeControl.WpfClient/arrow-left.png" Height="29" Width="40"/>-->
-                            </DockPanel>
-                        </Button>
-                        <TextBlock x:Name="textBlockDayAttendance" Text="" Margin="10" FontSize="20" Width="93" Height="64"  Foreground="#4f4f4f"/>
-                        <Button   x:Name="buttonNextDay" Click="buttonNextDay_Click" Height="32" Width="43" Margin="5">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                </Style>
-                            </Button.Style>
-                            <DockPanel>
-                                <!--<Image Source="D:\GitHub's\PracticeControl\PracticeControl\WPF-Client\PracticeControl.WpfClient/arrow-left.png" Height="29" Width="40"/>-->
-                            </DockPanel>
-                        </Button>
+                        <TextBlock Text="Посещаемость на" FontSize="30" Width="260" Height="64" Margin="20,5,0,0"/>
+                        <TextBlock x:Name="textBlockDayAttendance" Text="" Margin="0,5,0,0" FontSize="30" Width="93" Height="64" />
 
+                        <Button x:Name="buttonNextDay" Click="buttonNextDay_Click" Content="→" FontSize="30" Padding="-100" Height="32" Width="43" Margin="5"/>
                     </StackPanel>
+                    
                 </Grid>
 
 
@@ -82,18 +57,16 @@
                           HorizontalAlignment="Center" CanUserResizeColumns="False" AutoGenerateColumns="False" Margin="10,5,15,10"
                           MaxHeight="569" ItemsSource="{Binding Attendances}" Width="1338" MinRowHeight="40">
 
-
-
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Студенты" Width="520" Binding="{Binding StudentName}"/>
+                        <DataGridTextColumn Header="Студенты" Width="400" Binding="{Binding StudentName}"/>
 
                         <DataGridTemplateColumn Header="Фото" Width="200" >
 
                             <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                    <StackPanel>
+                                    <StackPanel Visibility="Collapsed">
                                         <Button x:Name ="buttonOpenPhotoAttendance" Click="buttonOpenPhotoAttendance_Click" Width="100" Height="25" Content="Фото" Margin="5"></Button>
-                                        <Image Source="{Binding Photo}" Visibility="Collapsed">
+                                        <Image Source="{Binding Photo,  NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" Binding.TargetUpdated="Image_TargetUpdated" Binding.SourceUpdated="Image_SourceUpdated" Visibility="Collapsed">
                                         </Image>
                                     </StackPanel>
                                   
@@ -120,6 +93,14 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
+                        <!--<DataGridTemplateColumn Header="Коментарий" Width="500">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="comment_TextBox" Width="400" Height="40" Background="ForestGreen" TextWrapping="Wrap"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>-->
+                        
                     </DataGrid.Columns>
 
 

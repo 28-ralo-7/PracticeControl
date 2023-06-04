@@ -64,7 +64,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
         private void dataGridPractices_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             SelectPractice = (PracticeScheduleView)dataGridPractices.SelectedItem;
-            if(SelectPractice is null)
+            if (SelectPractice is null)
                 return;
             gridPractices.Visibility = Visibility.Hidden;
             gridAttendance.Visibility = Visibility.Visible;
@@ -138,7 +138,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 AttendanceDates(SelectPractice);
             }
 
-            try 
+            try
             {
                 group_TextBlock.Text = "Группа: " + SelectPractice.Group.GroupName;
                 textBlockDayAttendance.Text = SelectDate.ToShortDateString().Replace(".2023", "");
@@ -180,12 +180,13 @@ namespace PracticeControl.WpfClient.Windows.Pages
 
                 }
                 dataGridAttendance.ItemsSource = AttendanceRows;
+
             }
             catch
             {
                 return;
             }
-            
+
         }
 
         //Обновление посещений при переключении даты
@@ -206,14 +207,6 @@ namespace PracticeControl.WpfClient.Windows.Pages
             SelectDate = PracticeDates[0];
             date_TextBlock.Text = $"c {PracticeDates[0].ToShortDateString().Replace(".2023", "")} по {PracticeDates[PracticeDates.Count - 1].ToShortDateString().Replace(".2023", "")}";
         }
-
-        
-        //сел телефон - понял
-        //вот вывод по кнопке, если найдем решение как убирать кнопку если нет фото, то будет вполне неплохо
-        //окей, надо это просто в голове представить
-        //я думаю можно както программно перебрать каждый роу в гриде и посмотреть на ресурсы
-        // щас подумаю
-        // давай перерыв, заодно тел зарядишь+++в  10
 
         //Изменение посещений
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -279,9 +272,9 @@ namespace PracticeControl.WpfClient.Windows.Pages
         //Назад дата
         private void buttonBackDay_Click(object sender, RoutedEventArgs e)
         {
-                DateTime startDate = PracticeDates[0];
+            DateTime startDate = PracticeDates[0];
 
-                DateTime endDate = PracticeDates[PracticeDates.Count - 1];
+            DateTime endDate = PracticeDates[PracticeDates.Count - 1];
 
             if (SelectDate <= endDate && SelectDate > startDate)
             {
@@ -353,8 +346,8 @@ namespace PracticeControl.WpfClient.Windows.Pages
         private void Image_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Image img = (Image)sender;
-           
-            
+
+
         }
 
         private void buttonOpenPhotoAttendance_Click(object sender, RoutedEventArgs e)
@@ -369,8 +362,34 @@ namespace PracticeControl.WpfClient.Windows.Pages
             attendancePhotoWindow.Show();
 
         }
-    }
 
+        private void Image_SourceUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+            Image image = (Image)sender;
+
+            if (image.Source is null)
+            {
+                return;
+            }
+
+            StackPanel StackPanel = (StackPanel)image.Parent;
+            StackPanel.Visibility = Visibility.Visible;
+        }
+
+        private void Image_TargetUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+            Image image = (Image)sender;
+
+            if (image.Source is null)
+            {
+                return;
+            }
+
+            StackPanel StackPanel = (StackPanel)image.Parent;
+            StackPanel.Visibility = Visibility.Visible;
+
+        }
+    }
     public class AttendanceOutView
     {
         public int AttendanceID { get; set; }
