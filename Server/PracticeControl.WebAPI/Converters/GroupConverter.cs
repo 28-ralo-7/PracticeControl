@@ -53,19 +53,20 @@ namespace PracticeControl.WebAPI.Converters
             {
                 Name = group.GroupName,
             };
-
-            var students = group.Students.Select(student => new Student
+            if (group.Students is not null)
             {
-                Lastname = student.LastName,
-                Firstname = student.FirstName,
-                Login = student.Login,
-                Middlename = student.MiddleName,
-                IdGroupNavigation = newGroup,
-                Passwordsalt = GetSalt(),
-                Passwordhash = PasswordHelper.GetHash(PasswordSalt, student.Password)
-            }).ToList();
-
-            newGroup.Students = students;
+                var students = group.Students.Select(student => new Student
+                {
+                    Lastname = student.LastName,
+                    Firstname = student.FirstName,
+                    Login = student.Login,
+                    Middlename = student.MiddleName,
+                    IdGroupNavigation = newGroup,
+                    Passwordsalt = GetSalt(),
+                    Passwordhash = PasswordHelper.GetHash(PasswordSalt, student.Password)
+                }).ToList();
+                newGroup.Students = students;
+            }
 
             return newGroup;
         }

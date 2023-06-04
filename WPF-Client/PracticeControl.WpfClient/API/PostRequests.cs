@@ -44,7 +44,7 @@ namespace PracticeControl.WpfClient.API
         {
             HttpClient client = new HttpClient();
 
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
 
             var json = JsonConvert.SerializeObject(newGroup);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
@@ -67,7 +67,7 @@ namespace PracticeControl.WpfClient.API
         {
             HttpClient client = new HttpClient();
 
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
 
             var json = JsonConvert.SerializeObject(newStudent);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
@@ -90,7 +90,7 @@ namespace PracticeControl.WpfClient.API
         {
             HttpClient client = new HttpClient();
 
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
 
             var json = JsonConvert.SerializeObject(practiceView);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
@@ -113,7 +113,7 @@ namespace PracticeControl.WpfClient.API
         {
             HttpClient client = new HttpClient();
 
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
 
             var json = JsonConvert.SerializeObject(practiceView);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
@@ -238,7 +238,7 @@ namespace PracticeControl.WpfClient.API
             try
             {
                 HttpClient client = new HttpClient();
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.JWTToken);
 
                 var json = JsonConvert.SerializeObject(practice);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");

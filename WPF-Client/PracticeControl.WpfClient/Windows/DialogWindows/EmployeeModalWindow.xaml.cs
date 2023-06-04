@@ -82,7 +82,7 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             
             if (string.IsNullOrWhiteSpace(password_TextBox.Text))
             {
-                MessageBox.Show("Заполните поле: Логин");
+                MessageBox.Show("Заполните поле: Пароль");
                 return;
             }
 
@@ -166,11 +166,6 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(password_TextBox.Text))
-            {
-                MessageBox.Show("Заполните поле: Логин");
-                return;
-            }
 
             UpdateEmployeeView employeeView = new UpdateEmployeeView
             {

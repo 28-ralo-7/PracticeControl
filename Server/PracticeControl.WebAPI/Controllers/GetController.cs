@@ -19,7 +19,7 @@ namespace PracticeControl.WebAPI.Controllers
             _getService = getService;
         }
 
-        [HttpGet("getPracticeInfo/{groupName}")]
+        [HttpGet("getPracticeInfo/{groupName}")]//Готово
         public async Task<IActionResult> GetPracticeInfo([FromRoute] string groupName)
         {
             var practice = _getService.GetPracticeScheduleViewList().Result.FirstOrDefault(b=>b.Group.GroupName == groupName && Convert.ToDateTime(b.StartDate).Date <= DateTime.Now.Date && DateTime.Now.Date <= Convert.ToDateTime(b.EndDate));
@@ -39,30 +39,28 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(practiceInfo);
         }
 
-        [HttpGet("getGroups")]
+        [HttpGet("getGroups")]//Готово
         public async Task<IActionResult> GetGroups()
         {
             var groups = await _getService.GetGroupViews();
             return Ok(groups);
         }        
         
-        [HttpGet("getGroupForName/{name}")]
+        [HttpGet("getGroupForName/{name}")]//Готово
         public async Task<IActionResult> GetGroupForName(string name)
         {
             var attendances = await _getService.GetGroupForName(name);
             return Ok(attendances);
         }
 
-
-        [HttpGet("getEmployee")]
+        [HttpGet("getEmployee")]//Готово
         public async Task<IActionResult> GetEmployee([FromForm] int id)
         {
             var employee = await _getService.GetEmployee(id);
             return Ok(employee);
         }
 
-
-        [HttpGet("getEmployeeList")]
+        [HttpGet("getEmployeeList")]//Готово
         public async Task<IActionResult> GetEmployeeList()
         {
             List<EmployeeView> employeeList = await _getService.GetEmployeeViewList();
@@ -70,8 +68,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(employeeList);
         }
 
-
-        [HttpGet("getPracticeScheduleList")]
+        [HttpGet("getPracticeScheduleList")]//Готово
         public async Task<IActionResult> GetPracticeScheduleList()
         {
             var practiceList = await _getService.GetPracticeScheduleViewList();
@@ -79,8 +76,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(practiceList);
         }
 
-
-        [HttpGet("getStudentGroup/{groupName}")]
+        [HttpGet("getStudentGroup/{groupName}")]//Готово
         public async Task<IActionResult> GetStudentsGroup([FromRoute] string groupName)
         {
             var response = await _getService.GetStudentGroup(groupName);
@@ -88,8 +84,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-
-        [HttpGet("getAllStudents")]
+        [HttpGet("getAllStudents")]//Готово
         public async Task<IActionResult> GetStudentList()
         {
             var response = await _getService.GetStudents();
@@ -97,8 +92,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-
-        [HttpGet("getPracticeList")]
+        [HttpGet("getPracticeList")]//Готово
         public async Task<IActionResult> GetPracticeList()
         {
             var response = await _getService.GetPracticeList();

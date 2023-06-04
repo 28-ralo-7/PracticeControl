@@ -144,20 +144,25 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
             AllStudents = await GetRequests.GetAllStudentsAsync();
 
-            int loginVerification = AllStudents
+            int loginVerification = 0;
+            if (dataGridStudents.ItemsSource is not null)
+            {
+                loginVerification = AllStudents
                 .Where(employeeView => Students
                     .Select(x => x.Login.ToLower())
                     .Contains(employeeView.Login.ToLower()))
                 .Count();
 
-            if (loginVerification > 0)
-            {
-                MessageBox.Show("Этот логин занят");
-                return;
-            }
+                if (loginVerification > 0)
+                {
+                    MessageBox.Show("Этот логин занят");
+                    return;
+                }
 
+                newGroup.Students = Students;
+            }
+            
             newGroup.GroupName = textBoxGroupName.Text;
-            newGroup.Students = Students;
 
             try
             {

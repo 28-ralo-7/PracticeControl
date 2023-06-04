@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows"
         mc:Ignorable="d"
-        Title="ПрактикКонтроль" Height="1000" Width="1800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+        Title="Контроль практики" Height="1000" Width="1800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"  >
     <Grid Background="#cfcfce">
         <TabControl TabStripPlacement="Top" Background="#cfcfce">
             <TabItem x:Name="tbItemPracticeSchedules" Header="Практики" Width="150" Padding="10" FontSize="16">

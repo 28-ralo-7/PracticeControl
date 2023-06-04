@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using PracticeControl.WebAPI.Interfaces.IServices;
 using PracticeControl.WebAPI.Services;
@@ -16,8 +17,8 @@ namespace PracticeControl.WebAPI.Controllers
         {
             _postService = postService;
         }
-
-        [HttpPost("createEmployee")]
+        [Authorize]
+        [HttpPost("createEmployee")]//Готово
         public IActionResult CreateEmployee([FromBody] CreateEmployeeView? employeeView)
         {
             var response = _postService.CreateEmployee(employeeView);
@@ -25,7 +26,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPost("createGroup")]
+        [HttpPost("createGroup")]//Готово
         public IActionResult CreateGroup([FromBody] CreateGroupView? groupView)
         {
             var response = _postService.CreateGroup(groupView);
@@ -33,7 +34,8 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPost("createStudent")]
+        [Authorize]
+        [HttpPost("createStudent")]//Готово
         public IActionResult CreateStudent([FromBody] CreateStudentView? student)
         {
             var response = _postService.CreateStudent(student);
@@ -41,7 +43,8 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response is not null ? true : false);
         }
 
-        [HttpPost("createPracticeSchedule")]
+        [Authorize]
+        [HttpPost("createPracticeSchedule")]//Готово
         public IActionResult CreatePracticeSchedule([FromBody] CreatePracticeScheduleView schedule)
         {
             var response = _postService.CreatePracticeSchedule(schedule);
@@ -49,7 +52,8 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPost("createPractice")]
+        [Authorize]
+        [HttpPost("createPractice")]//Готово
         public IActionResult CreatePractice([FromBody] CreatePracticeView schedule)
         {
             var response = _postService.CreatePractice(schedule);
@@ -57,9 +61,9 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-        //+++++++++++++++++++++++++++++++++
         #region Блок проверки уникальности новых записей
-        [HttpPost("checkUniquePractice")]
+        [Authorize]
+        [HttpPost("checkUniquePractice")]//Готово
         public async Task<IActionResult> CheckUniquePractice(PracticeView practiceView)
         {
             var response = await _postService.CheckUnique(practiceView);
@@ -67,8 +71,8 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-
-        [HttpPost("checkUniquePracticeSchedule")]
+        [Authorize]
+        [HttpPost("checkUniquePracticeSchedule")]//Готово
         public async Task<IActionResult> CheckUniquePracticeSchedule(PracticeScheduleView practiceScheduleView)
         {
             var response = await _postService.CheckUnique(practiceScheduleView);
@@ -76,8 +80,8 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-
-        [HttpPost("checkUniqueGroup")]
+        [Authorize]
+        [HttpPost("checkUniqueGroup")]//Готово
         public async Task<IActionResult> CheckUniqueGroup([FromBody]string groupView)
         {
             var response = await _postService.CheckUniqueGroup(groupView);
@@ -85,8 +89,8 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-
-        [HttpPost("checkUniqueEmployee")]
+        [Authorize]
+        [HttpPost("checkUniqueEmployee")]//Готово
         public async Task<IActionResult> CheckUniqueEmployee([FromBody]string login)
         {
             var response = await _postService.CheckUnique(login);
@@ -94,8 +98,8 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-
-        [HttpPost("checkUniqueStudent")]
+        [Authorize]
+        [HttpPost("checkUniqueStudent")]//Готово
         public async Task<IActionResult> CheckUniqueStudent([FromBody]string login)
         {
             var response = await _postService.CheckUniqueStudent(login);
@@ -103,16 +107,16 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-        #endregion
-
-
-        [HttpPost("checkValidDateForPractice")]
+        [Authorize]
+        [HttpPost("checkValidDateForPractice")]//Готово
         public IActionResult CheckValidDateForPractice([FromBody]CreatePracticeScheduleView createPracticeView)
         {
             var response = _postService.CheckValidDateForPractice(createPracticeView);
 
             return Ok(response);
         }
+        #endregion
+
 
     }
 }

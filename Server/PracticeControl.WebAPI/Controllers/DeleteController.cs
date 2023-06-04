@@ -14,7 +14,7 @@ namespace PracticeControl.WebAPI.Controllers
             _deleteService = deleteService;
         }
 
-        [HttpDelete("deleteEmployee/{login}")]
+        [HttpDelete("deleteEmployee/{login}")]//Готово
         public IActionResult DeleteEmployee(string login)
         {
             var response = _deleteService.DeleteEmployee(login);
@@ -22,7 +22,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response.Result);
         }
 
-        [HttpDelete("deleteStudent/{login}")]
+        [HttpDelete("deleteStudent/{login}")]//Готово
         public IActionResult DeleteStudent(string login)
         {
             var response = _deleteService.DeleteStudent(login);
@@ -30,7 +30,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response.Result);
         }
 
-        [HttpDelete("deleteGroup/{name}")]
+        [HttpDelete("deleteGroup/{name}")]//Готово
         public IActionResult DeleteGroup(string name)
         {
             var response = _deleteService.DeleteGroup(name);
@@ -38,7 +38,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response.Result);
         }
 
-        [HttpDelete("deletePractice/{id}")]
+        [HttpDelete("deletePractice/{id}")]//Готово
         public IActionResult DeletePractice(int id)
         {
             var response = _deleteService.DeletePracice(id);
@@ -46,7 +46,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response.Result);
         }
 
-        [HttpDelete("deletePracticeSchedule/{id}")]
+        [HttpDelete("deletePracticeSchedule/{id}")]//Готово
         public IActionResult DeletePracticeSchedule(int id)
         {
             var response = _deleteService.DeletePracticeSchedule(id);

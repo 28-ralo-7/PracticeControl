@@ -20,7 +20,7 @@ namespace PracticeControl.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("authorization")]
+        [Route("authorization")]//Готово
         public async Task<IActionResult> LoginDesktop([FromBody] Views.ViewMobile.AuthRequest parameters)
         {
             AuthResponseDesktop response = await _authService.Authorize(parameters.Login, parameters.PasswordString);
@@ -34,7 +34,7 @@ namespace PracticeControl.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("authorizationMobile")]
+        [Route("authorizationMobile")]//Готово
         public async Task<IActionResult> LoginMobile([FromBody] Views.ViewMobile.AuthRequest parameters)
         {
             AuthResponseMobile response = await _authService.Authorize(parameters);
