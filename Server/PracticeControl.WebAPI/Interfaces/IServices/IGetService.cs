@@ -16,6 +16,6 @@ namespace PracticeControl.WebAPI.Interfaces.IServices
         Task<GroupView> GetGroupForName(string name);
         Task<List<StudentView>> GetStudents();
         Task<List<PracticeView>> GetPracticeList();
-
+        Task<CurrentPracticeInfoView> GetCurrentPracticeInfo(string groupName, int studentID);
     }
 }

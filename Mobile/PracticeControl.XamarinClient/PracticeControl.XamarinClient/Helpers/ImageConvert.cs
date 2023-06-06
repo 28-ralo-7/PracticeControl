@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace PracticeControl.XamarinClient.Helpers
 {
@@ -12,25 +13,19 @@ namespace PracticeControl.XamarinClient.Helpers
         }
 
 
-/*        public static BitmapImage ConvertByteArrayToImage(byte[] imageData)
+        public static ImageSource ConvertByteArrayToImage(byte[] imageData)
         {
             if (imageData == null || imageData.Length == 0) return null;
 
-            var image = new BitmapImage();
+            var image = new Xamarin.Forms.Image();
+
             using (var mem = new MemoryStream(imageData))
             {
-                mem.Position = 0;
-                image.BeginInit();
-                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.UriSource = null;
-                image.StreamSource = mem;
-                image.EndInit();
+                image.Source = ImageSource.FromStream(() => mem);
             }
-            image.Freeze();
-            return image;
-        }
-*/
-    }
 
+            return image.Source;
+        }
+
+    }
 }

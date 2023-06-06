@@ -17,7 +17,7 @@ namespace PracticeControl.WebAPI.Controllers
         {
             _postService = postService;
         }
-        [Authorize]
+        
         [HttpPost("createEmployee")]//Готово
         public IActionResult CreateEmployee([FromBody] CreateEmployeeView? employeeView)
         {
@@ -34,7 +34,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        
         [HttpPost("createStudent")]//Готово
         public IActionResult CreateStudent([FromBody] CreateStudentView? student)
         {
@@ -43,7 +43,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response is not null ? true : false);
         }
 
-        [Authorize]
+        
         [HttpPost("createPracticeSchedule")]//Готово
         public IActionResult CreatePracticeSchedule([FromBody] CreatePracticeScheduleView schedule)
         {
@@ -52,7 +52,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        
         [HttpPost("createPractice")]//Готово
         public IActionResult CreatePractice([FromBody] CreatePracticeView schedule)
         {
@@ -62,7 +62,7 @@ namespace PracticeControl.WebAPI.Controllers
         }
 
         #region Блок проверки уникальности новых записей
-        [Authorize]
+        
         [HttpPost("checkUniquePractice")]//Готово
         public async Task<IActionResult> CheckUniquePractice(PracticeView practiceView)
         {
@@ -71,7 +71,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        
         [HttpPost("checkUniquePracticeSchedule")]//Готово
         public async Task<IActionResult> CheckUniquePracticeSchedule(PracticeScheduleView practiceScheduleView)
         {
@@ -80,7 +80,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        
         [HttpPost("checkUniqueGroup")]//Готово
         public async Task<IActionResult> CheckUniqueGroup([FromBody]string groupView)
         {
@@ -89,7 +89,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        
         [HttpPost("checkUniqueEmployee")]//Готово
         public async Task<IActionResult> CheckUniqueEmployee([FromBody]string login)
         {
@@ -98,7 +98,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        
         [HttpPost("checkUniqueStudent")]//Готово
         public async Task<IActionResult> CheckUniqueStudent([FromBody]string login)
         {
@@ -107,7 +107,7 @@ namespace PracticeControl.WebAPI.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        
         [HttpPost("checkValidDateForPractice")]//Готово
         public IActionResult CheckValidDateForPractice([FromBody]CreatePracticeScheduleView createPracticeView)
         {

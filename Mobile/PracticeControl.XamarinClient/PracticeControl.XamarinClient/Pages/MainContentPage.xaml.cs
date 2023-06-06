@@ -12,9 +12,6 @@ namespace PracticeControl.XamarinClient.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainContentPage : ContentPage
     {
-        //СЕРВЕР ДОДЕЛАТЬ - SHIT
-        //СДЕЛАТЬ ЗАПРОС НА ПОЛУЧЕНИЕ ВСЕХ ДАННЫХ О ПРАКТИКЕ (CurrentPracticeView)
-        //СДЕЛАТЬ PUT ОБНОВЛЕНИЕ ПОСЕЩЕНИЯ (StudentAttendanceView)
         private StudentViewMobile Student { get; set; }
         public MainContentPage()
         {
@@ -38,7 +35,7 @@ namespace PracticeControl.XamarinClient.Pages
 
         private async void GetDataGroup()
         {
-            var practice = await APIService.GetPracticeInfoAsync(Student.Group);
+            var practice = await APIService.GetPracticeInfoAsync(Student.Group, Student.StudentID);
 
             if (practice is null)
             {
@@ -46,10 +43,42 @@ namespace PracticeControl.XamarinClient.Pages
                 stackLayoutUpdateAttendance.IsVisible = false;
                 return;
             }
+            
+           
             labelUserName.Text = "Студент: " + Student.LastName + " " + Student.FirstName[0] + "." + Student.MiddleName[0]+".";
             labelDateNow.Text = "Сегодня: " + DateTime.Now.ToShortDateString();
-            labelPracticeDate.Text = "Расписание: с " +practice.DateStart.Replace(".2023", "") + " по " + practice.DateEnd.Replace(".2023", "");
+            labelPracticeDate.Text = "Расписание: с " 
+                                    + practice.DateStart.Replace(".2023", "") 
+                                    + " по " 
+                                    + practice.DateEnd.Replace(".2023", "");
             labelPracticeName.Text = practice.PracticeName;
+            labelEmployee.Text = "Руководитель: " + practice.PracticeLead;
+            labelIsPresent.Text = practice.IsPresent ? "Посещение: подтверждено" : "Посещение: отсутствует";
+            if (practice.Comment != null)
+            {
+                labelComment.Text = "Комментарий к фото: " + practice.Comment;
+            }
+            
+
+            if (practice.Photo is null)
+            {
+                labelNotFound.IsVisible = true;
+                imageAttendance.IsVisible = false;
+            }
+            else
+            {
+                labelNotFound.IsVisible = false;
+                imageAttendance.IsVisible = true;
+                imageAttendance.Source = ImageSource.FromStream(() =>
+                {
+                    return new MemoryStream(practice.Photo);
+                });
+
+            }
+            stackLayoutUpdateAttendance.IsVisible = true;
+
+
+
         }
 
         private async void buttonUpdateAttendance_Clicked(object sender, EventArgs e)
@@ -102,6 +131,8 @@ namespace PracticeControl.XamarinClient.Pages
                 {
                     return new MemoryStream(photoBytes);
                 });
+                imageAttendance.IsVisible = true;
+                labelNotFound.IsVisible = false;
 
 
                 var updateAttendance = new StudentAttendanceView

@@ -19,6 +19,8 @@ public partial class Attendance
 
     public byte[]? Photo { get; set; }
 
+    public string? Comment { get; set; }
+
     public virtual Practiceschedule IdPracticeNavigation { get; set; } = null!;
 
     public virtual Student IdStudentNavigation { get; set; } = null!;

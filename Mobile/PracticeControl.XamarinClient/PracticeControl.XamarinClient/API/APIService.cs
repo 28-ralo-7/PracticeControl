@@ -12,15 +12,15 @@ namespace PracticeControl.XamarinClient.API
 {
     public static class APIService
     {
-        public static string urlPath = "https://smallsagedart97.conveyor.cloud";
-        public static async Task<CurrentPracticeInfoView> GetPracticeInfoAsync(string groupName)
+        public static string urlPath = "https://fastshinyski45.conveyor.cloud";
+        public static async Task<CurrentPracticeInfoView> GetPracticeInfoAsync(string groupName, int studentID)
          {
             try
             {
                 HttpClient client = new HttpClient();
 
                 var response = await client
-                    .GetAsync($"{urlPath}/api/get/getPracticeInfo/{groupName}")
+                    .GetAsync($"{urlPath}/api/get/getPracticeInfo?groupName={groupName}&studentID={studentID}")
                     .ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)

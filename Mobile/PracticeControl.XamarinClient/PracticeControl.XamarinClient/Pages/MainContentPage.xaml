@@ -7,28 +7,45 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout x:Name="stackLayoutNotPractice" HorizontalOptions="CenterAndExpand" IsVisible="false">
-                <Label x:Name="labelNotPractice" FontSize="30"/>
+                <Label x:Name="labelNotPractice" Text="На данный период практик нет" FontSize="30"/>
             </StackLayout>
             
-            <StackLayout x:Name="stackLayoutUpdateAttendance" IsVisible="true">
+            <StackLayout x:Name="stackLayoutUpdateAttendance" IsVisible="false">
                 
                 <Label x:Name="labelUserName" FontSize="30" Text="jaeosfkh" TextColor="White" HorizontalTextAlignment="Center" />
 
                 <StackLayout WidthRequest="300" HeightRequest="300" Margin="0,50,0,0">
-                    <Label x:Name="labelPracticeName" FontSize="30 " TextColor="White" HorizontalTextAlignment="Center" />
-                    <Label x:Name="labelPracticeDate" FontSize="25" TextColor="White"/>
-                    <Label x:Name="labelDateNow" FontSize="25" TextColor="White"/>
-
-                    <Image x:Name="imageAttendance"/>
+                    <StackLayout Margin="10,0,0,0">
+                        <Label x:Name="labelPracticeName" FontSize="30 " TextColor="White" HorizontalTextAlignment="Center" />
+                        <Label x:Name="labelPracticeDate" FontSize="25" TextColor="White"/>
+                        <Label x:Name="labelDateNow" FontSize="25" TextColor="White"/>
+                        <Label x:Name="labelEmployee" FontSize="25" TextColor="White"/>
+                        <Label x:Name="labelComment" FontSize="25" Text="Коментарий к фото: нет" MaxLines="3" VerticalOptions="CenterAndExpand" TextColor="White"/>
+                        <Label x:Name="labelIsPresent" FontSize="25" TextColor="White"/>
+                    </StackLayout>
 
                     <Button x:Name="buttonUpdateAttendance"
-                            WidthRequest="300"
-                            HorizontalOptions="Center"
-                            HeightRequest="40"
-                            CornerRadius="10"
-                            Text="Отмениться на сегодня"
-                            Clicked="buttonUpdateAttendance_Clicked"/>
+                                WidthRequest="300"
+                                HorizontalOptions="Center"
+                                HeightRequest="100"
+                                CornerRadius="10" 
+                                Text="Отмениться на сегодня"
+                                Clicked="buttonUpdateAttendance_Clicked"
+                                />
 
+                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+
+                        <Image x:Name="imageAttendance"
+                               Rotation="90"
+                               WidthRequest="200"
+                               HeightRequest="200"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                        <Label x:Name="labelNotFound" Text="Фотографии нет" IsVisible="false" HorizontalOptions="Center"/>
+
+                    </StackLayout>
+                    <Label Text="Фото присутствия" TextColor="White" HorizontalOptions="Center"></Label>
+                    
                 </StackLayout>
             </StackLayout>
         </StackLayout>

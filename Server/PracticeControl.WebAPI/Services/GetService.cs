@@ -13,6 +13,8 @@ using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq;
 using PracticeControl.WebAPI.Converters;
+using PracticeControl.WebAPI.Views.ViewMobile;
+using System.Runtime.InteropServices;
 
 namespace PracticeControl.WebAPI.Services
 {
@@ -96,8 +98,8 @@ namespace PracticeControl.WebAPI.Services
         public async Task<List<PracticeView>> GetPracticeList()
         {
             List<Practice> practices = await _getRepository.GetPracticeList();
-            List<PracticeView> practiceViews = practices.Select(practice => ConvertToPracticeView(practice)).ToList(); 
-            
+            List<PracticeView> practiceViews = practices.Select(practice => ConvertToPracticeView(practice)).ToList();
+
             return practiceViews;
         }
 
@@ -108,6 +110,48 @@ namespace PracticeControl.WebAPI.Services
 
             return ConvertToGroupView(group);
 
+        }
+
+        //Информация о практике
+        public async Task<CurrentPracticeInfoView> GetCurrentPracticeInfo(string groupName, int studentID)
+        {
+            var group = await _getRepository.GetGroup(groupName);
+            var practiceList = _getRepository
+                .GetPracticeScheduleList().Result;
+
+            var practiceForGroup = practiceList.Where(ps => ps.IdGroup == group.Id);
+
+            var practice = practiceForGroup.FirstOrDefault(ps=>
+                            ps.Startdate <= DateOnly.Parse(DateTime.Now.ToShortDateString()) &&
+                            ps.Enddate >= DateOnly.Parse(DateTime.Now.ToShortDateString()));
+
+            var attendance = practice.Attendances
+                                .FirstOrDefault(att =>
+                                att.Date.ToShortDateString() == DateTime.Now.ToShortDateString()
+                                && att.IdStudent == studentID);
+
+            if (practice is not null && attendance is not null)
+            {
+                var practiceInfo = new CurrentPracticeInfoView
+                {
+                    PracticeName = practice.IdPracticeNavigation.Abbreviation + " " + practice.IdPracticeNavigation.Practicemodule,
+                    DateStart = practice.Startdate.ToString(),
+                    DateEnd = practice.Enddate.ToString(),
+                    PracticeLead = practice.IdEmployeeNavigation.Lastname
+                                    + " "
+                                    + practice.IdEmployeeNavigation.Firstname[0]
+                                    + "."
+                                    + practice.IdEmployeeNavigation.Middlename[0]
+                                    + ".",
+
+                    IsPresent = attendance.Ispresent,
+
+                    Comment = attendance.Comment,
+                    Photo = attendance.Photo
+                };
+                return practiceInfo;
+            }
+            return null;
         }
     }
 }

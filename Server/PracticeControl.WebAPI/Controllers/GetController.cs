@@ -19,24 +19,17 @@ namespace PracticeControl.WebAPI.Controllers
             _getService = getService;
         }
 
-        [HttpGet("getPracticeInfo/{groupName}")]//Готово
-        public async Task<IActionResult> GetPracticeInfo([FromRoute] string groupName)
+        [HttpGet("getPracticeInfo")]//Готово
+        public async Task<IActionResult> GetPracticeInfo([FromQuery] string groupName, [FromQuery] int studentID )
         {
-            var practice = _getService.GetPracticeScheduleViewList().Result.FirstOrDefault(b=>b.Group.GroupName == groupName && Convert.ToDateTime(b.StartDate).Date <= DateTime.Now.Date && DateTime.Now.Date <= Convert.ToDateTime(b.EndDate));
+            var practiceInfo = _getService.GetCurrentPracticeInfo(groupName, studentID);
 
-            if (practice is null)
+            if (practiceInfo is null)
             {
                 return null;
             }
 
-            var practiceInfo = new CurrentPracticeInfoView
-            {
-                PracticeName = practice.Abbreviation + " " + practice.PracticeModule,
-                DateStart = practice.StartDate,
-                DateEnd = practice.EndDate,
-            };
-
-            return Ok(practiceInfo);
+            return Ok(practiceInfo.Result);
         }
 
         [HttpGet("getGroups")]//Готово

@@ -164,7 +164,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
                 {
                     var currentAttendanceStudent = CurrentAttendance
                     .FirstOrDefault(x => x.StudentView.StudentID == student.StudentID);
-
+                   
                     if (currentAttendanceStudent is null)
                         return;
 

@@ -66,10 +66,16 @@
                             <DataTemplate>
                                     <StackPanel Visibility="Collapsed">
                                         <Button x:Name ="buttonOpenPhotoAttendance" Click="buttonOpenPhotoAttendance_Click" Width="100" Height="25" Content="Фото" Margin="5"></Button>
-                                        <Image Source="{Binding Photo,  NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" Binding.TargetUpdated="Image_TargetUpdated" Binding.SourceUpdated="Image_SourceUpdated" Visibility="Collapsed">
+                                        <Image Source="{Binding Photo,  NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" 
+                                               Binding.TargetUpdated="Image_TargetUpdated" 
+                                               Binding.SourceUpdated="Image_SourceUpdated" 
+                                               Visibility="Collapsed"
+                                               RenderTransformOrigin="0.5,0.5">
+                                            <Image.RenderTransform>
+                                                <RotateTransform Angle="90"/>
+                                            </Image.RenderTransform>
                                         </Image>
                                     </StackPanel>
-                                  
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
 

@@ -13,7 +13,8 @@ namespace PracticeControl.WebAPI.Converters
                 {
                     AttendanceID = Convert.ToInt32(attendance.Id),
                     Date = Convert.ToString(attendance.Date),
-                    IsPresent = attendance.Ispresent
+                    IsPresent = attendance.Ispresent,
+                    Comment = attendance.Comment
                 };
             }
             return null;
