@@ -16,6 +16,7 @@ namespace PracticeControl.XamarinClient.Pages
         public MainContentPage()
         {
             InitializeComponent();
+
         }
 
         public MainContentPage(StudentViewMobile user)
@@ -28,19 +29,23 @@ namespace PracticeControl.XamarinClient.Pages
                 buttonUpdateAttendance.IsEnabled = false;
                 //return;
             }
-
+            buttonUpdateAttendance.Focus();
             GetDataGroup();
         }
 
 
         private async void GetDataGroup()
         {
+            labelLoad.IsVisible = true;
             var practice = await APIService.GetPracticeInfoAsync(Student.Group, Student.StudentID);
 
             if (practice is null)
             {
                 stackLayoutNotPractice.IsVisible = true;
                 stackLayoutUpdateAttendance.IsVisible = false;
+                stackLayoutload.IsVisible = false;
+                await DisplayAlert("Предупреждение", "В данный момент у вас нет практики", "ОК");
+
                 return;
             }
             
@@ -54,10 +59,6 @@ namespace PracticeControl.XamarinClient.Pages
             labelPracticeName.Text = practice.PracticeName;
             labelEmployee.Text = "Руководитель: " + practice.PracticeLead;
             labelIsPresent.Text = practice.IsPresent ? "Посещение: подтверждено" : "Посещение: отсутствует";
-            if (practice.Comment != null)
-            {
-                labelComment.Text = "Комментарий к фото: " + practice.Comment;
-            }
             
 
             if (practice.Photo is null)
@@ -73,12 +74,10 @@ namespace PracticeControl.XamarinClient.Pages
                 {
                     return new MemoryStream(practice.Photo);
                 });
-
             }
+
+            stackLayoutload.IsVisible = false;
             stackLayoutUpdateAttendance.IsVisible = true;
-
-
-
         }
 
         private async void buttonUpdateAttendance_Clicked(object sender, EventArgs e)
@@ -92,7 +91,8 @@ namespace PracticeControl.XamarinClient.Pages
                     cameraStatus = await Permissions.RequestAsync<Permissions.Camera>();
                     if (cameraStatus != PermissionStatus.Granted)
                     {
-                        // Отказано в разрешении камеры
+                        await DisplayAlert("Ошибка разрешения", "Для работы приложения необходим доступ к камере", "ОК");
+
                         return;
                     }
                 }
@@ -104,6 +104,8 @@ namespace PracticeControl.XamarinClient.Pages
                     if (storageWriteStatus != PermissionStatus.Granted)
                     {
                         // Отказано в разрешении записи
+
+                        await DisplayAlert("Ошибка разрешения", "Для работы приложения необходим доступ к записи", "ОК");
                         return;
                     }
                 }
@@ -123,7 +125,7 @@ namespace PracticeControl.XamarinClient.Pages
 
                 if (photoBytes.Length == 0)
                 {
-                    await DisplayAlert("Ошибка", "Ошибка", "Ошибка");
+                    await DisplayAlert("Ошибка", "Фото не найдено", "ОК");
                     return;
                 }
 
@@ -156,6 +158,17 @@ namespace PracticeControl.XamarinClient.Pages
             {
                 await DisplayAlert("Сообщение об ошибке", ex.Message, "OK");
             }
+        }
+
+        private async void buttonExit_Clicked(object sender, EventArgs e)
+        {
+            Application.Current.Properties.Remove("IsLoggedIn");
+            Application.Current.Properties.Remove("Login");
+            Application.Current.Properties.Remove("Password");
+
+            await Navigation.PushAsync(new LoginPage());
+            
+
         }
     }
 }

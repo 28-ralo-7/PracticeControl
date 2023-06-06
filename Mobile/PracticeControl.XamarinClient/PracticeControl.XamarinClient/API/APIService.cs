@@ -12,7 +12,7 @@ namespace PracticeControl.XamarinClient.API
 {
     public static class APIService
     {
-        public static string urlPath = "https://fastshinyski45.conveyor.cloud";
+        public static string urlPath = "https://talltealphone98.conveyor.cloud";
         public static async Task<CurrentPracticeInfoView> GetPracticeInfoAsync(string groupName, int studentID)
          {
             try
@@ -92,6 +92,9 @@ namespace PracticeControl.XamarinClient.API
 
                 if (!response.IsSuccessStatusCode)
                 {
+                    Application.Current.Properties.Remove("IsLoggedIn");
+                    Application.Current.Properties.Remove("Login");
+                    Application.Current.Properties.Remove("Password");
                     return null;
                 }
 

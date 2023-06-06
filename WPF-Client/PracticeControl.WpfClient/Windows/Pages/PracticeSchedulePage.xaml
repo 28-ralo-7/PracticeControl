@@ -70,10 +70,8 @@
                                                Binding.TargetUpdated="Image_TargetUpdated" 
                                                Binding.SourceUpdated="Image_SourceUpdated" 
                                                Visibility="Collapsed"
-                                               RenderTransformOrigin="0.5,0.5">
-                                            <Image.RenderTransform>
-                                                <RotateTransform Angle="90"/>
-                                            </Image.RenderTransform>
+                                               >
+
                                         </Image>
                                     </StackPanel>
                                 </DataTemplate>

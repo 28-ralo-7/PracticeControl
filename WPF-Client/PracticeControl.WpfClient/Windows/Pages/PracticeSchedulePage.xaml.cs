@@ -213,7 +213,7 @@ namespace PracticeControl.WpfClient.Windows.Pages
         {
             var selectStudentAttendance = (AttendanceOutView)dataGridAttendance.SelectedItem;
 
-
+            
             if (selectStudentAttendance is null)
             {
                 return;

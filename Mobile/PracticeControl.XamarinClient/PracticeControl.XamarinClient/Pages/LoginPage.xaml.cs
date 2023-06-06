@@ -23,6 +23,8 @@ namespace PracticeControl.XamarinClient.Pages
         {
             if (string.IsNullOrWhiteSpace(entryLogin.Text) || string.IsNullOrWhiteSpace(entryPassword.Text))
             {
+                await DisplayAlert("Ошибка авторизации", "Заполните оба поля", "ОК");
+
                 return;
             }
 
@@ -32,10 +34,12 @@ namespace PracticeControl.XamarinClient.Pages
 
             if (user is null)
             {
+                await DisplayAlert("Ошибка авторизации", "Неверный логин или пароль", "ОК");
                 return;
             }
 
             await Navigation.PushAsync(new MainContentPage(user.user));
         }
+
     }
 }

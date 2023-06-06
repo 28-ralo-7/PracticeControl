@@ -8,7 +8,11 @@
         Title="" Height="700" Width="700" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None"  Background="Black">
     <Canvas>
 
-        <Image x:Name="imageOut" Height="700"  Width="700"></Image>
+        <Image x:Name="imageOut" Height="700"  Width="700" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <RotateTransform Angle="90"/>
+            </Image.RenderTransform>
+        </Image>
         <Button x:Name="exit_Button" Margin="650,10,0,0" Height="40" Width="40" Click="exit_Button_Click" Content="X" Cursor="Hand"  />
     </Canvas>
 </Window>
