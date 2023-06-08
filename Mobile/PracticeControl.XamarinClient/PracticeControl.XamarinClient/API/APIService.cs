@@ -12,7 +12,7 @@ namespace PracticeControl.XamarinClient.API
 {
     public static class APIService
     {
-        public static string urlPath = "https://nextyellowbike21.conveyor.cloud";
+        public static string urlPath = "https://widesageglass82.conveyor.cloud";
         public static async Task<CurrentPracticeInfoView> GetPracticeInfoAsync(string groupName, int studentID)
          {
             try

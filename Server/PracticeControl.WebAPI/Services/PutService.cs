@@ -151,7 +151,7 @@ namespace PracticeControl.WebAPI.Services
 
             var isUpdate = _putRepository.UpdateAttendance(attendance);
 
-            return isUpdate;
+            return isUpdate.Result;
         }
     }
 }

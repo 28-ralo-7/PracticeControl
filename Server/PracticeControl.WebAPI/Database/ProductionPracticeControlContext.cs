@@ -40,7 +40,9 @@ public partial class ProductionPracticeControlContext : DbContext
             entity.ToTable("attendance");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Comment).HasMaxLength(200);
+            entity.Property(e => e.Comment)
+                .HasMaxLength(200)
+                .HasColumnName("comment");
             entity.Property(e => e.Date).HasColumnName("date");
             entity.Property(e => e.IdPractice).HasColumnName("id_practice");
             entity.Property(e => e.IdStudent).HasColumnName("id_student");

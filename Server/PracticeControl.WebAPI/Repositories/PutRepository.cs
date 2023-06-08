@@ -119,19 +119,19 @@ namespace PracticeControl.WebAPI.Repositories
         }
 
         //Посещения фото
-        public bool UpdateAttendance(Attendance attendanceForUpdate)
+        public async Task<bool> UpdateAttendance(Attendance attendanceForUpdate)
         {
             try
             {
-                Attendance? attendance =  _context.Attendances
-                    .FirstOrDefault(att => 
+                Attendance? attendance = await _context.Attendances
+                    .FirstOrDefaultAsync(att => 
                             att.IdStudent == attendanceForUpdate.IdStudent &&
                             att.Date == attendanceForUpdate.Date
                             );
 
                 attendance.Photo = attendanceForUpdate.Photo;
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 
                 return true;
             }
