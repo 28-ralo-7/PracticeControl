@@ -15,7 +15,7 @@
 		Пароль: ozobus03
 	4) В панели conveyor by keyoti в столбце Internet URL должен появиться url ссылка для обращения
 	к webAPI. Пример ссылки: https://longgreyapple95.conveyor.cloud/swagger
-	5) Скопировать ссылку без /swagger. Пример: https://longgreyapple95.conveyor.cloud.
+	5) Скопировать ссылку без /swagger. Пример: https://longgreyapple95.conveyor.cloud
 	6) В проекте PracticeControl.XamarinClient, папка API, файл APIService.cs, строка 15 изменить значение
 	переменной urlPath на скопированную ссылку. Пример:
 	public static string urlPath = "https://longgreyapple95.conveyor.cloud";
