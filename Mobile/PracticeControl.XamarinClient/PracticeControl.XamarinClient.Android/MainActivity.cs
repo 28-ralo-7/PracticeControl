@@ -4,6 +4,9 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using AndroidX.Core.App;
+using AndroidX.Core.Content;
+using Android;
 
 namespace PracticeControl.XamarinClient.Droid
 {
@@ -12,10 +15,20 @@ namespace PracticeControl.XamarinClient.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+
             base.OnCreate(savedInstanceState);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ManageExternalStorage) == Permission.Granted)
+            {
+                //Разрешение уже получено
+            }
+            else
+            {
+                // Запрос разрешения на управление внешним хранилищем
+                ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.ManageExternalStorage }, 200);
+            }
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

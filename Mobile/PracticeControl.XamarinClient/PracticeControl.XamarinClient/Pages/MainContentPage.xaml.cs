@@ -110,6 +110,7 @@ namespace PracticeControl.XamarinClient.Pages
                     }
                 }
 
+
                 var photo = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions
                 {
                     Title = $"{DateTime.Now.ToString("dd.MM.yyyy_hh.mm.ss")}.png"
