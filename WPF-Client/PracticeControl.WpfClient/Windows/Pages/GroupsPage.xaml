@@ -5,19 +5,23 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows.Pages"
       mc:Ignorable="d" 
-       d:DesignHeight="800" d:DesignWidth="1227"
-      Title="GroupsPage">
-    <Canvas Background="White">
-        <Grid Height="800" Width="1227" Background="White" x:Name="gridStudents" Visibility="Collapsed">
+       d:DesignHeight="1000" d:DesignWidth="1627"
+      Title="GroupsPage" x:Name="Groups_Page" Loaded="Groups_Page_Loaded">
+
+    <Canvas Background="#cfcfce">
+        <!--Страница студенты группы-->
+        <Grid Height="1000" Width="1627" x:Name="gridStudents" Visibility="Collapsed">
+            
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="rowAdminStudents" Height="65*"></RowDefinition>
                 <RowDefinition Height="498*"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel x:Name="stackPanelBack" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="25,0">
-                <Button Background="White" Content="Назад" x:Name="bttnBackGroup" Click="bttnBackGroup_Click"  FontSize="19" Margin="10,5" Width="175" Height="45"></Button>
+                <Button Content="Назад" x:Name="bttnBackGroup" Click="bttnBackGroup_Click" Width="175" Height="45"></Button>
             </StackPanel>
 
-            <StackPanel Orientation="Vertical" Grid.Row="1"  HorizontalAlignment="Center">
+            <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0, -100, 0, 0"  HorizontalAlignment="Center">
+                
                 <StackPanel Orientation="Horizontal" Width="210" Margin="10" HorizontalAlignment="Center">
                     <TextBlock Text="Группа" Margin="0,0,5,10" FontSize="30"></TextBlock>
                     <TextBlock x:Name="textBoxGroupName"  Margin="5,0,0,10" Text="" FontSize="30" Width="100"></TextBlock>
@@ -25,136 +29,65 @@
 
                 <DataGrid x:Name="dataGridStudents" ScrollViewer.VerticalScrollBarVisibility="Visible"
                           IsReadOnly="True" HorizontalAlignment="Center" CanUserResizeColumns="False"
-                          Margin="10,5,15,10"  MaxHeight="405" ItemsSource="{Binding Students}"
-                          AutoGenerateColumns="False" Width="1072" Height="405">
+                          Margin="10,5,15,10"  MaxHeight="705" ItemsSource="{Binding Students}"
+                          AutoGenerateColumns="False" Width="1072" >
+                    
                     <DataGrid.ContextMenu>
-                        <ContextMenu>
+                        <ContextMenu x:Name="contextMenuStudents">
                             <MenuItem x:Name="editStudent_Button" Click="editStudent_Button_Click" Header="Изменить"/>
                             <MenuItem x:Name="deleteStudent_Button" Click="deleteStudent_Button_Click" Header="Удалить"/>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
 
-
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="650" x:Name="columnStudentName" Header="Студенты" Binding="{Binding StudentName}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="FontSize" Value="24"></Setter>
-                                    <Setter Property="Height" Value="45"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="30"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
+                        
+                        <DataGridTextColumn Width="650" x:Name="columnStudentName" Header="Студенты" Binding="{Binding StudentName}"/>
 
-                        <DataGridTextColumn Width="*" x:Name="columnStudentLogin" Header="Логин" Binding="{Binding Login}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="FontSize" Value="24"></Setter>
-                                    <Setter Property="Height" Value="45"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="30"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
+                        <DataGridTextColumn Width="*" x:Name="columnStudentLogin" Header="Логин" Binding="{Binding Login}"/>
+                        
                     </DataGrid.Columns>
                 </DataGrid>
+                
             </StackPanel>
+            
         </Grid>
 
-
-        <Grid Background="White" Height="800" Width="1227" Visibility="Visible" x:Name="gridGroup" HorizontalAlignment="Left" VerticalAlignment="Center">
+        <!--Страница групп-->
+        <Grid Height="1000" Width="1627" Visibility="Visible" x:Name="gridGroup" HorizontalAlignment="Left" VerticalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="rowAdminGroup" Height="65*"></RowDefinition>
                 <RowDefinition Height="498*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <StackPanel x:Name="stackPanelFuncAdminGroup" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="buttonCreateNewGroup" Click="buttonCreateNewGroup_Click" Background="White" Content="Добавить группу"  FontSize="19" Margin="10,5" Width="215" Height="45"></Button>
+                <Button x:Name="buttonCreateNewGroup" Click="buttonCreateNewGroup_Click" Content="Добавить группу" Margin="10,5" Width="215" Height="45"></Button>
             </StackPanel>
-
+                
             <StackPanel Orientation="Vertical" Grid.Row="1">
                 <DataGrid x:Name="dataGridGroups" ScrollViewer.VerticalScrollBarVisibility="Visible"
                           IsReadOnly="True"
                           HorizontalAlignment="Center" CanUserResizeColumns="False"
-                          Margin="10,5,15,10"  MaxHeight="387" ItemsSource="{Binding Groups}"
+                          Margin="10,5,15,10"  MaxHeight="750" ItemsSource="{Binding Groups}"
                           AutoGenerateColumns="False" Width="738"
                           PreviewMouseDoubleClick="dataGridGroups_PreviewMouseDoubleClick">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Width="370" Header="Группа" Binding="{Binding GroupView.GroupName}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="FontSize" Value="24"></Setter>
-                                    <Setter Property="Height" Value="45"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="30"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
 
-                        <DataGridTextColumn Width="*" Header="Количество студентов"  Binding="{Binding CountStudents}">
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="TextBlock.Margin" Value="2"></Setter>
-                                    <Setter Property="FontSize" Value="24"></Setter>
-                                    <Setter Property="Height" Value="45"></Setter>
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="Background" Value="White"></Setter>
-                                    <Setter Property="Foreground" Value="Black"></Setter>
-                                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                    <Setter Property="FontSize" Value="18"></Setter>
-                                    <Setter Property="Height" Value="30"></Setter>
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
+                    <DataGrid.ContextMenu >
+                        <ContextMenu >
+                            <MenuItem x:Name="editGroup_Button" Click="editGroup_Button_Click" Header="Изменить"/>
+                            <MenuItem x:Name="deleteGroup_Button" Click="deleteGroup_Button_Click" Header="Удалить"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Width="370" Header="Группа" Binding="{Binding GroupView.GroupName}"/>
+
+                        <DataGridTextColumn Width="*" Header="Количество студентов" Binding="{Binding CountStudents}"/>
+
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
         </Grid>
-
     </Canvas>
 
 

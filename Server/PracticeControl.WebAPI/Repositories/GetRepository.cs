@@ -3,7 +3,8 @@ using Microsoft.IdentityModel.Logging;
 using PracticeControl.WebAPI.Controllers;
 using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Interfaces.IRepositories;
-using PracticeControl.WebAPI.Views.blanks;
+using PracticeControl.WebAPI.Views.View;
+using System.Net.Http.Headers;
 
 namespace PracticeControl.WebAPI.Repositories
 {
@@ -17,23 +18,25 @@ namespace PracticeControl.WebAPI.Repositories
             _context = context;
         }
 
-        public List<Group>? GetGroups()
+        //Список групп
+        public async Task<List<Group>> GetGroups()
         {
-            var groups = _context.Groups
+            var groups = await _context.Groups
                 .Where(group => group.Isdeleted == false)
 
                 .Include(g => g.Students
                 .Where(student => student.Isdeleted == false))
 
-                .ToList();
+                .ToListAsync();
 
             return groups;
            
         }
 
-        public Employee? GetEmployee(int id)
+        //Работние по ID для авторизации
+        public async Task<Employee> GetEmployee(int id)
         {
-            var practicesEmployee = _context.Employees
+            var practicesEmployee = await _context.Employees
                 .Where(employee => employee.Isdeleted == false)
 
                 .Include(b=>b.Practiceschedules)
@@ -47,15 +50,16 @@ namespace PracticeControl.WebAPI.Repositories
                 .ThenInclude(b => b.Attendances)
                 .ThenInclude(b=>b.IdStudentNavigation)
 
-                .FirstOrDefault(b=>b.Id == id);
+                .FirstOrDefaultAsync(b=>b.Id == id);
 
             return practicesEmployee;
 
         }
 
-        public List<Employee> GetEmployeeList()
+        //Список сотрудников для админа
+        public async Task<List<Employee>> GetEmployeeList()
         {
-            var employees = _context.Employees
+            var employees = await _context.Employees
                 .Where(employee => employee.Isdeleted == false)
 
                 .Include(b => b.Practiceschedules
@@ -76,15 +80,18 @@ namespace PracticeControl.WebAPI.Repositories
                 .Where(attendance => attendance.Isdeleted == false))
                 .ThenInclude(b => b.IdStudentNavigation)
 
-                .ToList();
+                .ToListAsync();
 
             return employees;
         }
 
-        public List<Practiceschedule> GetPracticeScheduleList()
+        //Список расписаний
+        public async Task<List<Practiceschedule>> GetPracticeScheduleList()
         {
-            var practiceSchedule = _context.Practiceschedules
+            var practiceSchedule = await _context.Practiceschedules
                 .Where(schedule => schedule.Isdeleted == false)
+
+                .Include(schedule => schedule.IdEmployeeNavigation)
 
                 .Include(ps => ps.IdPracticeNavigation)
 
@@ -92,9 +99,107 @@ namespace PracticeControl.WebAPI.Repositories
                 .Include(ps => ps.Attendances)
                 .ThenInclude(a => a.IdStudentNavigation)
 
-                .ToList();
+                .ToListAsync();
 
             return practiceSchedule;
+        }
+
+        //Группа по названию
+        public async Task<Group> GetGroup(string name)
+        {
+            var group = await _context.Groups.FirstOrDefaultAsync(group => group.Name == name);
+
+            return group;
+        }
+
+        //Практика по названию
+        public async Task<Practice> GetPractice(string name)
+        {
+            string[] parts = name.Split(' ');
+
+            string abbreviation = parts[0];
+            string module = "";
+
+            for (int i = 1; i < parts.Length - 1; i++)
+            {
+                if (i != 1)
+                {
+                    module += " ";
+                }
+
+                module += parts[i];
+            }
+
+            string specialty = parts[parts.Length - 1];
+            specialty = specialty.Substring(1, specialty.Length - 2);
+
+            var practice = await _context.Practices.FirstOrDefaultAsync(p => 
+                                                p.Abbreviation == abbreviation && 
+                                                p.Practicemodule == module &&
+                                                p.Specialty == specialty
+                                                );
+            
+            return practice;
+        }
+
+        //Сотрудник по имени
+        public async Task<Employee> GetEmployee(string name)
+        {
+            string[] parts = name.Split(' ');
+
+            string lastname = parts[0];
+            string firstname = parts[1];
+            string middlename = parts[2];
+
+            var employee = await _context.Employees.FirstOrDefaultAsync(em =>
+                                                em.Lastname == lastname &&
+                                                em.Firstname == firstname &&
+                                                em.Middlename == middlename
+                                                );
+            return employee;
+        }
+
+        //Список студентов группы
+        public async Task<List<Student>> GetStudentsGroup(string groupName)
+        {
+            var studentsGroup = await _context.Students
+                .Include(student => student.IdGroupNavigation)
+                .Where(student => student.IdGroupNavigation.Name == groupName && student.Isdeleted == false)
+                .ToListAsync();
+
+            return studentsGroup;
+        }
+
+        //Список всех студентов
+        public async Task<List<Student>> GetStudents()
+        {
+            var students = await _context.Students
+                .Where(student => student.Isdeleted != true)
+                .Include(student => student.IdGroupNavigation)
+                .ToListAsync();
+
+            return students;
+        }
+
+        //Список всех студентов
+        public async Task<List<Practice>> GetPracticeList()
+        {
+            var practice = await _context.Practices
+                .Where(practice => practice.Isdeleted != true)
+                .ToListAsync();
+
+            return practice;
+        }
+
+        //Посещение
+        public async Task<Attendance> GetAttendance(int idStudent, DateOnly date)
+        {
+            Attendance? attendance = await _context.Attendances
+                .Where(att => att.IdStudent == idStudent && att.Date == date)
+                .FirstOrDefaultAsync();
+
+            return attendance;
+            
         }
     }
 }

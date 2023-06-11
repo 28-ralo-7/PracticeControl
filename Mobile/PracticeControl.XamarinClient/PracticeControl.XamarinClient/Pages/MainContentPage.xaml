@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PracticeControl.XamarinClient.Pages.MainContentPage"
+             Background="#2196F3" NavigationPage.HasNavigationBar="False"
+             NavigationPage.HasBackButton="False">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <ContentView  x:Name="stackLayoutNotPractice" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="false">
+                <Label x:Name="labelNotPractice" TextColor="White" FontSize="30" Text="Идет загрузка..." HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            </ContentView>
+            <ContentView  x:Name="stackLayoutload" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="true">
+                <Label x:Name="labelLoad" TextColor="White" FontSize="30" Text="Идет загрузка..." HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            </ContentView>
+            
+            <StackLayout x:Name="stackLayoutUpdateAttendance" IsVisible="false">
+
+                <StackLayout Orientation="Horizontal" Padding="5">
+                    <Label x:Name="labelUserName" FontSize="20" Text="Загрузка..." TextColor="White" Margin="5,5,0,0" />
+                    <StackLayout HorizontalOptions="FillAndExpand" >
+                        <Button x:Name="buttonExit" 
+                            WidthRequest="100" 
+                            HorizontalOptions="End" 
+                            HeightRequest="40" 
+                            CornerRadius="10"  
+                            Text="Выйти" 
+                            TextColor="#2196F3" 
+                            Background="white" 
+                            Clicked="buttonExit_Clicked" 
+                            />
+                    </StackLayout>
+
+                </StackLayout>
+
+                <StackLayout WidthRequest="300" HeightRequest="300" Margin="0,0,0,0">
+                    <StackLayout Margin="10,0,0,0">
+                        <Label x:Name="labelPracticeName" FontSize="30 " TextColor="White" HorizontalTextAlignment="Center" />
+                        <Label x:Name="labelPracticeDate" FontSize="25" TextColor="White"/>
+                        <Label x:Name="labelDateNow" FontSize="25" TextColor="White"/>
+                        <Label x:Name="labelEmployee" FontSize="25" TextColor="White"/>
+
+                        <Label x:Name="labelIsPresent" FontSize="25" TextColor="White"/>
+                    </StackLayout>
+
+                        <Button x:Name="buttonUpdateAttendance"  
+                                WidthRequest="250"  
+                                HorizontalOptions="Center"  
+                                TextColor="#2196F3"  
+                                Background="white"  
+                                HeightRequest="100"  
+                                CornerRadius="10"   
+                                FontSize="30"  
+                                Text="Отметиться на сегодня"  
+                                Clicked="buttonUpdateAttendance_Clicked"  
+                                FontAttributes="Bold" />
+                        
+                        <Image x:Name="imageAttendance"
+                                Aspect="AspectFit" 
+                                Rotation="90"  
+                                WidthRequest="300"  
+                                HeightRequest="300"  
+                                HorizontalOptions="Center"  
+                                VerticalOptions="Center"/>
+                        <Label x:Name="labelNotFound"  
+                                Text="Фотографии нет"  
+                                IsVisible="false"  
+                                HorizontalOptions="Center"/>
+                        <Label  Text="Ваше фото"  
+                                TextColor="White"  
+                                HorizontalOptions="Center"/>
+
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

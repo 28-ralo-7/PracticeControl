@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static PracticeControl.WpfClient.Helpers.ValidationTools;
 
 namespace PracticeControl.WpfClient.Windows.DialogWindows
 {
@@ -26,6 +27,8 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
     {
         private readonly List<EmployeeView>? employeeViews;
         private readonly EmployeeView? employee;
+
+        //Окно добавления
         public EmployeeModalWindow(List<EmployeeView>? employeeViews)
         {
             InitializeComponent();
@@ -33,6 +36,8 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             title_Label.Content = "Добавление пользователя";
             this.employeeViews = employeeViews;
         }
+        
+        //окно редактирования
         public EmployeeModalWindow(List<EmployeeView>? employeeViews, EmployeeForm employeeForm)
         {
             InitializeComponent();
@@ -53,26 +58,33 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             }
         }
 
+        //Метод добавления
         private async void create_Button_Click(object sender, RoutedEventArgs e)
         {
 
-            if (employeeViews.Any(employee => employee.Login == login_TextBox.Text))
+            if (string.IsNullOrWhiteSpace(lastname_TextBox.Text))
             {
-                MessageBox.Show("Такой сотрудник уже существует");
+                MessageBox.Show("Заполните поле: Фамилия");
+                return;
+            }            
+            
+            if (string.IsNullOrWhiteSpace(firstname_TextBox.Text))
+            {
+                MessageBox.Show("Заполните поле: Имя");
+                return;
+            }            
+            
+            if (string.IsNullOrWhiteSpace(login_TextBox.Text))
+            {
+                MessageBox.Show("Заполните поле: Логин");
+                return;
+            }            
+            
+            if (string.IsNullOrWhiteSpace(password_TextBox.Text))
+            {
+                MessageBox.Show("Заполните поле: Пароль");
                 return;
             }
-
-
-            if (string.IsNullOrWhiteSpace(lastname_TextBox.Text) ||
-                string.IsNullOrWhiteSpace(firstname_TextBox.Text) ||
-                string.IsNullOrWhiteSpace(login_TextBox.Text) ||
-                string.IsNullOrWhiteSpace(password_TextBox.Text)
-                )
-            {
-                MessageBox.Show("Заполните все поля");
-                return;
-            }
-
 
             CreateEmployeeView employeeView = new CreateEmployeeView 
             {
@@ -84,6 +96,13 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 IsAdmin = (bool)isAdmin_CheckBox.IsChecked
             };
 
+            var checkUnique = await PostRequests.CheckUnique(login_TextBox.Text);
+
+            if (checkUnique)
+            {
+                MessageBox.Show("Такой логин занят!");
+                return;
+            }
 
             try
             {
@@ -108,11 +127,13 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
 
         }
 
+        //Отмена
         private void cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        //Метод изменения
         private async void edit_Button_Click(object sender, RoutedEventArgs e)
         {
             var count = employeeViews
@@ -127,14 +148,24 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(lastname_TextBox.Text) ||
-                string.IsNullOrWhiteSpace(firstname_TextBox.Text) ||
-                string.IsNullOrWhiteSpace(login_TextBox.Text) 
-                )
+            if (string.IsNullOrWhiteSpace(lastname_TextBox.Text))
             {
-                MessageBox.Show("Заполните все поля");
+                MessageBox.Show("Заполните поле: Фамилия");
                 return;
             }
+
+            if (string.IsNullOrWhiteSpace(firstname_TextBox.Text))
+            {
+                MessageBox.Show("Заполните поле: Имя");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(login_TextBox.Text))
+            {
+                MessageBox.Show("Заполните поле: Логин");
+                return;
+            }
+
 
             UpdateEmployeeView employeeView = new UpdateEmployeeView
             {
@@ -166,6 +197,18 @@ namespace PracticeControl.WpfClient.Windows.DialogWindows
             {
                 MessageBox.Show("Ошибка сохранения");
             }
+        }
+        
+        //Пропуск для букв
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            AllowOnlyCharacter(e);
+        }
+
+        //Очистка пробелов
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ClearWhiteSpace(sender);
         }
     }
 }

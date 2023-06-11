@@ -12,7 +12,6 @@ namespace PracticeControl.WpfClient.Model.View
         public string EndDate { get; set; }
         public EmployeeView Employee { get; set; }
         public GroupView Group { get; set; }
-
         public List<AttendanceView> Attendances { get; set; }
     }
 }

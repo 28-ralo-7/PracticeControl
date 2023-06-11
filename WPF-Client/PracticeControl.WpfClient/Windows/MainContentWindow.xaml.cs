@@ -25,19 +25,28 @@ namespace PracticeControl.WpfClient.Windows
             this.User = user;
 
             InitializeComponent();
-            tbItemPractices.IsSelected = true;
+
+            tbItemPracticeSchedules.IsSelected = true;
 
             frameGroups.Content = new GroupsPage(User);
-            framePractices.Content = new PracticesPage(User);
+            framePracticeSchedules.Content = new PracticesPage(User);
 
             if (User.IsAdmin)
             {
-                frameEmployees.Content = new EmployeesPage();
+                frameEmployees.Content = new EmployeesPage(User);
                 tbItemEmployees.Visibility = Visibility.Visible;
+
+                frameStudents.Content = new StudentPage();
+                tbItemStudents.Visibility = Visibility.Visible;                
+                
+                framePractices.Content = new PracticePage();
+                tbItemPractices.Visibility = Visibility.Visible;
             }
             else
             {
                 tbItemEmployees.Visibility = Visibility.Collapsed;
+                tbItemStudents.Visibility = Visibility.Collapsed;
+                tbItemPractices.Visibility = Visibility.Collapsed;
             }
 
             
@@ -48,5 +57,16 @@ namespace PracticeControl.WpfClient.Windows
             InitializeComponent();
         }
 
+        private void exit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Вы точно хотите выйти?", "Подтверждение выхода", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                AuthorizationWindow authorizationWindow = new AuthorizationWindow();
+                authorizationWindow.Show();
+                this.Close();
+            }
+        }
     }
 }

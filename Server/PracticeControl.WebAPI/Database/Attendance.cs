@@ -13,11 +13,13 @@ public partial class Attendance
 
     public bool Ispresent { get; set; }
 
-    public string? Photo { get; set; }
-
     public bool Isdeleted { get; set; }
 
     public long IdPractice { get; set; }
+
+    public byte[]? Photo { get; set; }
+
+    public string? Comment { get; set; }
 
     public virtual Practiceschedule IdPracticeNavigation { get; set; } = null!;
 

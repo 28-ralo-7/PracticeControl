@@ -5,32 +5,165 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows.DialogWindows"
         mc:Ignorable="d"
-        Title="StudentEditModalWindow" Height="465" Width="405" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="38*"></ColumnDefinition>
-            <ColumnDefinition Width="43*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+        Title="StudentEditModalWindow" Height="600" Width="405" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Border   BorderBrush="Black" BorderThickness="2">
+        <Grid x:Name="gridStudentModal" Background="#cfcfce">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="38*"></ColumnDefinition>
+                <ColumnDefinition Width="43*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
+            <Label x:Name="title_Label" Content="" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" FontSize="20" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Фамилия" Margin="56,30,56,30" FontSize="18" />
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Имя" Margin="75,30,76,30" FontSize="18" />
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Отчество" Margin="56,30,56,30" FontSize="18" />
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Логин" Margin="66,30,66,30" FontSize="18" />
+            <!--Фамилия-->
+            <TextBox x:Name="lastName_TextBox"
+                     Grid.Row="1" Grid.Column="1" 
+                     Text="" Height="35" 
+                     Width="190" 
+                     FontSize="18" 
+                     PreviewTextInput="TextBox_PreviewTextInput"
+                     TextChanged="TextBox_TextChanged"    
+            />
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                       Text="Фамилия"
+                       Width="100"
+                       Height="35"
+                       FontSize="18"
+            />
 
+            <!--Имя-->
+            <TextBox x:Name="firstName_TextBox" 
+                     Grid.Row="2" Grid.Column="1" 
+                     Height="35" 
+                     Width="190" 
+                     FontSize="18"
+                     PreviewTextInput="TextBox_PreviewTextInput"
+                     TextChanged="TextBox_TextChanged"
+            />
+            <TextBlock Grid.Row="2" 
+                       Grid.Column="0" 
+                       Text="Имя" 
+                       Width="100" 
+                       Height="35" 
+                       FontSize="18"
+            />
+            
+            <!--Отчество-->
+            <TextBox x:Name="middleName_TextBox" 
+                     Grid.Row="3" Grid.Column="1" 
+                     Height="35" 
+                     Width="190" 
+                     FontSize="18"
+                     PreviewTextInput="TextBox_PreviewTextInput"
+                     TextChanged="TextBox_TextChanged"
+            />
+            <TextBlock Grid.Row="3"
+                       Grid.Column="0"
+                       Text="Отчество" 
+                       Width="100" 
+                       Height="35" 
+                       FontSize="18"
+            />
+            
+            <!--Логин-->
+            <TextBox x:Name="login_TextBox" 
+                     Grid.Row="4" 
+                     Grid.Column="1" 
+                     Height="35" 
+                     Width="190" 
+                     FontSize="18"
+                     TextChanged="TextBox_TextChanged"
+            />
+            <TextBlock Grid.Row="4" 
+                       Grid.Column="0"
+                       Text="Логин"
+                       Width="100"
+                       Height="35"
+                       FontSize="18"
+            />
+            
+            <!--Пароль-->
+            <TextBox x:Name="password_TextBox"
+                     Grid.Row="5" 
+                     Grid.Column="1" 
+                     Height="35" 
+                     Width="190" 
+                     FontSize="18"
+                     TextChanged="TextBox_TextChanged"
+            />
+            <TextBlock Grid.Row="5" 
+                       Grid.Column="0"
+                       Text="Пароль"
+                       Width="100"
+                       Height="35" 
+                       FontSize="18" 
+            />
 
-        <TextBox x:Name="textBoxLastName" Grid.Row="0" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
-        <TextBox x:Name="textBoxFirstName" Grid.Row="1" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
-        <TextBox x:Name="textBoxMiddleName" Grid.Row="2" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
-        <TextBox x:Name="textBoxLogin" Grid.Row="3" Grid.Column="1" Text="" Height="35" Width="190" FontSize="18" />
+            <!--Группа-->
+            <ComboBox x:Name="group_ComboBox" 
+                      BorderBrush="Transparent" 
+                      Grid.Row="6" 
+                      Grid.Column="1" 
+                      Height="35" 
+                      Width="190" 
+                      FontSize="18" 
+                      Visibility="Collapsed"
+            />
+            <TextBlock x:Name="group_TextBlock" 
+                       Grid.Row="6" Grid.Column="0"
+                       Text="Группа" 
+                       Width="100" 
+                       Height="35"
+                       FontSize="18" 
+                       Visibility="Collapsed"
+            />
+            
+            <!--Кнопка изменить-->
+            <Button x:Name="editStudent_Button" 
+                    Click="EditStudent_Button_Click" 
+                    Content="Изменить" 
+                    FontSize="17" 
+                    Grid.Column="1"
+                    Grid.Row="6" 
+                    Height="45" 
+                    Width="150" 
+                    Visibility="Collapsed"
+            />
 
-        <Button x:Name="buttonEditStudent" Click="buttonEditStudent_Click" Content="Изменить студента" FontSize="17"  Grid.ColumnSpan="2" Grid.Row="3" Height="45" Width="220" Margin="92,90,93,45" Grid.RowSpan="2"/>
-    </Grid>
+            <!--Кнопка добавить-->
+            <Button x:Name="addStudent_Button" 
+                    Click="addStudent_Button_Click"
+                    Visibility="Collapsed"
+                    Content="Добавить"
+                    FontSize="17" 
+                    Grid.Column="1"
+                    Grid.Row="7"
+                    Height="45"
+                    Width="150"
+            />
+
+            <!--Кнопка отмены-->
+            <Button x:Name="cancel_Button" 
+                    Click="cancel_Button_Click"
+                    Content="Отмена"
+                    FontSize="17" 
+                    Grid.Column="0" 
+                    Grid.Row="7" 
+                    Height="45" 
+                    Width="150"
+            />
+
+        </Grid>
+    </Border>
 </Window>

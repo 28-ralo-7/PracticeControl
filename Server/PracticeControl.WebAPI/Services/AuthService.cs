@@ -5,7 +5,8 @@ using PracticeControl.WebAPI.Helpers;
 using PracticeControl.WebAPI.Interfaces.IRepositories;
 using PracticeControl.WebAPI.Interfaces.IServices;
 using PracticeControl.WebAPI.Views;
-using PracticeControl.WebAPI.Views.blanks;
+using PracticeControl.WebAPI.Views.View;
+using PracticeControl.WebAPI.Views.ViewMobile;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -20,12 +21,13 @@ namespace PracticeControl.WebAPI.Services
         private readonly IConfiguration _config;
         public AuthService(IConfiguration config, IAuthRepository authRepository, IGetService getService)
         {
-
             _config = config;
             _authRepository = authRepository;
             _getService = getService;
         }
-        public AuthResponse Authenticate(string login, string password)
+
+        //Авторизация
+        public async Task<AuthResponseDesktop> Authorize(string login, string password)
         {
 
             Employee? employee = _authRepository.GetEmployee(login); 
@@ -37,14 +39,43 @@ namespace PracticeControl.WebAPI.Services
                 if (passwordHash == employee?.Passwordhash)
                 {
                     string token = CreateToken(employee);
-                    EmployeeView? userView = _getService.GetEmployee(Convert.ToInt32(employee.Id));
-                    return new AuthResponse(token, userView);
+                    EmployeeView? userView = await _getService.GetEmployee(Convert.ToInt32(employee.Id));
+                    return new AuthResponseDesktop(token, userView);
                 }
             }
           
             return null;
         }
 
+        //Авторизация
+        public async Task<AuthResponseMobile> Authorize(Views.ViewMobile.AuthRequest parameters)
+        {
+            Student student = _authRepository.GetStudent(parameters.Login);
+            if (student is not null)
+            {
+                var passwordHash = PasswordHelper.GetHash(student.Passwordsalt, parameters.PasswordString);
+
+                if (passwordHash == student.Passwordhash)
+                {
+                    AuthResponseMobile authResponse = new AuthResponseMobile
+                    {
+                        user = new StudentViewMobile
+                        {
+                            StudentID = (int)student.Id,
+                            LastName = student.Lastname,
+                            FirstName = student.Firstname,
+                            MiddleName = student.Middlename,
+                            Login = student.Login,
+                            Group = student.IdGroupNavigation.Name
+                        }
+                    };
+                    return authResponse;
+                }
+            }
+            return null;
+        }
+
+        //Получение токена
         public string CreateToken(Employee employee)
         {
             List<Claim> claims = new List<Claim>

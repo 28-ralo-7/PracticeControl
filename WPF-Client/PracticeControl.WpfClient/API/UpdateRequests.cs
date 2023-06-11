@@ -34,8 +34,8 @@ namespace PracticeControl.WpfClient.API
             return employeeView;
         }
 
-
-        public static async Task<StudentView> UpdateStudentAsync(UpdateStudentView updateEmployee)
+        //Студент
+        public static async Task<bool> UpdateStudentAsync(UpdateStudentView updateEmployee)
         {
             HttpClient client = new HttpClient();
 
@@ -47,13 +47,78 @@ namespace PracticeControl.WpfClient.API
 
             if (!response.IsSuccessStatusCode)
             {
+                return false;
+            }
+
+            var responseData = await response.Content.ReadAsStringAsync();
+            var studentView = JsonConvert.DeserializeObject<bool>(responseData);
+
+            return studentView;
+        }
+
+        //Группа
+        public static async Task<GroupView> RenameGroup(string newName, string oldName)
+        {
+            HttpClient client = new HttpClient();
+
+            var json = JsonConvert.SerializeObject(newName);
+
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"https://localhost:7063/api/put/renameGroup/{oldName}", data).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
                 return null;
             }
 
             var responseData = await response.Content.ReadAsStringAsync();
-            var studentView = JsonConvert.DeserializeObject<StudentView>(responseData);
+            var studentView = JsonConvert.DeserializeObject<GroupView>(responseData);
 
             return studentView;
+        }
+
+        //Посещения
+        public static async Task<bool> UpdateAttendanceAsync(List<UpdateAttendanceView> updateAttendances)
+        {
+            HttpClient client = new HttpClient();
+
+            var json = JsonConvert.SerializeObject(updateAttendances);
+
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"https://localhost:7063/api/put/updateAttendances/", data).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            var responseData = await response.Content.ReadAsStringAsync();
+            var updatedAttendances = JsonConvert.DeserializeObject<bool>(responseData);
+
+            return updatedAttendances;
+        }
+
+        public static async Task<bool> UpdatePracticeAsync(PracticeView practiceView)
+        {
+            HttpClient client = new HttpClient();
+
+            var json = JsonConvert.SerializeObject(practiceView);
+
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"https://localhost:7063/api/put/updatePractice/", data).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            var responseData = await response.Content.ReadAsStringAsync();
+            var updatedAttendances = JsonConvert.DeserializeObject<bool>(responseData);
+
+            return updatedAttendances;
         }
 
     }

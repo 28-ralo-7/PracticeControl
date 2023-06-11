@@ -12,7 +12,7 @@ namespace PracticeControl.WpfClient.Windows
             InitializeComponent();
         }
 
-        private void Auth_button_Click(object sender, RoutedEventArgs e)
+        private async void Auth_button_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(login_TextBox.Text) && string.IsNullOrEmpty(passwordBox.Password))
             {
@@ -21,19 +21,31 @@ namespace PracticeControl.WpfClient.Windows
             }
             var userAuth = new AuthUser(login_TextBox.Text, passwordBox.Password);
 
-            var user = GetRequests.Authorization(userAuth);
-
-            if (user.Result is null)
+            try
             {
-                MessageBox.Show("Неверный логин или пароль");
-                return;
+                var user = await GetRequests.Authorization(userAuth);
+
+                if (user is null)
+                {
+                    MessageBox.Show("Неверный логин или пароль", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                MainContentWindow mainWindow = new MainContentWindow(user.user);
+                mainWindow.Show();
+                this.Close();
+            }
+            catch (System.Exception)
+            {
+                MessageBox.Show("Ошибка авторизации", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
 
-            MainContentWindow mainWindow = new MainContentWindow(user.Result.user);
-            mainWindow.Show();
-            this.Close();
-            
+        }
+
+        private void close_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

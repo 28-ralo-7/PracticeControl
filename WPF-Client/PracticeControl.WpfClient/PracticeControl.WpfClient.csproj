@@ -7,11 +7,25 @@
     <AppConfig>App.config</AppConfig>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <StartupObject></StartupObject>
+    <ApplicationIcon>Resources\Image\DesignImage\DesktopAppLogo.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Windows\DesktopAppLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Image\DesignImage\DesktopAppLogo.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.101.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Windows\DesktopAppLogo.png" />
   </ItemGroup>
 
   <ItemGroup>

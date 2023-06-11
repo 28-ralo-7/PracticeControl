@@ -29,7 +29,7 @@ public partial class ProductionPracticeControlContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=PracticeControlDB;Username=postgres;Password=1");
+        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=ProductionPracticeControl;Username=postgres;Password=1");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -40,14 +40,15 @@ public partial class ProductionPracticeControlContext : DbContext
             entity.ToTable("attendance");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Comment)
+                .HasMaxLength(200)
+                .HasColumnName("comment");
             entity.Property(e => e.Date).HasColumnName("date");
             entity.Property(e => e.IdPractice).HasColumnName("id_practice");
             entity.Property(e => e.IdStudent).HasColumnName("id_student");
             entity.Property(e => e.Isdeleted).HasColumnName("isdeleted");
             entity.Property(e => e.Ispresent).HasColumnName("ispresent");
-            entity.Property(e => e.Photo)
-                .HasColumnType("character varying")
-                .HasColumnName("photo");
+            entity.Property(e => e.Photo).HasColumnName("photo");
 
             entity.HasOne(d => d.IdPracticeNavigation).WithMany(p => p.Attendances)
                 .HasForeignKey(d => d.IdPractice)
@@ -149,6 +150,7 @@ public partial class ProductionPracticeControlContext : DbContext
 
             entity.HasOne(d => d.IdPracticeNavigation).WithMany(p => p.Practiceschedules)
                 .HasForeignKey(d => d.IdPractice)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_practice_id");
         });
 

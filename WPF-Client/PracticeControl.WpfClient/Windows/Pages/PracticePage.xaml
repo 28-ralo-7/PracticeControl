@@ -1,0 +1,54 @@
+﻿<Page x:Class="PracticeControl.WpfClient.Windows.Pages.PracticePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="1000" d:DesignWidth="1627" Background="#cfcfce"
+      Title="PracticePage">
+    <Grid Height="1000" Width="1627" Background="#cfcfce" x:Name="gridStudents" Visibility="Visible">
+        
+        <!--сетка страницы-->
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="rowAdminStudents" Height="65*"></RowDefinition>
+            <RowDefinition Height="498*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!--кнопка добавить-->
+        <StackPanel x:Name="controlPanel_Stackpanel" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="25,0">
+            <Button Content="Добавить практику" x:Name="addPractice_Button" Click="addPractice_Button_Click" Margin="10,5" Width="175" Height="45"></Button>
+        </StackPanel>
+
+
+        <StackPanel Orientation="Vertical" Grid.Row="1"  HorizontalAlignment="Center">
+
+            <TextBlock Text="Справочник практик" FontSize="30" HorizontalAlignment="Center"></TextBlock>
+
+            <DataGrid x:Name="practice_DataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                          IsReadOnly="True" HorizontalAlignment="Center" CanUserResizeColumns="False"
+                          Margin="10,5,15,10"  MaxHeight="705" ItemsSource="{Binding PracticeViews}"
+                          AutoGenerateColumns="False" Width="1072" >
+
+                <!--контекстное меню-->
+                <DataGrid.ContextMenu>
+                    <ContextMenu x:Name="contextMenuStudents">
+                        <MenuItem x:Name="editPractice_Button" Click="editPractice_Button_Click" Header="Изменить"/>
+                        <MenuItem x:Name="deletePractice_Button" Click="deletePractice_Button_Click" Header="Удалить"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Width="*" x:Name="abbreviationPractice_Column" Header="Модуль" Binding="{Binding Abbreviation}"/>
+
+                    <DataGridTextColumn Width="650" x:Name="practiceModule_Column" Header="Название" Binding="{Binding PracticeModule}"/>
+
+                    <DataGridTextColumn Width="200" x:Name="specialty_Column" Header="Специальность" Binding="{Binding Specialty}"/>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </StackPanel>
+    </Grid>
+</Page>

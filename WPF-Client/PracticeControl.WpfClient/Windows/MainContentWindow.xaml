@@ -5,20 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PracticeControl.WpfClient.Windows"
         mc:Ignorable="d"
-        Title="ПрактикКонтроль" Height="800" Width="1400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
-    <Grid>
-        <TabControl TabStripPlacement="Left">
-            <TabItem x:Name="tbItemPractices" Header="Практики" Width="150" Padding="10" FontSize="16">
-                <Frame x:Name="framePractices" Width="1227"/>
+        Title="Контроль практики" Height="1000" Width="1800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"  >
+    <Grid Background="#cfcfce">
+        <TabControl TabStripPlacement="Top" Background="#cfcfce">
+            <TabItem x:Name="tbItemPracticeSchedules" Header="Практики" Width="150" Padding="10" FontSize="16">
+                <Frame x:Name="framePracticeSchedules" Width="1627"/>
             </TabItem>
 
             <TabItem x:Name="tbItemGroups" Header="Группы" Width="150" Padding="10" FontSize="16">
-                <Frame x:Name="frameGroups" Width="1227"/>
+                <Frame x:Name="frameGroups" Width="1627"/>
             </TabItem>
 
             <TabItem x:Name="tbItemEmployees" Header="Преподаватели" Width="150" Padding="10" FontSize="16">
-                <Frame x:Name="frameEmployees"  Width="1227"/>
+                <Frame x:Name="frameEmployees"  Width="1627"/>
+            </TabItem>
+
+            <TabItem x:Name="tbItemStudents" Header="Студенты" Width="150" Padding="10" FontSize="16">
+                <Frame x:Name="frameStudents"  Width="1627"/>
+            </TabItem>
+
+            <TabItem x:Name="tbItemPractices" Header="Практики" Width="150" Padding="10" FontSize="16">
+                <Frame x:Name="framePractices"  Width="1627"/>
             </TabItem>
         </TabControl>
+        
+        <Button x:Name="exit_Button" 
+                Click="exit_Button_Click"
+                Width="200" 
+                Height="50"
+                Content="Выйти" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Bottom"
+                Margin="20"/>
     </Grid>
 </Window>

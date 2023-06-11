@@ -8,5 +8,6 @@
         public string MiddleName { get; set; }
         public string Login { get; set; }
         public GroupView Group { get; set; }
+
     }
 }

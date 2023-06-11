@@ -2,6 +2,7 @@
 using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Interfaces.IServices;
 using PracticeControl.WebAPI.Views;
+using PracticeControl.WebAPI.Views.ViewMobile;
 
 namespace PracticeControl.WebAPI.Controllers
 {
@@ -19,10 +20,10 @@ namespace PracticeControl.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("authorization")]
-        public IActionResult Login([FromBody] AuthRequest parameters)
+        [Route("authorization")]//Готово
+        public async Task<IActionResult> LoginDesktop([FromBody] Views.ViewMobile.AuthRequest parameters)
         {
-            AuthResponse response = _authService.Authenticate(parameters.Login, parameters.PasswordString);
+            AuthResponseDesktop response = await _authService.Authorize(parameters.Login, parameters.PasswordString);
 
             if (response is not null)
             {
@@ -32,5 +33,18 @@ namespace PracticeControl.WebAPI.Controllers
             return Unauthorized();
         }
 
+        [HttpPost]
+        [Route("authorizationMobile")]//Готово
+        public async Task<IActionResult> LoginMobile([FromBody] Views.ViewMobile.AuthRequest parameters)
+        {
+            AuthResponseMobile response = await _authService.Authorize(parameters);
+
+            if (response is not null)
+            {
+                return Ok(response);
+            }
+
+            return Unauthorized();
+        }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using PracticeControl.WebAPI.Database;
 using PracticeControl.WebAPI.Interfaces.IRepositories;
-using PracticeControl.WebAPI.Views.blanks;
+using PracticeControl.WebAPI.Views.View;
 
 namespace PracticeControl.WebAPI.Converters
 {
     public static class PracticeScheduleConverter
     {
-
-        public static List<PracticeScheduleView> ConvertToPracticeScheduleView(List<Practiceschedule> practiceSchedules, IGetRepository getRepository)
+        //Из листа бд в лист View
+        public static async Task<List<PracticeScheduleView>> ConvertToPracticeScheduleView(List<Practiceschedule> practiceSchedules, IGetRepository _getRepository)
         {
 
             List<PracticeScheduleView> practiceScheduleViews = new List<PracticeScheduleView>();
@@ -23,7 +23,7 @@ namespace PracticeControl.WebAPI.Converters
                 practiceScheduleView.StartDate = practiceSchedule.Startdate.ToString();
                 practiceScheduleView.EndDate = practiceSchedule.Enddate.ToString();
 
-                Employee? employee = getRepository.GetEmployee((int)practiceSchedule.IdEmployee);
+                Employee? employee = await _getRepository.GetEmployee((int)practiceSchedule.IdEmployee);
 
                 if (employee is not null)
                 {
@@ -51,7 +51,8 @@ namespace PracticeControl.WebAPI.Converters
                         LastName = student.Lastname,
                         FirstName = student.Firstname,
                         MiddleName = student.Middlename,
-                        Login = student.Login
+                        Login = student.Login,
+                     
                     }).ToList()
                 };
 
@@ -77,6 +78,17 @@ namespace PracticeControl.WebAPI.Converters
                 practiceScheduleViews.Add(practiceScheduleView);
             }
             return practiceScheduleViews;
+        }
+
+        public static async Task<Practiceschedule> ConvertToPracticeSchedule(PracticeScheduleView practiceScheduleView)
+        {
+            return new Practiceschedule
+            {
+                Id = practiceScheduleView.PracticeScheduleID,
+                Startdate =  DateOnly.Parse(practiceScheduleView.StartDate),
+                Enddate = DateOnly.Parse(practiceScheduleView.EndDate),
+                IdGroup = practiceScheduleView.Group.GroupID
+            };
         }
     }
 }
